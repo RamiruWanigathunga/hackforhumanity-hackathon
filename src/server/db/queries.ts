@@ -20,7 +20,8 @@ export interface ProviderWithSlots {
   slots: ProviderSlot[];
 }
 
-export async function getActiveProvidersWithSlots(_daysAhead: number = 2): Promise<ProviderWithSlots[]> {
+export async function getActiveProvidersWithSlots(daysAhead: number = 2): Promise<ProviderWithSlots[]> {
+  void daysAhead;
   return getFallbackProvidersWithSlots();
 }
 
