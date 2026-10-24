@@ -42,7 +42,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-white text-[#141414] font-sans">
         <Header />
-        <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 py-8 md:py-12">
+        <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 py-6 md:py-10">
           {children}
         </main>
         <Footer />
