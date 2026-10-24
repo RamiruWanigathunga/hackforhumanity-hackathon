@@ -52,6 +52,7 @@ export async function processIntake(input: IntakeInput): Promise<IntakeResult> {
     const timeoutMs = env.AI_TIMEOUT_MS || 12000;
 
     const result = await generateObject({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       model: model as any,
       schema: TicketDraftSchema,
       system,
@@ -80,7 +81,10 @@ export async function processIntake(input: IntakeInput): Promise<IntakeResult> {
       tags: sanitizedTags,
       area: sanitizedArea,
       preferredDate: input.preferredDate || aiObject.preferredDate,
-      preferredWindow: (input.preferredWindow as any) || aiObject.preferredWindow || "anytime",
+      preferredWindow:
+        (input.preferredWindow as "morning" | "afternoon" | "evening" | "anytime") ||
+        aiObject.preferredWindow ||
+        "anytime",
       urgency: aiObject.urgency || "normal",
       hazard: Boolean(aiObject.hazard),
       detectedLanguage: aiObject.detectedLanguage || "unknown",

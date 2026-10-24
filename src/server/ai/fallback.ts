@@ -12,14 +12,20 @@ export function fallbackParse(
 
   // 1. Language Detection
   let detectedLanguage: "en" | "si" | "ta" | "singlish" | "mixed" | "unknown" = "en";
-  const hasSinhala = /[\u0D80-\u0DFF]/.test(rawText);
-  const hasTamil = /[\u0B80-\u0BFF]/.test(rawText);
+  const sinhalaMatches = rawText.match(/[\u0D80-\u0DFF]/g) || [];
+  const tamilMatches = rawText.match(/[\u0B80-\u0BFF]/g) || [];
 
-  if (hasSinhala && hasTamil) {
-    detectedLanguage = "mixed";
-  } else if (hasSinhala) {
+  if (sinhalaMatches.length > 0 && tamilMatches.length > 0) {
+    if (tamilMatches.length > sinhalaMatches.length * 2) {
+      detectedLanguage = "ta";
+    } else if (sinhalaMatches.length > tamilMatches.length * 2) {
+      detectedLanguage = "si";
+    } else {
+      detectedLanguage = "mixed";
+    }
+  } else if (sinhalaMatches.length > 0) {
     detectedLanguage = "si";
-  } else if (hasTamil) {
+  } else if (tamilMatches.length > 0) {
     detectedLanguage = "ta";
   } else {
     // Check for Singlish keywords

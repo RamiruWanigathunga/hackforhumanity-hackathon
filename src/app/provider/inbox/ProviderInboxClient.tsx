@@ -17,7 +17,7 @@ export interface EnrichedBooking {
   booking: Booking;
   ticket: JobTicket;
   slot: ProviderSlot;
-  proposedSlot: ProviderSlot | null;
+  proposedSlot: ProviderSlot | null | undefined;
 }
 
 export default function ProviderInboxClient({

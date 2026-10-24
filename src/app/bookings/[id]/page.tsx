@@ -147,7 +147,7 @@ export default async function BookingDetailPage({
           events={events.map((e) => ({
             id: e.id,
             type: e.type,
-            actor: e.actor as any,
+            actor: e.actor as "resident" | "provider" | "system",
             note: e.note,
             createdAt: e.createdAt,
           }))}
