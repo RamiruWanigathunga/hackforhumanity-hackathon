@@ -112,61 +112,60 @@ interface PopularServicesGridProps {
 
 export const PopularServicesGrid: React.FC<PopularServicesGridProps> = ({ onSelectCategory }) => {
   return (
-    <section id="categories" className="space-y-6 pt-4">
-      {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
-        <div className="space-y-1">
-          <span className="text-xs font-semibold text-[#707070] uppercase tracking-wider block">
-            Browse Directory
-          </span>
-          <h2 className="heading-2 text-[#141414]">
-            Popular Services.
-          </h2>
-          <p className="subtitle-lead text-sm sm:text-base">
-            Select a category or search for what you need. Active pilot trades feature instant AI intake and matching.
-          </p>
+    <section id="categories" className="w-full bg-white py-20 sm:py-24 px-4 sm:px-6">
+      <div className="max-w-[1200px] mx-auto space-y-10">
+        {/* Section Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#dee1e6] pb-8">
+          <div className="space-y-2">
+            <span className="text-xs font-semibold text-[#7c828a] uppercase tracking-wider block">
+              Trade Taxonomy
+            </span>
+            <h2 className="display-lg text-[#0a0b0d]">
+              Explore verified services.
+            </h2>
+            <p className="body-md text-[#5b616e] max-w-xl text-base sm:text-lg">
+              Select a trade to initiate an AI-assisted intake ticket or view specialist availability across the Colombo cluster.
+            </p>
+          </div>
+          <div className="text-xs text-[#7c828a] font-medium hidden sm:block">
+            10 Standard Categories / Live Pilot
+          </div>
         </div>
-        <div className="text-xs text-[#707070] font-medium hidden sm:block">
-          10 Service Categories / Colombo Pilot
-        </div>
-      </div>
 
-      {/* Grid: 2 rows of 5 on desktop */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
-        {POPULAR_SERVICES.map((service) => {
-          const IconComp = service.iconComponent;
+        {/* 10-Up Grid: 2 rows of 5 on desktop */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+          {POPULAR_SERVICES.map((service) => {
+            const IconComp = service.iconComponent;
 
-          return (
-            <button
-              key={service.id}
-              type="button"
-              onClick={() => onSelectCategory && onSelectCategory(service)}
-              className="group relative text-left bg-white rounded-[20px] p-4 sm:p-5 border border-[#f0f0f0] hover:border-[#141414] hover:bg-[#fafafa] transition-all flex flex-col justify-between gap-4 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#141414]"
-            >
-              {/* Top row: Squircle icon with clean SVG */}
-              <div className="flex items-start justify-between w-full">
-                <div className="w-12 h-12 bg-[#f3f3f3] text-[#141414] group-hover:bg-[#141414] group-hover:text-white app-icon-squircle flex items-center justify-center transition-colors shrink-0">
+            return (
+              <button
+                key={service.id}
+                type="button"
+                onClick={() => onSelectCategory && onSelectCategory(service)}
+                className="coinbase-card text-left bg-white rounded-[24px] p-6 border border-[#dee1e6] hover:border-[#0052ff] transition-all flex flex-col justify-between gap-6 cursor-pointer focus:outline-none focus:border-[#0052ff]"
+              >
+                {/* Top circular icon plate */}
+                <div className="w-12 h-12 rounded-full bg-[#eef0f3] text-[#0a0b0d] flex items-center justify-center shrink-0">
                   <IconComp className="w-5 h-5 text-current" />
                 </div>
-              </div>
 
-              {/* Text metadata */}
-              <div className="space-y-1">
-                <h3 className="font-bold text-sm sm:text-base text-[#141414] group-hover:text-black tracking-tight leading-snug">
-                  {service.name}
-                </h3>
-                <p className="text-xs text-[#707070] line-clamp-2 leading-relaxed">
-                  {service.subtitle}
-                </p>
-              </div>
+                {/* Text info */}
+                <div className="space-y-1.5">
+                  <h3 className="title-sm text-[#0a0b0d] tracking-tight">
+                    {service.name}
+                  </h3>
+                  <p className="body-sm text-[#5b616e] line-clamp-2">
+                    {service.subtitle}
+                  </p>
+                </div>
 
-              {/* Hover indicator link without arrow */}
-              <div className="text-[11px] font-semibold text-[#141414] opacity-0 group-hover:opacity-100 transition-opacity">
-                <span>Select trade</span>
-              </div>
-            </button>
-          );
-        })}
+                <div className="pt-2 text-xs font-semibold text-[#0052ff]">
+                  Select Service
+                </div>
+              </button>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

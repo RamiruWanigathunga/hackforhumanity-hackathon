@@ -25,17 +25,17 @@ export default async function MatchesPage({
   const { matches, emptyReason } = rankProviders(ticket, providersWithSlots);
 
   return (
-    <div className="max-w-3xl mx-auto space-y-8 py-4 sm:py-6">
+    <div className="w-full max-w-[840px] mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
         <div className="space-y-1.5">
-          <span className="text-xs font-semibold text-[#707070] uppercase tracking-wider block">
+          <span className="text-xs font-semibold text-[#7c828a] uppercase tracking-wider block">
             Step 3 of 4 / Matching
           </span>
-          <h1 className="heading-2 text-[#141414]">
+          <h1 className="display-md text-[#0a0b0d]">
             Recommended local technicians in your area.
           </h1>
-          <p className="subtitle-lead text-xs sm:text-sm">
+          <p className="body-md text-[#5b616e]">
             Ranked deterministically by category fit, area proximity, slot availability, and native language.
           </p>
         </div>
@@ -47,20 +47,20 @@ export default async function MatchesPage({
       </div>
 
       {/* Ticket Summary Strip */}
-      <div className="bg-[#f3f3f3] rounded-[24px] p-5 flex flex-wrap items-center justify-between gap-3 text-xs border border-[#e0e0e0]">
+      <div className="bg-[#f7f7f7] rounded-[24px] p-6 flex flex-wrap items-center justify-between gap-3 text-xs border border-[#dee1e6]">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 flex-wrap text-[#141414]">
+          <div className="flex items-center gap-2 flex-wrap text-[#0a0b0d]">
             <span className="font-bold text-sm capitalize">
               {ticket.category.replace(/_/g, " ")} Issue
             </span>
-            <span className="bg-white px-2.5 py-0.5 rounded-full border border-[#e0e0e0] font-medium text-xs">
+            <span className="bg-white px-2.5 py-0.5 rounded-full border border-[#dee1e6] font-medium text-xs">
               {ticket.area || "Area not set"}
             </span>
-            <span className="bg-white px-2.5 py-0.5 rounded-full border border-[#e0e0e0] font-medium text-xs">
+            <span className="bg-white px-2.5 py-0.5 rounded-full border border-[#dee1e6] font-medium text-xs">
               {ticket.preferredDate || "Anytime"} ({ticket.preferredWindow})
             </span>
           </div>
-          <p className="text-[#525252] font-medium">{ticket.summary}</p>
+          <p className="text-[#5b616e] font-medium">{ticket.summary}</p>
         </div>
       </div>
 
@@ -68,9 +68,9 @@ export default async function MatchesPage({
       {matches.length > 0 ? (
         <MatchesList ticketId={ticket.id} matches={matches} />
       ) : (
-        <div className="bg-white rounded-[24px] border border-[#f0f0f0] p-10 text-center space-y-4">
-          <h3 className="heading-4 text-[#141414]">No exact provider matches found.</h3>
-          <p className="text-xs sm:text-sm text-[#707070] max-w-md mx-auto leading-relaxed">
+        <div className="bg-white rounded-[24px] border border-[#dee1e6] p-10 text-center space-y-4">
+          <h3 className="title-md text-[#0a0b0d]">No exact provider matches found.</h3>
+          <p className="body-sm text-[#5b616e] max-w-md mx-auto leading-relaxed">
             {emptyReason}
           </p>
           <div className="pt-2">
@@ -84,13 +84,13 @@ export default async function MatchesPage({
       )}
 
       {/* Footnote */}
-      <div className="text-[11px] text-[#707070] text-center sm:text-left space-y-1.5 pt-6 border-t border-[#f0f0f0]">
+      <div className="text-[11px] text-[#7c828a] text-center sm:text-left space-y-1.5 pt-6 border-t border-[#dee1e6]">
         <p>
           Ranking is deterministically calculated from service fit (40%), availability (25%), area proximity (20%), rating (10%), and language (5%).
         </p>
         <p>
           AI does not select or prioritize providers. All ratings and credentials shown are fictional sample profiles for this demonstration.{" "}
-          <Link href="/about#matching" className="text-[#0066ff] underline">
+          <Link href="/about#matching" className="text-[#0052ff] underline">
             Learn more about the ranking formula.
           </Link>
         </p>

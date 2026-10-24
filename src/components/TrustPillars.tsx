@@ -26,31 +26,46 @@ export const TrustPillars: React.FC = () => {
   ];
 
   return (
-    <section className="py-8 border-y border-[#f0f0f0]">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {pillars.map((pillar, idx) => {
-          const IconComponent = pillar.iconComp;
+    <section className="w-full bg-[#f7f7f7] py-20 sm:py-24 px-4 sm:px-6 border-y border-[#dee1e6]">
+      <div className="max-w-[1200px] mx-auto space-y-12">
+        <div className="max-w-2xl space-y-2">
+          <span className="text-xs font-semibold text-[#7c828a] uppercase tracking-wider block">
+            Platform Principles
+          </span>
+          <h2 className="display-lg text-[#0a0b0d]">
+            Engineered for transparency.
+          </h2>
+          <p className="body-md text-[#5b616e]">
+            Every technician match is calculated deterministically with zero opaque ranking logic.
+          </p>
+        </div>
 
-          return (
-            <div
-              key={idx}
-              className="flex flex-col sm:items-start items-center text-center sm:text-left space-y-2.5 p-2"
-            >
-              {/* 30% Squircle Icon Container */}
-              <div className="w-12 h-12 bg-[#f3f3f3] text-[#141414] app-icon-squircle flex items-center justify-center shrink-0">
-                <IconComponent className="w-5 h-5 text-current" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {pillars.map((pillar, idx) => {
+            const IconComponent = pillar.iconComp;
+
+            return (
+              <div
+                key={idx}
+                className="coinbase-card bg-white rounded-[24px] p-8 border border-[#dee1e6] space-y-4 flex flex-col justify-between"
+              >
+                <div className="w-12 h-12 rounded-full bg-[#eef0f3] text-[#0a0b0d] flex items-center justify-center shrink-0">
+                  <IconComponent className="w-5 h-5 text-current" />
+                </div>
+
+                <div className="space-y-2">
+                  <h4 className="title-md text-[#0a0b0d] tracking-tight">
+                    {pillar.title}
+                  </h4>
+
+                  <p className="body-sm text-[#5b616e] leading-relaxed">
+                    {pillar.description}
+                  </p>
+                </div>
               </div>
-
-              <h4 className="font-bold text-sm sm:text-base text-[#141414] tracking-tight">
-                {pillar.title}
-              </h4>
-
-              <p className="text-xs text-[#707070] leading-relaxed">
-                {pillar.description}
-              </p>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </section>
   );

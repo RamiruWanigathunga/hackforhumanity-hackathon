@@ -76,41 +76,53 @@ export const ProviderCard: React.FC<ProviderCardProps> = ({
 
   return (
     <div
-      className={`rounded-[24px] p-6 sm:p-7 space-y-5 transition-all ${
+      className={`rounded-[24px] p-6 sm:p-8 space-y-6 transition-all ${
         featured
-          ? "bg-[#f3f3f3] border-none"
-          : "bg-white border border-[#f0f0f0]"
+          ? "bg-[#0a0b0d] text-white shadow-xl"
+          : "bg-white text-[#0a0b0d] border border-[#dee1e6] coinbase-card"
       }`}
     >
       {/* Header Info */}
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-        <div className="flex items-start gap-3.5">
-          {/* iOS 30% squircle icon tile */}
-          <div className="w-12 h-12 bg-[#141414] text-white app-icon-squircle flex items-center justify-center shrink-0">
-            <IconComponent className="w-5 h-5 text-white" />
+        <div className="flex items-start gap-4">
+          {/* Circular Icon Plate */}
+          <div
+            className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${
+              featured ? "bg-[#16181c] text-white border border-white/10" : "bg-[#eef0f3] text-[#0a0b0d]"
+            }`}
+          >
+            <IconComponent className="w-5 h-5 text-current" />
           </div>
 
           <div className="space-y-1">
             <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="font-bold text-lg text-[#141414] tracking-tight">
+              <h3 className={`title-md tracking-tight ${featured ? "text-white" : "text-[#0a0b0d]"}`}>
                 {displayName}
               </h3>
               {featured && (
-                <span className="text-[11px] font-semibold text-[#0066ff] bg-[#0066ff]/10 px-2.5 py-0.5 rounded-full">
-                  Top Match
+                <span className="text-[11px] font-semibold text-[#0052ff] bg-[#0052ff]/15 px-2.5 py-0.5 rounded-full">
+                  Top Recommended
                 </span>
               )}
-              <span className="text-[11px] text-[#707070] bg-[#f0f0f0] px-2.5 py-0.5 rounded-full">
+              <span
+                className={`text-[11px] px-2.5 py-0.5 rounded-full ${
+                  featured ? "text-[#a8acb3] bg-white/10" : "text-[#7c828a] bg-[#f7f7f7] border border-[#dee1e6]"
+                }`}
+              >
                 Sample profile / demo data
               </span>
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-[#707070] flex-wrap">
-              <span>Area: <strong className="text-[#141414] font-medium">{homeArea}</strong></span>
+            <div
+              className={`flex items-center gap-2 text-xs flex-wrap ${
+                featured ? "text-[#a8acb3]" : "text-[#5b616e]"
+              }`}
+            >
+              <span>Area: <strong className={featured ? "text-white font-medium" : "text-[#0a0b0d] font-medium"}>{homeArea}</strong></span>
               <span>/</span>
-              <span>Rating: <strong className="text-[#141414] font-medium">{rating}</strong> (demo)</span>
+              <span>Rating: <strong className={featured ? "text-white font-medium" : "text-[#0a0b0d] font-medium"}>{rating}</strong> (demo)</span>
               <span>/</span>
-              <span>{jobsCompleted} jobs (demo)</span>
+              <span className="number-display text-xs">{jobsCompleted} jobs</span>
               <span>/</span>
               <span>{languages.map((l) => l.toUpperCase()).join("/")}</span>
             </div>
@@ -119,36 +131,56 @@ export const ProviderCard: React.FC<ProviderCardProps> = ({
 
         {visitFeeLkr && (
           <div className="text-left sm:text-right shrink-0">
-            <span className="text-[11px] text-[#707070] block">Visit fee (provider-stated)</span>
-            <span className="font-bold text-base text-[#141414]">
+            <span className={`text-[11px] block ${featured ? "text-[#a8acb3]" : "text-[#7c828a]"}`}>
+              Visit fee (provider-stated)
+            </span>
+            <span className={`number-display text-base font-semibold ${featured ? "text-white" : "text-[#0a0b0d]"}`}>
               LKR {visitFeeLkr.toLocaleString()}
             </span>
           </div>
         )}
       </div>
 
-      {bio && <p className="text-xs text-[#525252] leading-relaxed max-w-2xl">{bio}</p>}
+      {bio && (
+        <p className={`body-sm leading-relaxed max-w-2xl ${featured ? "text-[#a8acb3]" : "text-[#5b616e]"}`}>
+          {bio}
+        </p>
+      )}
 
       {/* Score Bar Breakdown */}
-      <div className="bg-[#fafafa] rounded-[16px] p-4 border border-[#f0f0f0] space-y-2.5">
+      <div
+        className={`rounded-[16px] p-5 space-y-3 ${
+          featured ? "bg-[#16181c] border border-white/10" : "bg-[#f7f7f7] border border-[#dee1e6]"
+        }`}
+      >
         <ScoreBar total={totalScore} components={scoreComponents} showBreakdown={showReasons} />
 
         <div className="flex items-center justify-between pt-1">
           <button
             type="button"
             onClick={() => setShowReasons(!showReasons)}
-            className="text-xs font-semibold text-[#141414] hover:underline cursor-pointer"
+            className={`text-xs font-semibold hover:underline cursor-pointer ${
+              featured ? "text-white" : "text-[#0052ff]"
+            }`}
           >
             {showReasons ? "Hide match reasoning" : "Why this match was ranked here"}
           </button>
         </div>
 
         {showReasons && (
-          <div className="pt-2.5 border-t border-[#e0e0e0] flex flex-wrap gap-2">
+          <div
+            className={`pt-3 border-t flex flex-wrap gap-2 ${
+              featured ? "border-white/10" : "border-[#dee1e6]"
+            }`}
+          >
             {reasons.map((r, i) => (
               <span
                 key={i}
-                className="inline-flex items-center text-[11px] font-medium px-3 py-1 rounded-full bg-white border border-[#e0e0e0] text-[#141414]"
+                className={`inline-flex items-center text-[11px] font-medium px-3 py-1 rounded-full ${
+                  featured
+                    ? "bg-[#0a0b0d] text-white border border-white/15"
+                    : "bg-white text-[#0a0b0d] border border-[#dee1e6]"
+                }`}
               >
                 {r}
               </span>
@@ -158,11 +190,13 @@ export const ProviderCard: React.FC<ProviderCardProps> = ({
       </div>
 
       {/* Available Slots and Request Action */}
-      <div className="pt-1 space-y-3">
-        <div className="flex items-center justify-between text-xs font-semibold text-[#141414]">
-          <span>Next Free Time Slots:</span>
+      <div className="pt-1 space-y-4">
+        <div className="flex items-center justify-between text-xs font-semibold">
+          <span className={featured ? "text-white" : "text-[#0a0b0d]"}>Next Free Time Slots:</span>
           {suggestedSlots.length === 0 && (
-            <span className="text-xs text-[#707070] font-normal">No slots within 3 days</span>
+            <span className={`font-normal ${featured ? "text-[#a8acb3]" : "text-[#7c828a]"}`}>
+              No slots within 3 days
+            </span>
           )}
         </div>
 
@@ -177,8 +211,10 @@ export const ProviderCard: React.FC<ProviderCardProps> = ({
                   onClick={() => handleSlotPick(s.id)}
                   className={`px-4 py-2 rounded-full text-xs font-semibold border transition-all cursor-pointer ${
                     isSelected
-                      ? "bg-[#141414] text-white border-[#141414]"
-                      : "bg-[#f3f3f3] text-[#141414] border-transparent hover:bg-[#e0e0e0]"
+                      ? "bg-[#0052ff] text-white border-[#0052ff]"
+                      : featured
+                      ? "bg-[#16181c] text-[#a8acb3] border-white/10 hover:text-white hover:border-white/30"
+                      : "bg-[#eef0f3] text-[#0a0b0d] border-transparent hover:bg-[#dee1e6]"
                   }`}
                 >
                   {s.date} / <span className="capitalize">{s.window}</span>

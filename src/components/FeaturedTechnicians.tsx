@@ -70,88 +70,88 @@ interface FeaturedTechniciansProps {
 
 export const FeaturedTechnicians: React.FC<FeaturedTechniciansProps> = ({ onSelectProvider }) => {
   return (
-    <section className="space-y-6 pt-2">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
-        <div className="space-y-1">
-          <span className="text-xs font-semibold text-[#707070] uppercase tracking-wider block">
-            Verified Directory
-          </span>
-          <h2 className="heading-2 text-[#141414]">
-            Featured Verified Technicians.
-          </h2>
-          <p className="subtitle-lead text-sm sm:text-base">
-            Sample licensed specialists available in the Colombo pilot cluster.
-          </p>
+    <section className="w-full bg-[#f7f7f7] py-20 sm:py-24 px-4 sm:px-6 border-t border-[#dee1e6]">
+      <div className="max-w-[1200px] mx-auto space-y-10">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#dee1e6] pb-8">
+          <div className="space-y-2">
+            <span className="text-xs font-semibold text-[#7c828a] uppercase tracking-wider block">
+              Active Directory
+            </span>
+            <h2 className="display-lg text-[#0a0b0d]">
+              Featured verified technicians.
+            </h2>
+            <p className="body-md text-[#5b616e]">
+              Licensed trade specialists active in the Colombo pilot cluster.
+            </p>
+          </div>
+          <Link href="/provider" className="text-sm font-semibold text-[#0052ff] hover:underline">
+            View all technicians
+          </Link>
         </div>
-        <Link href="/provider" className="text-xs font-semibold text-[#141414] hover:underline">
-          View all technicians
-        </Link>
-      </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {SAMPLE_FEATURED_PROVIDERS.map((provider) => {
-          const IconComp =
-            provider.category === "plumbing"
-              ? PlumberIcon
-              : provider.category === "electrical"
-              ? ElectricianIcon
-              : ACIcon;
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {SAMPLE_FEATURED_PROVIDERS.map((provider) => {
+            const IconComp =
+              provider.category === "plumbing"
+                ? PlumberIcon
+                : provider.category === "electrical"
+                ? ElectricianIcon
+                : ACIcon;
 
-          return (
-            <div
-              key={provider.id}
-              className="bg-white rounded-[24px] border border-[#f0f0f0] p-5 sm:p-6 space-y-4 hover:border-[#141414] transition-all flex flex-col justify-between"
-            >
-              <div className="space-y-3">
-                <div className="flex items-start justify-between">
-                  {/* 30% iOS Squircle Icon Container */}
-                  <div className="w-12 h-12 bg-[#141414] text-white app-icon-squircle flex items-center justify-center shrink-0">
-                    <IconComp className="w-5 h-5 text-white" />
-                  </div>
-                  <span className="text-xs font-medium text-[#707070] bg-[#f5f5f5] px-2.5 py-1 rounded-full">
-                    {provider.homeArea}
-                  </span>
-                </div>
-
-                <div className="space-y-1">
-                  <h3 className="font-bold text-base text-[#141414] tracking-tight">
-                    {provider.displayName}
-                  </h3>
-                  <div className="flex items-center gap-1.5 text-xs text-[#707070]">
-                    <span className="text-[#141414] font-semibold">Rating: {provider.rating}</span>
-                    <span>(demo)</span>
-                    <span>/</span>
-                    <span>{provider.jobsCompleted} jobs</span>
-                  </div>
-                </div>
-
-                <p className="text-xs text-[#525252] leading-relaxed line-clamp-2">
-                  {provider.tagline}
-                </p>
-              </div>
-
-              <div className="pt-3 border-t border-[#f0f0f0] space-y-3">
-                {provider.visitFeeLkr && (
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#707070]">Visit fee:</span>
-                    <span className="font-bold text-[#141414]">
-                      LKR {provider.visitFeeLkr.toLocaleString()}
+            return (
+              <div
+                key={provider.id}
+                className="coinbase-card bg-white rounded-[24px] border border-[#dee1e6] p-7 space-y-5 flex flex-col justify-between"
+              >
+                <div className="space-y-4">
+                  <div className="flex items-start justify-between">
+                    <div className="w-12 h-12 rounded-full bg-[#eef0f3] text-[#0a0b0d] flex items-center justify-center shrink-0">
+                      <IconComp className="w-5 h-5 text-current" />
+                    </div>
+                    <span className="text-xs font-medium text-[#7c828a] bg-[#f7f7f7] px-3 py-1 rounded-full border border-[#dee1e6]">
+                      {provider.homeArea}
                     </span>
                   </div>
-                )}
 
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full text-xs font-semibold"
-                  onClick={() => onSelectProvider && onSelectProvider(provider)}
-                >
-                  Book Specialist
-                </Button>
+                  <div className="space-y-1">
+                    <h3 className="title-md text-[#0a0b0d] tracking-tight">
+                      {provider.displayName}
+                    </h3>
+                    <div className="flex items-center gap-2 text-xs text-[#5b616e]">
+                      <span>Rating: <strong className="text-[#0a0b0d] font-semibold">{provider.rating}</strong></span>
+                      <span>/</span>
+                      <span className="number-display text-xs">{provider.jobsCompleted} jobs</span>
+                    </div>
+                  </div>
+
+                  <p className="body-sm text-[#5b616e] leading-relaxed line-clamp-2">
+                    {provider.tagline}
+                  </p>
+                </div>
+
+                <div className="pt-4 border-t border-[#dee1e6] space-y-4">
+                  {provider.visitFeeLkr && (
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-[#7c828a]">Visit fee:</span>
+                      <span className="number-display text-sm text-[#0a0b0d]">
+                        LKR {provider.visitFeeLkr.toLocaleString()}
+                      </span>
+                    </div>
+                  )}
+
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="w-full text-xs font-semibold"
+                    onClick={() => onSelectProvider && onSelectProvider(provider)}
+                  >
+                    Select Technician
+                  </Button>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </section>
   );

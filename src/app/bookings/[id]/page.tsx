@@ -41,60 +41,60 @@ export default async function BookingDetailPage({
   }
 
   return (
-    <div className="max-w-2xl mx-auto space-y-8 py-4 sm:py-6">
+    <div className="w-full max-w-[840px] mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-8">
       {/* Real-time Poller auto-refreshes page every 5s while pending */}
       <StatusPoller currentStatus={booking.status} />
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
         <div className="space-y-1.5">
-          <span className="text-xs font-semibold text-[#707070] uppercase tracking-wider block">
+          <span className="text-xs font-semibold text-[#7c828a] uppercase tracking-wider block">
             Booking Reference / {booking.id}
           </span>
-          <h1 className="heading-2 text-[#141414]">
+          <h1 className="display-md text-[#0a0b0d]">
             {statusHeadline}
           </h1>
         </div>
-        <span className="text-xs font-semibold bg-[#f3f3f3] text-[#141414] px-3.5 py-1.5 rounded-full border border-[#e0e0e0]">
+        <span className="text-xs font-semibold bg-[#eef0f3] text-[#0a0b0d] px-3.5 py-1.5 rounded-full border border-[#dee1e6]">
           {booking.status.replace(/_/g, " ").toUpperCase()}
         </span>
       </div>
 
       {/* Active Time Window Banner */}
-      <div className="bg-white rounded-[24px] border border-[#f0f0f0] p-6 sm:p-7 space-y-5">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-xs">
+      <div className="bg-white rounded-[24px] border border-[#dee1e6] p-6 sm:p-8 space-y-6 coinbase-card">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs">
           <div>
-            <span className="text-[#707070] block">Scheduled Appointment</span>
-            <span className="font-bold text-base text-[#141414]">
+            <span className="text-[#7c828a] block">Scheduled Appointment</span>
+            <span className="font-semibold text-base text-[#0a0b0d] block mt-1">
               {slot?.date} / <span className="capitalize">{slot?.window}</span>
             </span>
           </div>
 
           {proposedSlot && isProposal && (
-            <div className="bg-[#f3f3f3] p-4 rounded-[16px] border border-[#e0e0e0]">
-              <span className="text-[#141414] font-semibold block">Proposed Alternative</span>
-              <span className="font-bold text-sm text-[#141414]">
+            <div className="bg-[#f7f7f7] p-4 rounded-[12px] border border-[#dee1e6]">
+              <span className="text-[#0a0b0d] font-semibold block">Proposed Alternative</span>
+              <span className="font-bold text-sm text-[#0052ff] block mt-0.5">
                 {proposedSlot.date} / <span className="capitalize">{proposedSlot.window}</span>
               </span>
             </div>
           )}
 
           <div>
-            <span className="text-[#707070] block">Assigned Technician</span>
-            <span className="font-bold text-sm text-[#141414]">{provider?.displayName}</span>
-            <span className="text-[11px] text-[#707070] block">
+            <span className="text-[#7c828a] block">Assigned Technician</span>
+            <span className="font-semibold text-sm text-[#0a0b0d] block mt-1">{provider?.displayName}</span>
+            <span className="text-[11px] text-[#7c828a] block mt-0.5">
               Rating: {provider?.rating} (demo) / Base: {provider?.homeArea}
             </span>
           </div>
 
           <div>
-            <span className="text-[#707070] block">Contact Phone</span>
+            <span className="text-[#7c828a] block">Contact Phone</span>
             {isAccepted || isCompleted ? (
-              <span className="font-mono font-bold text-sm text-[#141414] bg-[#f3f3f3] px-3 py-1 rounded-full inline-block mt-0.5">
+              <span className="number-display text-sm text-[#0a0b0d] bg-[#eef0f3] px-3 py-1 rounded-full inline-block mt-1">
                 {provider?.phoneMasked} (Revealed)
               </span>
             ) : (
-              <span className="text-xs text-[#707070] italic block mt-0.5">
+              <span className="text-xs text-[#7c828a] italic block mt-1">
                 Masked until confirmed by technician
               </span>
             )}
@@ -111,19 +111,19 @@ export default async function BookingDetailPage({
 
       {/* Structured Ticket Details */}
       {ticket && (
-        <div className="bg-[#f3f3f3] rounded-[24px] p-6 space-y-3 text-xs">
-          <span className="font-bold text-[#141414] uppercase tracking-wider block">
+        <div className="bg-[#f7f7f7] rounded-[24px] border border-[#dee1e6] p-6 sm:p-7 space-y-3 text-xs">
+          <span className="font-semibold text-[#0a0b0d] uppercase tracking-wider block">
             Job Details
           </span>
-          <p className="text-sm font-semibold text-[#141414]">{ticket.summary}</p>
-          <div className="flex flex-wrap gap-2 pt-1 text-[#707070]">
-            <span className="bg-white px-3 py-1 rounded-full border border-[#e0e0e0]">
+          <p className="text-sm font-semibold text-[#0a0b0d]">{ticket.summary}</p>
+          <div className="flex flex-wrap gap-2 pt-1 text-[#5b616e]">
+            <span className="bg-white px-3 py-1 rounded-full border border-[#dee1e6]">
               Trade: {ticket.category.replace(/_/g, " ")}
             </span>
-            <span className="bg-white px-3 py-1 rounded-full border border-[#e0e0e0]">
+            <span className="bg-white px-3 py-1 rounded-full border border-[#dee1e6]">
               Area: {ticket.area}
             </span>
-            <span className="bg-white px-3 py-1 rounded-full border border-[#e0e0e0]">
+            <span className="bg-white px-3 py-1 rounded-full border border-[#dee1e6]">
               Urgency: {ticket.urgency}
             </span>
           </div>
@@ -131,7 +131,7 @@ export default async function BookingDetailPage({
       )}
 
       {/* Live Timeline */}
-      <div className="bg-white rounded-[24px] border border-[#f0f0f0] p-6 sm:p-7 space-y-3">
+      <div className="bg-white rounded-[24px] border border-[#dee1e6] p-6 sm:p-8 space-y-4 coinbase-card">
         <StatusTimeline
           currentStatus={booking.status}
           events={events.map((e) => ({
@@ -144,10 +144,10 @@ export default async function BookingDetailPage({
         />
       </div>
 
-      {/* Footer Back Link without arrow */}
+      {/* Footer Back Link */}
       <div className="text-center pt-2">
         <Link href="/">
-          <Button variant="ghost" size="sm">
+          <Button variant="outline" size="sm">
             Submit Another Repair Request
           </Button>
         </Link>

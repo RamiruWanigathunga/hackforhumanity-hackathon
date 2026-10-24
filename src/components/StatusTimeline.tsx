@@ -46,42 +46,44 @@ export const StatusTimeline: React.FC<StatusTimelineProps> = ({ events, currentS
 
   return (
     <div className="space-y-4 py-2">
-      <div className="flex items-center justify-between border-b border-[#f0f0f0] pb-2">
-        <span className="text-xs font-semibold text-[#707070]">Activity Timeline</span>
-        <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#f3f3f3] text-[#141414] border border-[#e0e0e0]">
+      <div className="flex items-center justify-between border-b border-[#dee1e6] pb-3">
+        <span className="text-xs font-semibold text-[#7c828a] uppercase tracking-wider">
+          Event Audit Log
+        </span>
+        <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#eef0f3] text-[#0a0b0d]">
           Current: {getStatusLabel(currentStatus)}
         </span>
       </div>
 
-      <div className="relative pl-6 space-y-6 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-[#e0e0e0]">
+      <div className="relative pl-6 space-y-6 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-[#dee1e6]">
         {events.map((evt, idx) => {
           const isLatest = idx === events.length - 1;
           const isAccepted = evt.type === "accepted" || evt.type === "completed";
           const isWarning = evt.type === "alternative_proposed";
 
-          let dotColor = "bg-[#141414]";
-          if (isAccepted) dotColor = "bg-[#141414]";
-          if (isWarning) dotColor = "bg-[#707070]";
+          let dotColor = "bg-[#0052ff]";
+          if (isAccepted) dotColor = "bg-[#05b169]";
+          if (isWarning) dotColor = "bg-[#7c828a]";
 
           return (
             <div key={evt.id} className="relative flex items-start gap-3">
               <span
                 className={`absolute -left-6 top-1.5 w-3 h-3 rounded-full border-2 border-white ring-2 ${
-                  isLatest ? "ring-black/20 scale-110" : "ring-black/5"
+                  isLatest ? "ring-[#0052ff]/30 scale-110" : "ring-black/5"
                 } ${dotColor}`}
               />
-              <div className="flex-1 space-y-0.5">
+              <div className="flex-1 space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-sm capitalize text-[#141414]">
+                  <span className="font-semibold text-sm capitalize text-[#0a0b0d]">
                     {getStatusLabel(evt.type)}
                   </span>
-                  <span className="text-[#adadad] text-[11px]">
+                  <span className="number-display text-[#7c828a] text-xs">
                     {new Date(evt.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                   </span>
                 </div>
-                <div className="text-xs text-[#707070]">
-                  Actor: <span className="font-medium text-[#262626]">{getActorLabel(evt.actor)}</span>
-                  {evt.note && <p className="mt-1 text-xs text-[#141414] bg-[#f3f3f3] p-2.5 rounded-[12px]">{evt.note}</p>}
+                <div className="text-xs text-[#5b616e]">
+                  Actor: <span className="font-medium text-[#0a0b0d]">{getActorLabel(evt.actor)}</span>
+                  {evt.note && <p className="mt-1.5 text-xs text-[#0a0b0d] bg-[#f7f7f7] border border-[#dee1e6] p-3 rounded-[12px]">{evt.note}</p>}
                 </div>
               </div>
             </div>

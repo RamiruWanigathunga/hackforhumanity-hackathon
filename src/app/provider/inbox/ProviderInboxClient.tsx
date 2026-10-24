@@ -86,40 +86,40 @@ export default function ProviderInboxClient({
   return (
     <div className="space-y-6">
       {/* Provider Identity Header Banner */}
-      <div className="bg-[#141414] text-white rounded-[24px] p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-[#0a0b0d] text-white rounded-[24px] p-6 sm:p-7 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-            <h2 className="text-lg font-bold tracking-tight">Active as: {provider.displayName}</h2>
-            <span className="text-[11px] text-[#adadad] bg-white/10 px-2 py-0.5 rounded-full">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#05b169]" />
+            <h2 className="title-md text-white">Active Identity: {provider.displayName}</h2>
+            <span className="text-[11px] text-[#a8acb3] bg-white/10 px-2.5 py-0.5 rounded-full">
               Demo Identity
             </span>
           </div>
-          <p className="text-xs text-[#adadad]">
+          <p className="text-xs text-[#a8acb3]">
             Categories: {provider.categories.join(", ")} / Home Base: {provider.homeArea} / Rating: {provider.rating} (demo)
           </p>
         </div>
 
         <Button
           type="button"
-          variant="outline"
+          variant="outline-dark"
           size="sm"
           onClick={handleSwitchProvider}
-          className="bg-transparent text-white border-white/20 hover:bg-white/10 shrink-0"
+          className="shrink-0"
         >
           Switch Sample Provider
         </Button>
       </div>
 
       {/* Tabs */}
-      <div className="flex flex-wrap gap-2 border-b border-[#f0f0f0] pb-2 text-xs font-semibold">
+      <div className="flex flex-wrap gap-2 border-b border-[#dee1e6] pb-3 text-xs font-semibold">
         <button
           type="button"
           onClick={() => setActiveTab("new")}
           className={`px-4 py-2 rounded-full transition-all cursor-pointer ${
             activeTab === "new"
-              ? "bg-[#141414] text-white"
-              : "text-[#707070] hover:text-[#141414] hover:bg-[#f3f3f3]"
+              ? "bg-[#0052ff] text-white"
+              : "text-[#5b616e] hover:text-[#0a0b0d] hover:bg-[#eef0f3]"
           }`}
         >
           New Requests ({inbox.newRequests.length})
@@ -129,8 +129,8 @@ export default function ProviderInboxClient({
           onClick={() => setActiveTab("waiting")}
           className={`px-4 py-2 rounded-full transition-all cursor-pointer ${
             activeTab === "waiting"
-              ? "bg-[#141414] text-white"
-              : "text-[#707070] hover:text-[#141414] hover:bg-[#f3f3f3]"
+              ? "bg-[#0052ff] text-white"
+              : "text-[#5b616e] hover:text-[#0a0b0d] hover:bg-[#eef0f3]"
           }`}
         >
           Waiting on Resident ({inbox.waitingOnResident.length})
@@ -140,8 +140,8 @@ export default function ProviderInboxClient({
           onClick={() => setActiveTab("upcoming")}
           className={`px-4 py-2 rounded-full transition-all cursor-pointer ${
             activeTab === "upcoming"
-              ? "bg-[#141414] text-white"
-              : "text-[#707070] hover:text-[#141414] hover:bg-[#f3f3f3]"
+              ? "bg-[#0052ff] text-white"
+              : "text-[#5b616e] hover:text-[#0a0b0d] hover:bg-[#eef0f3]"
           }`}
         >
           Confirmed Upcoming ({inbox.upcoming.length})
@@ -151,8 +151,8 @@ export default function ProviderInboxClient({
           onClick={() => setActiveTab("past")}
           className={`px-4 py-2 rounded-full transition-all cursor-pointer ${
             activeTab === "past"
-              ? "bg-[#141414] text-white"
-              : "text-[#707070] hover:text-[#141414] hover:bg-[#f3f3f3]"
+              ? "bg-[#0052ff] text-white"
+              : "text-[#5b616e] hover:text-[#0a0b0d] hover:bg-[#eef0f3]"
           }`}
         >
           History and Completed ({inbox.past.length})
@@ -162,9 +162,9 @@ export default function ProviderInboxClient({
       {/* Booking List */}
       <div className="space-y-4">
         {currentList.length === 0 ? (
-          <div className="bg-white rounded-[24px] border border-[#f0f0f0] p-10 text-center space-y-2">
-            <h3 className="font-bold text-[#141414] text-sm">No bookings in this tab</h3>
-            <p className="text-xs text-[#707070]">
+          <div className="bg-white rounded-[24px] border border-[#dee1e6] p-12 text-center space-y-2 coinbase-card">
+            <h3 className="title-md text-[#0a0b0d]">No bookings in this tab</h3>
+            <p className="body-sm text-[#5b616e]">
               New resident requests will automatically appear here within ~5 seconds.
             </p>
           </div>
@@ -172,28 +172,28 @@ export default function ProviderInboxClient({
           currentList.map(({ booking, ticket, slot, proposedSlot }) => (
             <div
               key={booking.id}
-              className="bg-white rounded-[24px] border border-[#f0f0f0] p-5 sm:p-6 space-y-4"
+              className="coinbase-card bg-white rounded-[24px] border border-[#dee1e6] p-6 sm:p-7 space-y-5"
             >
               {/* Header Info */}
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-mono text-xs text-[#707070]">{booking.id}</span>
-                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#f3f3f3] text-[#141414] border border-[#e0e0e0]">
+                    <span className="font-mono text-xs text-[#7c828a]">{booking.id}</span>
+                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#eef0f3] text-[#0a0b0d] border border-[#dee1e6]">
                       {booking.status.replace(/_/g, " ").toUpperCase()}
                     </span>
                     {ticket.residentName && (
-                      <span className="text-xs text-[#141414] font-medium">
+                      <span className="text-xs text-[#0a0b0d] font-medium">
                         Resident: {ticket.residentName}
                       </span>
                     )}
                   </div>
-                  <h3 className="text-base font-bold text-[#141414]">{ticket.summary}</h3>
+                  <h3 className="title-md text-[#0a0b0d]">{ticket.summary}</h3>
                 </div>
 
                 <div className="text-right sm:text-right shrink-0">
-                  <span className="text-xs text-[#707070] block">Scheduled Slot</span>
-                  <span className="font-bold text-sm text-[#141414]">
+                  <span className="text-xs text-[#7c828a] block">Scheduled Slot</span>
+                  <span className="number-display text-sm text-[#0a0b0d]">
                     {slot.date} / <span className="capitalize">{slot.window}</span>
                   </span>
                 </div>
@@ -205,30 +205,30 @@ export default function ProviderInboxClient({
               )}
 
               {/* Structured Job Details Strip */}
-              <div className="bg-[#f3f3f3] rounded-[16px] p-4 space-y-2 text-xs text-[#262626]">
+              <div className="bg-[#f7f7f7] rounded-[16px] border border-[#dee1e6] p-4 space-y-2.5 text-xs text-[#0a0b0d]">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-semibold text-[#141414]">Structured Job Ticket:</span>
-                  <span className="bg-white px-2.5 py-0.5 rounded-full border border-[#e0e0e0]">
+                  <span className="font-semibold text-[#0a0b0d]">Structured Job Ticket:</span>
+                  <span className="bg-white px-2.5 py-0.5 rounded-full border border-[#dee1e6]">
                     Category: {ticket.category}
                   </span>
-                  <span className="bg-white px-2.5 py-0.5 rounded-full border border-[#e0e0e0]">
+                  <span className="bg-white px-2.5 py-0.5 rounded-full border border-[#dee1e6]">
                     Area: {ticket.area}
                   </span>
-                  <span className="bg-white px-2.5 py-0.5 rounded-full border border-[#e0e0e0]">
+                  <span className="bg-white px-2.5 py-0.5 rounded-full border border-[#dee1e6]">
                     Urgency: {ticket.urgency}
                   </span>
-                  <span className="bg-white px-2.5 py-0.5 rounded-full border border-[#e0e0e0]">
+                  <span className="bg-white px-2.5 py-0.5 rounded-full border border-[#dee1e6]">
                     Language: {ticket.detectedLanguage.toUpperCase()}
                   </span>
                 </div>
 
                 {ticket.tags && ticket.tags.length > 0 && (
                   <div className="flex flex-wrap gap-1 items-center pt-1">
-                    <span className="text-[11px] text-[#707070]">Tags:</span>
+                    <span className="text-[11px] text-[#7c828a]">Tags:</span>
                     {ticket.tags.map((t) => (
                       <span
                         key={t}
-                        className="px-2.5 py-0.5 bg-white rounded-full text-[11px] border border-[#e0e0e0] font-medium"
+                        className="px-2.5 py-0.5 bg-white rounded-full text-[11px] border border-[#dee1e6] font-medium"
                       >
                         {t}
                       </span>
@@ -236,22 +236,22 @@ export default function ProviderInboxClient({
                   </div>
                 )}
 
-                <div className="pt-1 text-[11px] text-[#707070]">
+                <div className="pt-1 text-[11px] text-[#7c828a]">
                   Original Words: &quot;{ticket.rawText}&quot;
                 </div>
               </div>
 
               {/* Proposal notification if waiting on resident */}
               {proposedSlot && booking.status === "alternative_proposed" && (
-                <div className="bg-[#f3f3f3] p-4 rounded-[16px] border border-[#e0e0e0] text-xs text-[#141414]">
+                <div className="bg-[#f7f7f7] p-4 rounded-[12px] border border-[#dee1e6] text-xs text-[#0a0b0d]">
                   You proposed an alternative slot on <strong>{proposedSlot.date} ({proposedSlot.window})</strong>. Waiting for resident response.
                 </div>
               )}
 
               {/* Propose another slot inline drawer */}
               {proposingBookingId === booking.id && (
-                <div className="bg-[#fafafa] border border-[#e0e0e0] rounded-[16px] p-4 space-y-3">
-                  <h4 className="text-xs font-bold text-[#141414]">
+                <div className="bg-[#f7f7f7] border border-[#dee1e6] rounded-[16px] p-5 space-y-3">
+                  <h4 className="text-xs font-bold text-[#0a0b0d]">
                     Select another available time to propose to resident:
                   </h4>
                   {availableSlots.length > 0 ? (
@@ -263,8 +263,8 @@ export default function ProviderInboxClient({
                           onClick={() => setSelectedProposalSlot(s.id)}
                           className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all cursor-pointer ${
                             selectedProposalSlot === s.id
-                              ? "bg-[#141414] text-white border-[#141414]"
-                              : "bg-white text-[#262626] border-[#e0e0e0] hover:bg-[#f3f3f3]"
+                              ? "bg-[#0052ff] text-white border-[#0052ff]"
+                              : "bg-white text-[#0a0b0d] border-[#dee1e6] hover:bg-[#eef0f3]"
                           }`}
                         >
                           {s.date} / <span className="capitalize">{s.window}</span>
@@ -272,7 +272,7 @@ export default function ProviderInboxClient({
                       ))}
                     </div>
                   ) : (
-                    <p className="text-xs text-[#707070]">No other free slots in the next 3 days.</p>
+                    <p className="text-xs text-[#7c828a]">No other free slots in the next 3 days.</p>
                   )}
                   <div className="flex gap-2 justify-end pt-1">
                     <Button
@@ -297,8 +297,8 @@ export default function ProviderInboxClient({
                 </div>
               )}
 
-              {/* Action Buttons without arrows or checkmark symbols */}
-              <div className="flex flex-wrap items-center justify-end gap-2 pt-1 border-t border-[#f0f0f0]">
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center justify-end gap-2 pt-2 border-t border-[#dee1e6]">
                 {booking.status === "requested" && (
                   <>
                     <Button
@@ -312,7 +312,7 @@ export default function ProviderInboxClient({
                     </Button>
                     <Button
                       type="button"
-                      variant="soft"
+                      variant="secondary"
                       size="sm"
                       onClick={() => setProposingBookingId(booking.id)}
                     >

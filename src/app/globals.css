@@ -3,15 +3,23 @@
 @layer base {
   :root {
     --canvas: #ffffff;
-    --canvas-soft: #f3f3f3;
-    --field: #f0f0f0;
-    --hairline-soft: #f0f0f0;
-    --hairline: #e0e0e0;
-    --ink: #141414;
-    --ink-soft: #262626;
-    --text-muted: #707070;
-    --text-faint: #adadad;
-    --accent: #0066ff;
+    --surface-soft: #f7f7f7;
+    --surface-strong: #eef0f3;
+    --surface-dark: #0a0b0d;
+    --surface-dark-elevated: #16181c;
+    --primary: #0052ff;
+    --primary-active: #003ecc;
+    --primary-disabled: #a8b8cc;
+    --accent-yellow: #f4b000;
+    --hairline: #dee1e6;
+    --hairline-soft: #eef0f3;
+    --ink: #0a0b0d;
+    --body: #5b616e;
+    --body-strong: #0a0b0d;
+    --muted: #7c828a;
+    --muted-soft: #a8acb3;
+    --semantic-up: #05b169;
+    --semantic-down: #cf202f;
   }
 }
 
@@ -20,75 +28,103 @@ html {
 }
 
 ::selection {
-  background-color: #141414;
+  background-color: #0052ff;
   color: #ffffff;
 }
 
 body {
   background-color: var(--canvas);
   color: var(--ink);
-  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   letter-spacing: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Mobbin Typography Hierarchy */
-.heading-display {
+/* Coinbase Typography Hierarchy: Display weight stays at 400 */
+.display-mega {
   font-size: clamp(2.5rem, 6vw, 5rem);
-  font-weight: 650;
+  font-weight: 400;
   line-height: 1.0;
-  letter-spacing: 0;
+  letter-spacing: -2px;
 }
 
-.heading-1 {
-  font-size: clamp(2rem, 4.5vw, 3.5rem);
-  font-weight: 650;
+.display-xl {
+  font-size: clamp(2rem, 4.5vw, 4rem);
+  font-weight: 400;
   line-height: 1.0;
-  letter-spacing: 0;
+  letter-spacing: -1.6px;
 }
 
-.heading-2 {
-  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
-  font-weight: 650;
+.display-lg {
+  font-size: clamp(1.75rem, 3.5vw, 3.25rem);
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -1.3px;
+}
+
+.display-md {
+  font-size: clamp(1.5rem, 3vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1.09;
+  letter-spacing: -1px;
+}
+
+.display-sm {
+  font-size: clamp(1.25rem, 2.2vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1.11;
+  letter-spacing: -0.5px;
+}
+
+.title-lg {
+  font-size: 2rem;
+  font-weight: 400;
   line-height: 1.13;
+  letter-spacing: -0.4px;
+}
+
+.title-md {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.33;
   letter-spacing: 0;
 }
 
-.heading-3 {
-  font-size: 1.75rem;
-  font-weight: 650;
-  line-height: 1.13;
-  letter-spacing: 0;
-}
-
-.heading-4 {
-  font-size: 1.35rem;
-  font-weight: 650;
+.title-sm {
+  font-size: 1rem;
+  font-weight: 600;
   line-height: 1.25;
   letter-spacing: 0;
 }
 
-.subtitle-lead {
-  font-size: 1.25rem;
-  font-weight: 300;
-  line-height: 1.38;
-  color: #707070;
-}
-
-.body-text {
+.body-md {
   font-size: 1rem;
-  font-weight: 450;
-  line-height: 1.38;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #5b616e;
 }
 
 .body-sm {
   font-size: 0.875rem;
-  font-weight: 450;
-  line-height: 1.43;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #5b616e;
 }
 
-/* Squircle 30% border radius motif */
-.app-icon-squircle {
-  border-radius: 30%;
+.number-display {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Card hover soft drop per Coinbase spec */
+.coinbase-card {
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.coinbase-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }

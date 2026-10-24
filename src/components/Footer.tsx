@@ -1,95 +1,177 @@
 import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-[#141414] text-white rounded-t-[28px] mt-24 px-6 sm:px-12 py-14 md:py-20">
-      <div className="max-w-6xl mx-auto space-y-12">
-        {/* Top Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-          <div className="md:col-span-2 space-y-3">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 bg-white text-[#141414] app-icon-squircle flex items-center justify-center font-bold text-xs">
-                HD
+    <div className="w-full mt-24">
+      {/* Signature Coinbase CTA Band Dark */}
+      <section className="w-full bg-[#0a0b0d] text-white py-20 px-4 sm:px-6">
+        <div className="max-w-[1200px] mx-auto text-center space-y-6">
+          <span className="text-xs uppercase tracking-wider text-[#a8acb3] font-medium block">
+            Institutional Verification
+          </span>
+          <h2 className="display-lg text-white max-w-2xl mx-auto">
+            Transparent local trade matching for Sri Lanka.
+          </h2>
+          <p className="body-md text-[#a8acb3] max-w-xl mx-auto">
+            Describe repair issues in everyday Sinhala, Tamil, Singlish, or English. Deterministic database rankings connect you directly to local technicians.
+          </p>
+          <div className="pt-2 flex flex-wrap justify-center gap-3">
+            <Link href="/#search-intake-bar">
+              <Button variant="primary" size="lg">
+                Find Local Technician
+              </Button>
+            </Link>
+            <Link href="/provider">
+              <Button variant="outline-dark" size="lg">
+                Provider Registration
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Signature Coinbase Footer Light */}
+      <footer className="w-full bg-white border-t border-[#dee1e6] py-16 px-4 sm:px-6 text-sm text-[#5b616e]">
+        <div className="max-w-[1200px] mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 pb-12">
+          {/* Col 1: Brand */}
+          <div className="col-span-2 space-y-3">
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 rounded-full bg-[#0052ff] flex items-center justify-center text-white text-xs font-bold">
+                H
               </div>
-              <span className="font-bold text-xl tracking-tight">HelpDesk<span className="text-[#707070]">.lk</span></span>
+              <span className="font-semibold text-base text-[#0a0b0d]">HelpDesk.lk</span>
             </div>
-            <p className="text-xs text-[#adadad] max-w-sm leading-relaxed">
-              AI-driven local trade and repair matching engineered for Sri Lanka. Multilingual problem intake in English, Sinhala, Tamil, and Singlish with 100% transparent, explainable provider scoring.
+            <p className="body-sm text-[#7c828a] max-w-xs leading-relaxed">
+              Institutional local service coordination platform. Multilingual AI problem intake with explainable open scoring weights.
             </p>
-            <div className="pt-2 flex flex-wrap gap-2 text-[11px] text-[#adadad]">
-              <span className="bg-[#262626] px-3 py-1 rounded-full">Pilot: Nugegoda & Mirihana</span>
-              <span className="bg-[#262626] px-3 py-1 rounded-full">Zero Commission</span>
-              <span className="bg-[#262626] px-3 py-1 rounded-full">No Upfront Payment</span>
+            <div className="text-xs text-[#7c828a] pt-2">
+              Colombo Pilot Cluster : Nugegoda, Mirihana, Kirulapone
             </div>
           </div>
 
+          {/* Col 2: Services */}
           <div className="space-y-3">
-            <span className="text-xs font-semibold text-white uppercase tracking-wider block">
-              Popular Trades
+            <span className="text-xs font-semibold text-[#0a0b0d] uppercase tracking-wider block">
+              Services
             </span>
-            <ul className="space-y-2 text-xs text-[#adadad]">
+            <ul className="space-y-2 text-xs">
               <li>
-                <Link href="/#categories" className="hover:text-white transition-colors">
-                  Electricians (Wiring & Fans)
+                <Link href="/#categories" className="hover:text-[#0052ff] transition-colors">
+                  Electrical Repair
                 </Link>
               </li>
               <li>
-                <Link href="/#categories" className="hover:text-white transition-colors">
-                  Plumbers (Leaks & Drains)
+                <Link href="/#categories" className="hover:text-[#0052ff] transition-colors">
+                  Plumbing Services
                 </Link>
               </li>
               <li>
-                <Link href="/#categories" className="hover:text-white transition-colors">
-                  AC & Refrigeration
+                <Link href="/#categories" className="hover:text-[#0052ff] transition-colors">
+                  AC and Appliances
                 </Link>
               </li>
               <li>
-                <Link href="/#categories" className="hover:text-white transition-colors">
-                  Auto Mechanics & More
+                <Link href="/#categories" className="hover:text-[#0052ff] transition-colors">
+                  Automotive Repair
                 </Link>
               </li>
             </ul>
           </div>
 
+          {/* Col 3: Technology */}
           <div className="space-y-3">
-            <span className="text-xs font-semibold text-white uppercase tracking-wider block">
-              Transparency
+            <span className="text-xs font-semibold text-[#0a0b0d] uppercase tracking-wider block">
+              Technology
             </span>
-            <ul className="space-y-2 text-xs text-[#adadad]">
+            <ul className="space-y-2 text-xs">
               <li>
-                <Link href="/about" className="hover:text-white transition-colors">
-                  How Matching Works
+                <Link href="/about" className="hover:text-[#0052ff] transition-colors">
+                  Multilingual AI Intake
                 </Link>
               </li>
               <li>
-                <Link href="/about#matching" className="hover:text-white transition-colors">
-                  Deterministic Ranking Formula
+                <Link href="/about#matching" className="hover:text-[#0052ff] transition-colors">
+                  Deterministic Scoring
                 </Link>
               </li>
               <li>
-                <Link href="/about#ai" className="hover:text-white transition-colors">
-                  AI Guardrails & Safety
+                <Link href="/about#ai" className="hover:text-[#0052ff] transition-colors">
+                  Safety Guardrails
                 </Link>
               </li>
               <li>
-                <Link href="/provider" className="hover:text-white transition-colors">
-                  Demo Provider Mode
+                <Link href="/about" className="hover:text-[#0052ff] transition-colors">
+                  Heuristic Fallback
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 4: For Providers */}
+          <div className="space-y-3">
+            <span className="text-xs font-semibold text-[#0a0b0d] uppercase tracking-wider block">
+              Providers
+            </span>
+            <ul className="space-y-2 text-xs">
+              <li>
+                <Link href="/provider" className="hover:text-[#0052ff] transition-colors">
+                  Provider Portal
+                </Link>
+              </li>
+              <li>
+                <Link href="/provider" className="hover:text-[#0052ff] transition-colors">
+                  Slot Calendar
+                </Link>
+              </li>
+              <li>
+                <Link href="/provider" className="hover:text-[#0052ff] transition-colors">
+                  Lead Dispatch
+                </Link>
+              </li>
+              <li>
+                <Link href="/provider" className="hover:text-[#0052ff] transition-colors">
+                  Sample Profiles
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 5: Legal & Notice */}
+          <div className="space-y-3">
+            <span className="text-xs font-semibold text-[#0a0b0d] uppercase tracking-wider block">
+              Governance
+            </span>
+            <ul className="space-y-2 text-xs">
+              <li>
+                <Link href="/about" className="hover:text-[#0052ff] transition-colors">
+                  Hackathon Prototype
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-[#0052ff] transition-colors">
+                  No Monetary Fees
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-[#0052ff] transition-colors">
+                  Open Source License
                 </Link>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-[11px] text-[#707070]">
+        {/* Legal Band */}
+        <div className="max-w-[1200px] mx-auto pt-8 border-t border-[#dee1e6] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs text-[#7c828a]">
           <p>
-            Developed for Hack for Humanity. Providers and ratings are fictional sample data for demonstration. No payments or identity checks performed.
+            Prototype developed for Hack for Humanity Colombo. All provider profiles are fictional sample data.
           </p>
-          <p className="shrink-0">
-            Open Source (MIT) · Powered by Google Gemini & PostgreSQL
+          <p>
+            Powered by Google Gemini and Supabase PostgreSQL.
           </p>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
   );
 }

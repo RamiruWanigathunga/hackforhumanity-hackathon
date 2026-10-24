@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
+import { Button } from "@/components/ui/Button";
 
 export default async function Header() {
   const cookieStore = await cookies();
@@ -15,74 +16,60 @@ export default async function Header() {
   }
 
   return (
-    <header className="sticky top-4 sm:top-5 z-40 w-full px-4 sm:px-6">
-      <div className="max-w-6xl mx-auto bg-[#f3f3f3] rounded-full px-4 sm:px-6 py-2.5 flex items-center justify-between border border-[#e0e0e0]">
-        {/* Brand Logomark + Wordmark */}
-        <div className="flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 bg-[#141414] text-white app-icon-squircle flex items-center justify-center font-bold text-xs tracking-tight">
-              HD
+    <header className="sticky top-0 z-50 w-full bg-white border-b border-[#dee1e6] h-16 flex items-center">
+      <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 flex items-center justify-between">
+        {/* Brand Wordmark with Coinbase Blue accent */}
+        <div className="flex items-center gap-8">
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="w-7 h-7 rounded-full bg-[#0052ff] flex items-center justify-center text-white text-xs font-bold">
+              H
             </div>
-            <span className="font-bold text-sm sm:text-base tracking-tight text-[#141414] group-hover:text-black">
-              HelpDesk<span className="text-[#707070]">.lk</span>
+            <span className="font-semibold text-lg tracking-tight text-[#0a0b0d]">
+              HelpDesk<span className="text-[#0052ff]">.lk</span>
             </span>
           </Link>
 
-          {/* Language Switcher Pill (similar to ondemand.lk screenshot, styled as Mobbin segmented pill) */}
-          <div className="hidden md:flex items-center bg-white rounded-full p-0.5 border border-[#e0e0e0] text-[11px] font-semibold">
-            <span className="px-2.5 py-0.5 rounded-full bg-[#141414] text-white">EN</span>
-            <span className="px-2.5 py-0.5 text-[#707070] hover:text-[#141414] cursor-pointer">සිංහල</span>
-            <span className="px-2.5 py-0.5 text-[#707070] hover:text-[#141414] cursor-pointer">தமிழ்</span>
-          </div>
+          {/* Primary Nav Links */}
+          <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-[#5b616e]">
+            <Link href="/" className="hover:text-[#0a0b0d] transition-colors">
+              Find Services
+            </Link>
+            <Link href="/#categories" className="hover:text-[#0a0b0d] transition-colors">
+              Directory
+            </Link>
+            <Link href="/about" className="hover:text-[#0a0b0d] transition-colors">
+              How It Works
+            </Link>
+            <Link href="/about#matching" className="hover:text-[#0a0b0d] transition-colors">
+              Scoring Model
+            </Link>
+          </nav>
         </div>
 
-        {/* Navigation links & Actions */}
-        <nav className="flex items-center gap-1.5 sm:gap-3 text-xs font-semibold">
-          <Link
-            href="/"
-            className="hidden sm:inline-flex px-3 py-1.5 rounded-full text-[#141414] hover:bg-white transition-colors"
-          >
-            Find Trades
-          </Link>
-
-          <Link
-            href="/#categories"
-            className="hidden md:inline-flex px-3 py-1.5 rounded-full text-[#707070] hover:text-[#141414] hover:bg-white transition-colors"
-          >
-            Categories
-          </Link>
-
-          <Link
-            href="/about"
-            className="hidden sm:inline-flex text-[#707070] hover:text-[#141414] px-3 py-1.5 rounded-full transition-colors"
-          >
-            How It Works
-          </Link>
-
+        {/* Right Nav Actions */}
+        <div className="flex items-center gap-3">
           {bookingCount > 0 && (
             <Link
               href="/bookings"
-              className="inline-flex items-center px-3 py-1.5 rounded-full bg-white text-[#141414] border border-[#e0e0e0] gap-1 hover:border-[#141414] transition-colors"
+              className="text-xs font-medium text-[#0a0b0d] bg-[#eef0f3] hover:bg-[#dee1e6] px-3.5 py-1.5 rounded-full transition-colors"
             >
-              Bookings <span className="text-[10px] bg-[#141414] text-white rounded-full px-1.5">{bookingCount}</span>
+              Bookings ({bookingCount})
             </Link>
           )}
 
-          {/* Become a Provider / Provider Mode CTA pill */}
           <Link
             href={demoProviderId ? "/provider/inbox" : "/provider"}
-            className="px-4 py-2 rounded-full bg-[#141414] text-white hover:bg-[#262626] transition-colors text-xs font-semibold inline-flex items-center gap-1.5"
+            className="text-xs font-medium text-[#5b616e] hover:text-[#0a0b0d] px-3 py-1.5 rounded-full transition-colors hidden sm:inline-block"
           >
-            {demoProviderId ? (
-              <>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                Provider Inbox
-              </>
-            ) : (
-              "Become a Provider"
-            )}
+            {demoProviderId ? "Provider Inbox" : "Provider Portal"}
           </Link>
-        </nav>
+
+          <Link href="/#search-intake-bar">
+            <Button variant="primary" size="sm">
+              Get Started
+            </Button>
+          </Link>
+        </div>
       </div>
     </header>
   );

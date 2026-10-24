@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { getTicket } from "@/server/db/queries";
 import TicketReviewForm from "./TicketReviewForm";
 
-
 export default async function TicketReviewPage({
   params,
 }: {
@@ -16,16 +15,16 @@ export default async function TicketReviewPage({
   }
 
   return (
-    <div className="max-w-3xl mx-auto space-y-8 py-4 sm:py-6">
+    <div className="w-full max-w-[840px] mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-8">
       <div className="space-y-2">
-        <span className="text-xs font-semibold text-[#707070] uppercase tracking-wider block">
-          Step 2 of 4 · Ticket Review
+        <span className="text-xs font-semibold text-[#7c828a] uppercase tracking-wider block">
+          Step 2 of 4 / Ticket Review
         </span>
-        <h1 className="heading-2 text-[#141414]">
-          Review and confirm your job ticket.
+        <h1 className="display-md text-[#0a0b0d]">
+          Review and verify your job ticket.
         </h1>
-        <p className="subtitle-lead text-sm sm:text-base">
-          Verify the problem details below. Every field is editable before we search for local technicians.
+        <p className="body-md text-[#5b616e]">
+          Verify the problem details below. Every field is editable before deterministic matching queries local technicians.
         </p>
       </div>
 

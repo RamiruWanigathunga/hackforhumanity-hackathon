@@ -23,20 +23,20 @@ export function HomeClientContainer() {
   };
 
   return (
-    <div className="space-y-16 sm:space-y-20 py-2 sm:py-6">
-      {/* 1. Hero Section & Search / Intake Bar */}
+    <div className="w-full flex flex-col">
+      {/* 1. Full-Bleed Dark Hero Band with Layered Product-UI Mockups */}
       <HomeSearchIntake ref={searchIntakeRef} />
 
-      {/* 2. Popular Services Grid (10 items like ondemand.lk, elevated in Mobbin monochrome) */}
+      {/* 2. White Editorial Section: 10-Item Trade Taxonomy Grid */}
       <PopularServicesGrid onSelectCategory={handleSelectCategory} />
 
-      {/* 3. Four Trust & Feature Value Pillars */}
+      {/* 3. Soft-Gray Elevation Band: Trust & Deterministic Principles */}
       <TrustPillars />
 
-      {/* 4. Grow Your Business / Provider Acquisition Banner */}
+      {/* 4. White Editorial Band: Provider Acquisition Card */}
       <GrowBusinessBanner />
 
-      {/* 5. Featured Verified Local Technicians */}
+      {/* 5. Soft-Gray Elevation Band: Verified Directory Grid */}
       <FeaturedTechnicians onSelectProvider={handleSelectProvider} />
     </div>
   );

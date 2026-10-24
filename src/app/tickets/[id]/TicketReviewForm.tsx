@@ -80,23 +80,23 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
 
       {/* Clarifying Question Block */}
       {ticket.clarificationQ && !ticket.clarificationA && (
-        <div className="bg-[#fafafa] border border-[#141414] rounded-[24px] p-5 sm:p-6 space-y-3">
+        <div className="bg-[#f7f7f7] border border-[#dee1e6] rounded-[24px] p-6 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#141414]">
-              Clarification Question
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#0a0b0d]">
+              Clarification Requested
             </span>
-            <span className="text-[11px] text-[#707070] bg-[#f0f0f0] px-2 py-0.5 rounded-full font-medium">
-              AI Request
+            <span className="text-[11px] text-[#7c828a] bg-[#eef0f3] px-2.5 py-0.5 rounded-full font-medium">
+              Model Diagnostic
             </span>
           </div>
-          <p className="text-sm font-semibold text-[#141414]">{ticket.clarificationQ}</p>
+          <p className="text-sm font-semibold text-[#0a0b0d]">{ticket.clarificationQ}</p>
           <form onSubmit={handleClarification} className="flex gap-2">
             <input
               type="text"
               value={clarificationAnswer}
               onChange={(e) => setClarificationAnswer(e.target.value)}
               placeholder="Your answer..."
-              className="flex-1 bg-white border border-[#e0e0e0] rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#141414]"
+              className="flex-1 bg-white border border-[#dee1e6] rounded-[12px] px-4 py-2 text-sm focus:outline-none focus:border-[#0052ff] focus:ring-1 focus:ring-[#0052ff]"
             />
             <Button
               type="submit"
@@ -112,27 +112,27 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
       )}
 
       {/* What we understood review card */}
-      <div className="bg-white rounded-[24px] border border-[#f0f0f0] p-6 sm:p-8 space-y-6">
+      <div className="bg-white rounded-[24px] border border-[#dee1e6] p-6 sm:p-8 space-y-6">
         {/* Meta row */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#f0f0f0] pb-4">
-          <div className="flex items-center gap-2">
-            <h2 className="text-lg font-bold text-[#141414] tracking-tight">
-              What the AI Understood
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#dee1e6] pb-4">
+          <div className="flex items-center gap-3">
+            <h2 className="title-md text-[#0a0b0d]">
+              Extracted Parameters
             </h2>
-            <span className="text-xs text-[#707070] bg-[#f5f5f5] px-2.5 py-0.5 rounded-full font-medium">
-              Source: {ticket.aiSource === "ai" ? "AI Model" : "Basic Parser"}
+            <span className="text-xs text-[#7c828a] bg-[#eef0f3] px-2.5 py-0.5 rounded-full font-medium">
+              Source: {ticket.aiSource === "ai" ? "Gemini AI" : "Heuristic Parser"}
             </span>
           </div>
-          <div className="flex items-center gap-2 text-xs text-[#707070]">
-            <span>Language: <strong className="text-[#141414] uppercase">{ticket.detectedLanguage}</strong></span>
+          <div className="flex items-center gap-2 text-xs text-[#5b616e]">
+            <span>Language: <strong className="text-[#0a0b0d] uppercase">{ticket.detectedLanguage}</strong></span>
             <span>/</span>
-            <span>Confidence: <strong className="text-[#141414]">High</strong></span>
+            <span>Confidence: <strong className="text-[#05b169]">High</strong></span>
           </div>
         </div>
 
         {/* Editable Summary */}
         <div className="space-y-1.5">
-          <label htmlFor="summary" className="text-xs font-semibold text-[#141414] block">
+          <label htmlFor="summary" className="text-xs font-semibold text-[#0a0b0d] block">
             Structured Problem Summary (Editable)
           </label>
           <textarea
@@ -140,13 +140,13 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
             rows={2}
             value={summary}
             onChange={(e) => setSummary(e.target.value)}
-            className="w-full bg-[#f0f0f0] text-[#141414] rounded-[16px] px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#141414] resize-none"
+            className="w-full bg-white border border-[#dee1e6] text-[#0a0b0d] rounded-[12px] px-4 py-3 text-sm focus:outline-none focus:border-[#0052ff] focus:ring-1 focus:ring-[#0052ff] resize-none"
           />
         </div>
 
         {/* Category Selection */}
         <div className="space-y-2">
-          <label className="text-xs font-semibold text-[#141414] block">
+          <label className="text-xs font-semibold text-[#0a0b0d] block">
             Trade Category
           </label>
           <div className="flex flex-wrap gap-2">
@@ -159,8 +159,8 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
                   onClick={() => handleCategoryChange(cat)}
                   className={`px-4 py-2 rounded-full text-xs font-semibold border transition-all cursor-pointer ${
                     isSelected
-                      ? "bg-[#141414] text-white border-[#141414]"
-                      : "bg-[#f3f3f3] text-[#262626] border-transparent hover:bg-[#e0e0e0]"
+                      ? "bg-[#0052ff] text-white border-[#0052ff]"
+                      : "bg-[#eef0f3] text-[#0a0b0d] border-transparent hover:bg-[#dee1e6]"
                   }`}
                 >
                   {cat.replace(/_/g, " ").toUpperCase()}
@@ -173,7 +173,7 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
         {/* Taxonomy Tags */}
         {availableTags.length > 0 && (
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-[#141414] block">
+            <label className="text-xs font-semibold text-[#0a0b0d] block">
               Issue Tags (Click to toggle, max 4)
             </label>
             <div className="flex flex-wrap gap-2">
@@ -186,8 +186,8 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
                     onClick={() => toggleTag(tag.id)}
                     className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all cursor-pointer ${
                       isSelected
-                        ? "bg-[#141414] text-white border-[#141414]"
-                        : "bg-[#f3f3f3] text-[#262626] border-transparent hover:bg-[#e0e0e0]"
+                        ? "bg-[#0052ff] text-white border-[#0052ff]"
+                        : "bg-[#eef0f3] text-[#0a0b0d] border-transparent hover:bg-[#dee1e6]"
                     }`}
                   >
                     {tag.label_en}
@@ -201,14 +201,14 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
         {/* Area, Date, Window, Urgency */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
           <div className="space-y-1.5">
-            <label htmlFor="area" className="text-xs font-semibold text-[#141414] block">
+            <label htmlFor="area" className="text-xs font-semibold text-[#0a0b0d] block">
               Area
             </label>
             <select
               id="area"
               value={area}
               onChange={(e) => setArea(e.target.value)}
-              className="w-full bg-[#f0f0f0] text-[#141414] rounded-[16px] px-3.5 py-3 text-xs focus:outline-none focus:ring-2 focus:ring-[#141414] cursor-pointer"
+              className="w-full bg-white border border-[#dee1e6] text-[#0a0b0d] rounded-[12px] px-3.5 py-3 text-xs focus:outline-none focus:border-[#0052ff] focus:ring-1 focus:ring-[#0052ff] cursor-pointer"
             >
               {PILOT_AREAS.map((a) => (
                 <option key={a} value={a}>
@@ -219,7 +219,7 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="date" className="text-xs font-semibold text-[#141414] block">
+            <label htmlFor="date" className="text-xs font-semibold text-[#0a0b0d] block">
               Date (YYYY-MM-DD)
             </label>
             <input
@@ -227,19 +227,19 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
               type="date"
               value={preferredDate}
               onChange={(e) => setPreferredDate(e.target.value)}
-              className="w-full bg-[#f0f0f0] text-[#141414] rounded-[16px] px-3.5 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#141414]"
+              className="w-full bg-white border border-[#dee1e6] text-[#0a0b0d] rounded-[12px] px-3.5 py-2.5 text-xs focus:outline-none focus:border-[#0052ff] focus:ring-1 focus:ring-[#0052ff]"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="window" className="text-xs font-semibold text-[#141414] block">
+            <label htmlFor="window" className="text-xs font-semibold text-[#0a0b0d] block">
               Window
             </label>
             <select
               id="window"
               value={preferredWindow}
               onChange={(e) => setPreferredWindow(e.target.value)}
-              className="w-full bg-[#f0f0f0] text-[#141414] rounded-[16px] px-3.5 py-3 text-xs focus:outline-none focus:ring-2 focus:ring-[#141414] cursor-pointer"
+              className="w-full bg-white border border-[#dee1e6] text-[#0a0b0d] rounded-[12px] px-3.5 py-3 text-xs focus:outline-none focus:border-[#0052ff] focus:ring-1 focus:ring-[#0052ff] cursor-pointer"
             >
               {TIME_WINDOWS.map((w) => (
                 <option key={w} value={w}>
@@ -250,14 +250,14 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="urgency" className="text-xs font-semibold text-[#141414] block">
+            <label htmlFor="urgency" className="text-xs font-semibold text-[#0a0b0d] block">
               Urgency
             </label>
             <select
               id="urgency"
               value={urgency}
               onChange={(e) => setUrgency(e.target.value)}
-              className="w-full bg-[#f0f0f0] text-[#141414] rounded-[16px] px-3.5 py-3 text-xs focus:outline-none focus:ring-2 focus:ring-[#141414] cursor-pointer"
+              className="w-full bg-white border border-[#dee1e6] text-[#0a0b0d] rounded-[12px] px-3.5 py-3 text-xs focus:outline-none focus:border-[#0052ff] focus:ring-1 focus:ring-[#0052ff] cursor-pointer"
             >
               <option value="low">Low</option>
               <option value="normal">Normal</option>
@@ -271,23 +271,23 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
           <button
             type="button"
             onClick={() => setShowOriginal(!showOriginal)}
-            className="text-xs font-semibold text-[#707070] hover:text-[#141414] cursor-pointer flex items-center gap-1"
+            className="text-xs font-semibold text-[#7c828a] hover:text-[#0052ff] cursor-pointer flex items-center gap-1 transition-colors"
           >
-            {showOriginal ? "Hide your original words" : "Show your original words"}
+            {showOriginal ? "Hide original words" : "Show original words"}
           </button>
           {showOriginal && (
-            <div className="mt-2 p-4 bg-[#f3f3f3] rounded-[16px] text-xs text-[#262626] font-mono leading-relaxed">
+            <div className="mt-2 p-4 bg-[#f7f7f7] border border-[#dee1e6] rounded-[12px] text-xs text-[#0a0b0d] font-mono leading-relaxed">
               &quot;{ticket.rawText}&quot;
             </div>
           )}
         </div>
 
         {/* Action Buttons */}
-        <div className="pt-4 border-t border-[#f0f0f0] flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="pt-4 border-t border-[#dee1e6] flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex gap-2 w-full sm:w-auto">
             <Button
               type="button"
-              variant="soft"
+              variant="secondary"
               size="md"
               loading={isUpdating}
               onClick={handleUpdate}
