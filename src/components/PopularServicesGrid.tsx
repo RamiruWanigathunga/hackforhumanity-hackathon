@@ -1,13 +1,24 @@
 "use client";
 
 import React from "react";
-import { Badge } from "@/components/ui/Badge";
+import {
+  ElectricianIcon,
+  PlumberIcon,
+  ACIcon,
+  MechanicIcon,
+  CleaningIcon,
+  CarpenterIcon,
+  PainterIcon,
+  PestIcon,
+  SalonIcon,
+  SecurityIcon,
+} from "@/components/ui/Icons";
 
 export interface ServiceCategoryItem {
   id: string;
   name: string;
   subtitle: string;
-  icon: string;
+  iconComponent: React.ComponentType<{ className?: string }>;
   isPilot: boolean;
   samplePrompt: string;
 }
@@ -16,80 +27,80 @@ export const POPULAR_SERVICES: ServiceCategoryItem[] = [
   {
     id: "electrical",
     name: "Electrician",
-    subtitle: "Wiring, fans, breakers & inverters",
-    icon: "⚡",
+    subtitle: "Wiring, fans, breakers and inverters",
+    iconComponent: ElectricianIcon,
     isPilot: true,
     samplePrompt: "Ceiling fan stopped working, breaker trips when turning on",
   },
   {
     id: "plumbing",
     name: "Plumber",
-    subtitle: "Pipes, taps, pumps & drainage",
-    icon: "🚰",
+    subtitle: "Pipes, taps, pumps and drainage",
+    iconComponent: PlumberIcon,
     isPilot: true,
     samplePrompt: "Kitchen sink drain leaking and bathroom tap dripping",
   },
   {
     id: "ac_appliance",
-    name: "AC & Appliances",
+    name: "AC and Appliances",
     subtitle: "AC, fridge, washing machine",
-    icon: "❄️",
+    iconComponent: ACIcon,
     isPilot: true,
     samplePrompt: "Split AC not cooling properly and making vibrating noise",
   },
   {
     id: "mechanic",
     name: "Auto Mechanic",
-    subtitle: "Car, van & vehicle repair",
-    icon: "🚗",
+    subtitle: "Car, van and vehicle repair",
+    iconComponent: MechanicIcon,
     isPilot: false,
-    samplePrompt: "Car battery dead and engine won't start in morning",
+    samplePrompt: "Car battery dead and engine will not start in morning",
   },
   {
     id: "cleaning",
     name: "Cleaning",
-    subtitle: "Home, office & deep cleaning",
-    icon: "🧹",
+    subtitle: "Home, office and deep cleaning",
+    iconComponent: CleaningIcon,
     isPilot: false,
     samplePrompt: "Deep apartment cleaning needed before tenant move-in",
   },
   {
     id: "carpenter",
     name: "Carpenter",
-    subtitle: "Furniture, doors & cabinets",
-    icon: "🪚",
+    subtitle: "Furniture, doors and cabinets",
+    iconComponent: CarpenterIcon,
     isPilot: false,
     samplePrompt: "Wooden front door lock stuck and cupboard hinges broken",
   },
   {
     id: "painter",
     name: "Painter",
-    subtitle: "House & building paint",
-    icon: "🎨",
+    subtitle: "House and building paint",
+    iconComponent: PainterIcon,
     isPilot: false,
     samplePrompt: "Living room wall repainting and water dampness touchup",
   },
   {
     id: "pest_control",
     name: "Pest Control",
-    subtitle: "Termites, cockroaches & insects",
-    icon: "🪲",
+    subtitle: "Termites, cockroaches and insects",
+    iconComponent: PestIcon,
     isPilot: false,
     samplePrompt: "Termite treatment needed for bedroom wooden door frame",
   },
   {
     id: "salon",
-    name: "Salon & Barber",
-    subtitle: "Hair, beauty & home grooming",
-    icon: "✂️",
+    name: "Salon and Barber",
+    subtitle: "Hair, beauty and home grooming",
+    iconComponent: SalonIcon,
     isPilot: false,
     samplePrompt: "Home haircut and beard trim appointment needed",
   },
   {
     id: "security",
-    name: "CCTV & Security",
-    subtitle: "Cameras, alarms & fences",
-    icon: "📹",
+    name: "CCTV and Security",
+    subtitle: "Cameras, alarms and fences",
+    iconComponent: SecurityIcon,
     isPilot: false,
     samplePrompt: "CCTV camera offline and DVR recording storage check",
   },
@@ -102,29 +113,29 @@ interface PopularServicesGridProps {
 export const PopularServicesGrid: React.FC<PopularServicesGridProps> = ({ onSelectCategory }) => {
   return (
     <section id="categories" className="space-y-6 pt-4">
-      {/* Section Header with Mobbin weight hierarchy and terminal period */}
+      {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
         <div className="space-y-1">
-          <div className="inline-flex items-center gap-2">
-            <span className="text-xs font-semibold text-[#707070] uppercase tracking-wider">
-              Browse Directory
-            </span>
-          </div>
+          <span className="text-xs font-semibold text-[#707070] uppercase tracking-wider block">
+            Browse Directory
+          </span>
           <h2 className="heading-2 text-[#141414]">
             Popular Services.
           </h2>
           <p className="subtitle-lead text-sm sm:text-base">
-            Select a category or search for what you need. Active pilot trades feature instant AI intake & matching.
+            Select a category or search for what you need. Active pilot trades feature instant AI intake and matching.
           </p>
         </div>
         <div className="text-xs text-[#707070] font-medium hidden sm:block">
-          10 Service Categories · Colombo Pilot
+          10 Service Categories / Colombo Pilot
         </div>
       </div>
 
-      {/* Grid: 2 rows of 5 on desktop (identical to ondemand.lk screenshot) */}
+      {/* Grid: 2 rows of 5 on desktop */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
         {POPULAR_SERVICES.map((service) => {
+          const IconComp = service.iconComponent;
+
           return (
             <button
               key={service.id}
@@ -132,22 +143,11 @@ export const PopularServicesGrid: React.FC<PopularServicesGridProps> = ({ onSele
               onClick={() => onSelectCategory && onSelectCategory(service)}
               className="group relative text-left bg-white rounded-[20px] p-4 sm:p-5 border border-[#f0f0f0] hover:border-[#141414] hover:bg-[#fafafa] transition-all flex flex-col justify-between gap-4 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#141414]"
             >
-              {/* Top row: Squircle icon + Commercial badge if Active Pilot */}
+              {/* Top row: Squircle icon with clean SVG */}
               <div className="flex items-start justify-between w-full">
-                {/* 30% iOS Squircle Icon */}
-                <div className="w-12 h-12 bg-[#f3f3f3] text-[#141414] group-hover:bg-[#141414] group-hover:text-white app-icon-squircle flex items-center justify-center text-xl transition-colors shrink-0">
-                  {service.icon}
+                <div className="w-12 h-12 bg-[#f3f3f3] text-[#141414] group-hover:bg-[#141414] group-hover:text-white app-icon-squircle flex items-center justify-center transition-colors shrink-0">
+                  <IconComp className="w-5 h-5 text-current" />
                 </div>
-
-                {service.isPilot ? (
-                  <Badge variant="commercial" size="sm">
-                    Instant Match
-                  </Badge>
-                ) : (
-                  <span className="text-[10px] text-[#adadad] font-medium bg-[#f5f5f5] px-2 py-0.5 rounded-full">
-                    Pilot Soon
-                  </span>
-                )}
               </div>
 
               {/* Text metadata */}
@@ -160,10 +160,9 @@ export const PopularServicesGrid: React.FC<PopularServicesGridProps> = ({ onSele
                 </p>
               </div>
 
-              {/* Hover indicator link */}
-              <div className="text-[11px] font-semibold text-[#141414] flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              {/* Hover indicator link without arrow */}
+              <div className="text-[11px] font-semibold text-[#141414] opacity-0 group-hover:opacity-100 transition-opacity">
                 <span>Select trade</span>
-                <span>→</span>
               </div>
             </button>
           );

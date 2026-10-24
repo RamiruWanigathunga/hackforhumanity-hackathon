@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
-import { getRecentResidentBookings, getProviderById } from "@/server/db/queries";
-import { Badge } from "@/components/ui/Badge";
+import { getRecentResidentBookings } from "@/server/db/queries";
 import { Button } from "@/components/ui/Button";
 
 export default async function ResidentBookingsPage() {
@@ -49,20 +48,15 @@ export default async function ResidentBookingsPage() {
             const isProposal = booking.status === "alternative_proposed";
             const isCancelled = booking.status === "cancelled" || booking.status === "declined";
 
-            let statusVariant: "neutral" | "commercial" | "hazard" | "sample" | "success" = "neutral";
             let statusText = "Requested (Waiting for provider)";
 
             if (isAccepted) {
-              statusVariant = "success";
               statusText = "Confirmed by technician";
             } else if (isProposal) {
-              statusVariant = "commercial";
               statusText = "Alternative time proposed";
             } else if (isCompleted) {
-              statusVariant = "neutral";
               statusText = "Completed";
             } else if (isCancelled) {
-              statusVariant = "hazard";
               statusText = booking.status === "cancelled" ? "Cancelled" : "Declined by technician";
             }
 
@@ -80,9 +74,9 @@ export default async function ResidentBookingsPage() {
                       Service Request
                     </h3>
                   </div>
-                  <Badge variant={statusVariant} size="sm">
+                  <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#f3f3f3] text-[#141414] border border-[#e0e0e0]">
                     {statusText}
-                  </Badge>
+                  </span>
                 </div>
 
                 <div className="pt-2 border-t border-[#f0f0f0] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -91,7 +85,7 @@ export default async function ResidentBookingsPage() {
                   </span>
                   <Link href={`/bookings/${booking.id}`}>
                     <Button variant="primary" size="sm">
-                      View Live Booking Status →
+                      View Live Booking Status
                     </Button>
                   </Link>
                 </div>
@@ -101,17 +95,14 @@ export default async function ResidentBookingsPage() {
         </div>
       ) : (
         <div className="bg-white rounded-[24px] border border-[#f0f0f0] p-10 text-center space-y-4">
-          <div className="w-14 h-14 rounded-full bg-[#f3f3f3] text-[#141414] flex items-center justify-center mx-auto text-2xl font-bold">
-            📋
-          </div>
           <h3 className="heading-4 text-[#141414]">No booking requests found.</h3>
           <p className="text-xs sm:text-sm text-[#707070] max-w-md mx-auto leading-relaxed">
-            You haven&apos;t submitted any repair requests from this browser yet. Use our natural language search to find a local specialist.
+            You have not submitted any repair requests from this browser yet. Use our natural language search to find a local specialist.
           </p>
           <div className="pt-2">
             <Link href="/">
               <Button variant="primary" size="md">
-                Find Local Technician →
+                Find Local Technician
               </Button>
             </Link>
           </div>

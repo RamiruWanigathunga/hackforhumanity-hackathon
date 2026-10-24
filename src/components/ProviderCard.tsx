@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ScoreBar, ScoreComponents } from "@/components/ScoreBar";
+import { PlumberIcon, ElectricianIcon, ACIcon } from "@/components/ui/Icons";
 
 export interface ProviderSlotOption {
   id: string;
@@ -68,26 +68,26 @@ export const ProviderCard: React.FC<ProviderCardProps> = ({
     }
   };
 
-  const categoryIcon = categories.includes("plumbing")
-    ? "🚰"
+  const IconComponent = categories.includes("plumbing")
+    ? PlumberIcon
     : categories.includes("electrical")
-    ? "⚡"
-    : "❄️";
+    ? ElectricianIcon
+    : ACIcon;
 
   return (
     <div
       className={`rounded-[24px] p-6 sm:p-7 space-y-5 transition-all ${
         featured
-          ? "bg-[#f3f3f3] border-none" // pricing-card-featured style in Mobbin
+          ? "bg-[#f3f3f3] border-none"
           : "bg-white border border-[#f0f0f0]"
       }`}
     >
       {/* Header Info */}
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
         <div className="flex items-start gap-3.5">
-          {/* iOS 30% squircle icon tile per design.md */}
-          <div className="w-12 h-12 bg-[#141414] text-white app-icon-squircle flex items-center justify-center text-lg shrink-0">
-            {categoryIcon}
+          {/* iOS 30% squircle icon tile */}
+          <div className="w-12 h-12 bg-[#141414] text-white app-icon-squircle flex items-center justify-center shrink-0">
+            <IconComponent className="w-5 h-5 text-white" />
           </div>
 
           <div className="space-y-1">
@@ -96,24 +96,22 @@ export const ProviderCard: React.FC<ProviderCardProps> = ({
                 {displayName}
               </h3>
               {featured && (
-                <Badge variant="commercial" size="sm">
+                <span className="text-[11px] font-semibold text-[#0066ff] bg-[#0066ff]/10 px-2.5 py-0.5 rounded-full">
                   Top Match
-                </Badge>
+                </span>
               )}
-              {/* Honesty Rule H2: Sample profile demo data */}
-              <Badge variant="sample" size="sm">
-                Sample profile · demo data
-              </Badge>
+              <span className="text-[11px] text-[#707070] bg-[#f0f0f0] px-2.5 py-0.5 rounded-full">
+                Sample profile / demo data
+              </span>
             </div>
 
             <div className="flex items-center gap-2 text-xs text-[#707070] flex-wrap">
               <span>Area: <strong className="text-[#141414] font-medium">{homeArea}</strong></span>
-              <span>•</span>
-              {/* Honesty Rule H3: rating with (demo) */}
-              <span>★ <strong className="text-[#141414] font-medium">{rating}</strong> (demo)</span>
-              <span>•</span>
+              <span>/</span>
+              <span>Rating: <strong className="text-[#141414] font-medium">{rating}</strong> (demo)</span>
+              <span>/</span>
               <span>{jobsCompleted} jobs (demo)</span>
-              <span>•</span>
+              <span>/</span>
               <span>{languages.map((l) => l.toUpperCase()).join("/")}</span>
             </div>
           </div>
@@ -141,7 +139,7 @@ export const ProviderCard: React.FC<ProviderCardProps> = ({
             onClick={() => setShowReasons(!showReasons)}
             className="text-xs font-semibold text-[#141414] hover:underline cursor-pointer"
           >
-            {showReasons ? "Hide match reasoning ▲" : "Why this match was ranked here ▼"}
+            {showReasons ? "Hide match reasoning" : "Why this match was ranked here"}
           </button>
         </div>
 
@@ -152,14 +150,14 @@ export const ProviderCard: React.FC<ProviderCardProps> = ({
                 key={i}
                 className="inline-flex items-center text-[11px] font-medium px-3 py-1 rounded-full bg-white border border-[#e0e0e0] text-[#141414]"
               >
-                ✓ {r}
+                {r}
               </span>
             ))}
           </div>
         )}
       </div>
 
-      {/* Available Slots & Request Action */}
+      {/* Available Slots and Request Action */}
       <div className="pt-1 space-y-3">
         <div className="flex items-center justify-between text-xs font-semibold text-[#141414]">
           <span>Next Free Time Slots:</span>
@@ -183,7 +181,7 @@ export const ProviderCard: React.FC<ProviderCardProps> = ({
                       : "bg-[#f3f3f3] text-[#141414] border-transparent hover:bg-[#e0e0e0]"
                   }`}
                 >
-                  {s.date} · <span className="capitalize">{s.window}</span>
+                  {s.date} / <span className="capitalize">{s.window}</span>
                 </button>
               );
             })}
@@ -199,7 +197,7 @@ export const ProviderCard: React.FC<ProviderCardProps> = ({
               disabled={!activeSlotId}
               onClick={handleRequest}
             >
-              Request Booking →
+              Request Booking
             </Button>
           </div>
         )}

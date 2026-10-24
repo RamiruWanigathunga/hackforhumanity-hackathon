@@ -1,5 +1,4 @@
 import React from "react";
-import { Badge } from "@/components/ui/Badge";
 
 export interface BookingEventItem {
   id: string;
@@ -49,9 +48,9 @@ export const StatusTimeline: React.FC<StatusTimelineProps> = ({ events, currentS
     <div className="space-y-4 py-2">
       <div className="flex items-center justify-between border-b border-[#f0f0f0] pb-2">
         <span className="text-xs font-semibold text-[#707070]">Activity Timeline</span>
-        <Badge variant={currentStatus === "accepted" || currentStatus === "completed" ? "success" : "neutral"} size="sm">
+        <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#f3f3f3] text-[#141414] border border-[#e0e0e0]">
           Current: {getStatusLabel(currentStatus)}
-        </Badge>
+        </span>
       </div>
 
       <div className="relative pl-6 space-y-6 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-[#e0e0e0]">
@@ -59,12 +58,10 @@ export const StatusTimeline: React.FC<StatusTimelineProps> = ({ events, currentS
           const isLatest = idx === events.length - 1;
           const isAccepted = evt.type === "accepted" || evt.type === "completed";
           const isWarning = evt.type === "alternative_proposed";
-          const isNegative = evt.type === "declined" || evt.type === "cancelled";
 
           let dotColor = "bg-[#141414]";
           if (isAccepted) dotColor = "bg-[#141414]";
           if (isWarning) dotColor = "bg-[#707070]";
-          if (isNegative) dotColor = "bg-[#141414]";
 
           return (
             <div key={evt.id} className="relative flex items-start gap-3">

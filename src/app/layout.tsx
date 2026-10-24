@@ -26,7 +26,7 @@ const notoTamil = Noto_Sans_Tamil({
 });
 
 export const metadata: Metadata = {
-  title: "HelpDesk LK — AI Local Service Matcher.",
+  title: "HelpDesk LK : AI Local Service Matcher.",
   description: "Multilingual AI intake and explainable transparent local trades matching in Sri Lanka.",
 };
 

@@ -3,9 +3,7 @@ import Link from "next/link";
 import { getTicket, getActiveProvidersWithSlots } from "@/server/db/queries";
 import { rankProviders } from "@/server/matching/match";
 import MatchesList from "./MatchesList";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-
 
 export default async function MatchesPage({
   params,
@@ -19,7 +17,6 @@ export default async function MatchesPage({
     notFound();
   }
 
-  // Guard: User must confirm ticket before viewing matches (Honesty Rule H5)
   if (ticket.status === "draft") {
     redirect(`/tickets/${ticket.id}`);
   }
@@ -33,7 +30,7 @@ export default async function MatchesPage({
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
         <div className="space-y-1.5">
           <span className="text-xs font-semibold text-[#707070] uppercase tracking-wider block">
-            Step 3 of 4 · Matching
+            Step 3 of 4 / Matching
           </span>
           <h1 className="heading-2 text-[#141414]">
             Recommended local technicians in your area.
@@ -44,24 +41,24 @@ export default async function MatchesPage({
         </div>
         <Link href={`/tickets/${ticket.id}`} className="shrink-0">
           <Button variant="outline" size="sm">
-            ← Edit Ticket
+            Edit Ticket
           </Button>
         </Link>
       </div>
 
-      {/* Ticket Summary Strip (24px radius, soft-canvas fill) */}
+      {/* Ticket Summary Strip */}
       <div className="bg-[#f3f3f3] rounded-[24px] p-5 flex flex-wrap items-center justify-between gap-3 text-xs border border-[#e0e0e0]">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-bold text-sm text-[#141414] capitalize">
+          <div className="flex items-center gap-2 flex-wrap text-[#141414]">
+            <span className="font-bold text-sm capitalize">
               {ticket.category.replace(/_/g, " ")} Issue
             </span>
-            <Badge variant="neutral" size="sm">
+            <span className="bg-white px-2.5 py-0.5 rounded-full border border-[#e0e0e0] font-medium text-xs">
               {ticket.area || "Area not set"}
-            </Badge>
-            <Badge variant="neutral" size="sm">
+            </span>
+            <span className="bg-white px-2.5 py-0.5 rounded-full border border-[#e0e0e0] font-medium text-xs">
               {ticket.preferredDate || "Anytime"} ({ticket.preferredWindow})
-            </Badge>
+            </span>
           </div>
           <p className="text-[#525252] font-medium">{ticket.summary}</p>
         </div>
@@ -72,9 +69,6 @@ export default async function MatchesPage({
         <MatchesList ticketId={ticket.id} matches={matches} />
       ) : (
         <div className="bg-white rounded-[24px] border border-[#f0f0f0] p-10 text-center space-y-4">
-          <div className="w-14 h-14 rounded-full bg-[#f3f3f3] text-[#141414] flex items-center justify-center mx-auto text-xl font-bold">
-            🔍
-          </div>
           <h3 className="heading-4 text-[#141414]">No exact provider matches found.</h3>
           <p className="text-xs sm:text-sm text-[#707070] max-w-md mx-auto leading-relaxed">
             {emptyReason}
@@ -82,7 +76,7 @@ export default async function MatchesPage({
           <div className="pt-2">
             <Link href={`/tickets/${ticket.id}`}>
               <Button variant="primary" size="md">
-                Widen Area or Change Date →
+                Widen Area or Change Date
               </Button>
             </Link>
           </div>

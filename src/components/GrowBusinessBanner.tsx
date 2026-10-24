@@ -1,12 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { ToolsIcon } from "@/components/ui/Icons";
 
 export const GrowBusinessBanner: React.FC = () => {
   const benefits = [
     "Free marketplace listing",
-    "Customer leads & bookings",
-    "Invoicing & slot management",
+    "Customer leads and bookings",
+    "Invoicing and slot management",
     "Verified technician badge",
   ];
 
@@ -15,14 +16,14 @@ export const GrowBusinessBanner: React.FC = () => {
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
         <div className="flex flex-col sm:flex-row items-start gap-5">
           {/* iOS 30% squircle icon */}
-          <div className="w-16 h-16 bg-[#141414] text-white app-icon-squircle flex items-center justify-center text-3xl shrink-0">
-            🛠️
+          <div className="w-16 h-16 bg-[#141414] text-white app-icon-squircle flex items-center justify-center shrink-0">
+            <ToolsIcon className="w-7 h-7 text-white" />
           </div>
 
           <div className="space-y-3 max-w-2xl">
             <div className="space-y-1">
               <span className="text-xs font-semibold text-[#707070] uppercase tracking-wider block">
-                For Technicians & Local Pros
+                For Technicians and Local Pros
               </span>
               <h3 className="heading-3 text-[#141414]">
                 Grow Your Business with HelpDesk LK.
@@ -33,25 +34,25 @@ export const GrowBusinessBanner: React.FC = () => {
               Join skilled trade professionals across Colombo. Receive verified resident requests, publish your free availability calendar, and confirm bookings with zero commission fees.
             </p>
 
-            {/* Checkmark pills in stadium shapes */}
+            {/* Checkmark pills in stadium shapes without checkmark emoji */}
             <div className="flex flex-wrap gap-2 pt-1">
               {benefits.map((b, idx) => (
                 <span
                   key={idx}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-[#e0e0e0] text-xs font-medium text-[#141414]"
+                  className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-white border border-[#e0e0e0] text-xs font-medium text-[#141414]"
                 >
-                  <span className="text-emerald-600 font-bold">✓</span> {b}
+                  {b}
                 </span>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Action buttons (Stadium pills per design.md) */}
+        {/* Action buttons without arrows */}
         <div className="flex flex-col sm:flex-row md:flex-col gap-3 shrink-0 w-full sm:w-auto md:w-48">
           <Link href="/provider" className="w-full">
             <Button variant="primary" size="md" className="w-full">
-              Register Free →
+              Register Free
             </Button>
           </Link>
           <Link href="/provider" className="w-full">

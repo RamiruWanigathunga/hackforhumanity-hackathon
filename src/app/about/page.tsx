@@ -1,5 +1,4 @@
 import { SCORING_WEIGHTS } from "@/config/scoring";
-import { Badge } from "@/components/ui/Badge";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
@@ -8,9 +7,9 @@ export default function AboutPage() {
     <div className="max-w-3xl mx-auto space-y-12 py-6 sm:py-8">
       {/* Intro */}
       <div className="space-y-3">
-        <Badge variant="neutral" size="sm">
+        <span className="text-xs font-semibold text-[#707070] uppercase tracking-wider block">
           About HelpDesk LK
-        </Badge>
+        </span>
         <h1 className="heading-1 text-[#141414]">
           AI local service matching for Sri Lanka.
         </h1>
@@ -130,16 +129,16 @@ export default function AboutPage() {
 
       {/* Hackathon Disclaimer */}
       <div className="bg-[#f3f3f3] rounded-[24px] p-6 sm:p-8 space-y-3 border border-[#e0e0e0]">
-        <Badge variant="sample" size="sm">
+        <span className="text-xs font-semibold text-[#707070] uppercase tracking-wider block">
           Hackathon Prototype Notice
-        </Badge>
+        </span>
         <p className="text-xs text-[#525252] leading-relaxed">
           HelpDesk LK was developed for Hack for Humanity (Hacktoberfest Hack Day Colombo). All provider profiles and reviews are fictional sample data for demonstration. No identity checks or licensing verifications have been conducted, and no real monetary transactions take place.
         </p>
         <div className="pt-2">
           <Link href="/">
             <Button variant="primary" size="md">
-              Try the Demo Now →
+              Try the Demo Now
             </Button>
           </Link>
         </div>

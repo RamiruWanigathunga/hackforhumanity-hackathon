@@ -3,6 +3,7 @@
 import React, { useState, useTransition } from "react";
 import { residentRespondProposalAction, residentCancelBookingAction, rateBookingAction } from "@/server/actions/bookings";
 import { Button } from "@/components/ui/Button";
+import { StarIcon } from "@/components/ui/Icons";
 
 export default function ResidentBookingActions({
   bookingId,
@@ -60,7 +61,7 @@ export default function ResidentBookingActions({
             loading={isPending}
             onClick={() => handleProposalResponse(false)}
           >
-            Decline & Cancel
+            Decline and Cancel
           </Button>
         </div>
       </div>
@@ -80,11 +81,11 @@ export default function ResidentBookingActions({
               type="button"
               disabled={isPending}
               onClick={() => handleRate(star)}
-              className={`text-xl transition-transform hover:scale-125 cursor-pointer ${
-                star <= selectedRating ? "text-amber-500" : "text-gray-300"
+              className={`p-1 transition-transform hover:scale-110 cursor-pointer ${
+                star <= selectedRating ? "text-[#141414]" : "text-gray-300"
               }`}
             >
-              ★
+              <StarIcon className="w-5 h-5 text-current" />
             </button>
           ))}
           <span className="text-xs text-[#707070] ml-2">

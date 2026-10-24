@@ -5,8 +5,8 @@ import { PILOT_AREAS, PILOT_NAME } from "@/config/pilot";
 import { TIME_WINDOWS, TIME_WINDOW_LABELS, getColomboToday } from "@/lib/time";
 import { createTicketAction } from "@/server/actions/tickets";
 import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
 import { Chip } from "@/components/ui/Chip";
+import { SearchIcon, ChevronDownIcon } from "@/components/ui/Icons";
 
 export const DEMO_EXAMPLE_CHIPS = [
   {
@@ -17,7 +17,7 @@ export const DEMO_EXAMPLE_CHIPS = [
     window: "morning",
   },
   {
-    label: "Fan & burning smell (Singlish)",
+    label: "Fan and burning smell (Singlish)",
     text: "fan eka karakenne na, switch eken burning smell ekak enawa",
     area: "Nugegoda",
     day: "today",
@@ -56,7 +56,6 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
     setProblem: (text: string, area?: string) => {
       setProblemText(text);
       if (area) setSelectedArea(area);
-      // Smooth scroll to intake bar
       const element = document.getElementById("search-intake-bar");
       if (element) {
         element.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -91,67 +90,64 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
 
   return (
     <div className="space-y-6 text-center sm:text-left">
-      {/* Eyebrow Badges */}
-      <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-        <Badge variant="neutral" size="sm">
-          Pilot: {PILOT_NAME}
-        </Badge>
-        <Badge variant="neutral" size="sm">
-          Multilingual AI Intake
-        </Badge>
-        {/* Electric Blue Accent per design.md */}
-        <Badge variant="commercial" size="sm">
-          Zero Upfront Fees
-        </Badge>
+      {/* Eyebrow Meta Info (Clean typography without badges) */}
+      <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 text-xs text-[#707070]">
+        <span>Pilot: {PILOT_NAME}</span>
+        <span>/</span>
+        <span>Multilingual AI Intake</span>
+        <span>/</span>
+        <span className="text-[#141414] font-medium">Zero Upfront Fees</span>
       </div>
 
-      {/* Hero Typography: 652 heading with 1.0 tight line-height and terminal period */}
+      {/* Hero Typography */}
       <div className="space-y-3 max-w-3xl mx-auto sm:mx-0">
         <h1 className="heading-1 text-[#141414] tracking-tight">
           Find trusted local repair services.
         </h1>
         <p className="subtitle-lead text-base sm:text-lg max-w-2xl leading-relaxed">
-          Search verified electricians, plumbers, and AC technicians across Colombo. Describe your problem naturally in English, Sinhala, Tamil, or Singlish — our explainable matching connects you with verified local specialists.
+          Search verified electricians, plumbers, and AC technicians across Colombo. Describe your problem naturally in English, Sinhala, Tamil, or Singlish. Our explainable matching connects you with verified local specialists.
         </p>
       </div>
 
-      {/* Main Stadium Search & Intake Bar (Inspired by ondemand.lk, elevated with Mobbin geometry) */}
+      {/* Main Search and Intake Bar */}
       <form onSubmit={handleSubmit} id="search-intake-bar" className="space-y-3">
         <div className="bg-[#f0f0f0] rounded-full p-2 sm:p-2.5 border border-[#e0e0e0] flex flex-col md:flex-row items-center gap-2 focus-within:ring-2 focus-within:ring-[#141414] focus-within:bg-white transition-all">
-          {/* Search Icon & Problem Input */}
+          {/* Search Icon and Problem Input */}
           <div className="flex items-center gap-3 flex-1 w-full px-3.5 sm:px-4">
-            <span className="text-lg text-[#707070] shrink-0">🔍</span>
+            <span className="text-[#707070] shrink-0">
+              <SearchIcon className="w-5 h-5 text-[#707070]" />
+            </span>
             <input
               id="search-input"
               type="text"
               required
               value={problemText}
               onChange={(e) => setProblemText(e.target.value)}
-              placeholder="What do you need fixed? e.g. AC leaking, pipe burst, breaker tripping..."
+              placeholder="What needs fixing? e.g. AC leaking, pipe burst, breaker tripping..."
               className="w-full bg-transparent border-none text-[#141414] placeholder-[#707070] text-sm sm:text-base font-normal focus:outline-none"
             />
           </div>
 
-          {/* Area Selector ("Near Me" pill like ondemand.lk) */}
+          {/* Area Selector */}
           <div className="flex items-center gap-2 w-full md:w-auto shrink-0 justify-between md:justify-end px-2 sm:px-0">
             <div className="relative shrink-0">
               <select
                 value={selectedArea}
                 onChange={(e) => setSelectedArea(e.target.value)}
-                className="bg-white text-[#141414] border border-[#e0e0e0] text-xs font-semibold rounded-full pl-3.5 pr-7 py-2.5 appearance-none focus:outline-none focus:ring-1 focus:ring-[#141414] cursor-pointer"
+                className="bg-white text-[#141414] border border-[#e0e0e0] text-xs font-semibold rounded-full pl-3.5 pr-8 py-2.5 appearance-none focus:outline-none focus:ring-1 focus:ring-[#141414] cursor-pointer"
               >
                 {PILOT_AREAS.map((a) => (
                   <option key={a} value={a}>
-                    📍 Near Me ({a})
+                    Near Me ({a})
                   </option>
                 ))}
               </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#707070] text-[10px]">
-                ▼
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#707070]">
+                <ChevronDownIcon className="w-3.5 h-3.5 text-[#707070]" />
               </div>
             </div>
 
-            {/* Primary Action Button (Stadium pill per design.md) */}
+            {/* Primary Action Button */}
             <Button
               type="submit"
               variant="primary"
@@ -160,19 +156,19 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
               disabled={!problemText.trim() || isPending}
               className="shrink-0 px-6 sm:px-7 font-bold text-xs sm:text-sm"
             >
-              {isPending ? "Analyzing with AI..." : "Find Specialist →"}
+              {isPending ? "Analyzing with AI..." : "Find Specialist"}
             </Button>
           </div>
         </div>
 
-        {/* Optional Time & Preferences Expandable Toggle */}
+        {/* Optional Time and Preferences Expandable Toggle */}
         <div className="flex items-center justify-between px-2 pt-0.5">
           <button
             type="button"
             onClick={() => setShowAdvanced(!showAdvanced)}
             className="text-xs font-semibold text-[#707070] hover:text-[#141414] transition-colors inline-flex items-center gap-1 cursor-pointer"
           >
-            <span>{showAdvanced ? "▲ Hide scheduling options" : "▼ Specify preferred day & time window"}</span>
+            <span>{showAdvanced ? "Hide scheduling options" : "Specify preferred day and time window"}</span>
           </button>
           <span className="text-[11px] text-[#707070] hidden sm:block">
             Today is {getColomboToday()} (Colombo time)
@@ -242,7 +238,7 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
         <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
           {DEMO_EXAMPLE_CHIPS.map((chip, idx) => (
             <Chip key={idx} onClick={() => handleChipClick(chip)}>
-              ⚡ {chip.label}
+              {chip.label}
             </Chip>
           ))}
         </div>

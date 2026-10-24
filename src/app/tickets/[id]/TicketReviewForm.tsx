@@ -7,7 +7,6 @@ import { CATEGORIES, getTagsForCategory, Category } from "@/config/taxonomy";
 import { TIME_WINDOWS, TIME_WINDOW_LABELS } from "@/lib/time";
 import { updateTicketAction, confirmTicketAction, answerClarificationAction } from "@/server/actions/tickets";
 import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
 import { SafetyBanner } from "@/components/SafetyBanner";
 import Link from "next/link";
 
@@ -39,7 +38,6 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
 
   const handleCategoryChange = (newCat: Category) => {
     setCategory(newCat);
-    // Filter tags to new category
     const validTags = getTagsForCategory(newCat).map((t) => t.id);
     setTags(tags.filter((t) => validTags.includes(t)));
   };
@@ -87,9 +85,9 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
             <span className="text-xs font-bold uppercase tracking-wider text-[#141414]">
               Clarification Question
             </span>
-            <Badge variant="neutral" size="sm">
+            <span className="text-[11px] text-[#707070] bg-[#f0f0f0] px-2 py-0.5 rounded-full font-medium">
               AI Request
-            </Badge>
+            </span>
           </div>
           <p className="text-sm font-semibold text-[#141414]">{ticket.clarificationQ}</p>
           <form onSubmit={handleClarification} className="flex gap-2">
@@ -107,7 +105,7 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
               loading={isClarifying}
               disabled={!clarificationAnswer.trim() || isClarifying}
             >
-              Answer & Refine
+              Answer and Refine
             </Button>
           </form>
         </div>
@@ -121,13 +119,13 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
             <h2 className="text-lg font-bold text-[#141414] tracking-tight">
               What the AI Understood
             </h2>
-            <Badge variant={ticket.aiSource === "ai" ? "neutral" : "sample"} size="sm">
+            <span className="text-xs text-[#707070] bg-[#f5f5f5] px-2.5 py-0.5 rounded-full font-medium">
               Source: {ticket.aiSource === "ai" ? "AI Model" : "Basic Parser"}
-            </Badge>
+            </span>
           </div>
           <div className="flex items-center gap-2 text-xs text-[#707070]">
             <span>Language: <strong className="text-[#141414] uppercase">{ticket.detectedLanguage}</strong></span>
-            <span>•</span>
+            <span>/</span>
             <span>Confidence: <strong className="text-[#141414]">High</strong></span>
           </div>
         </div>
@@ -192,7 +190,7 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
                         : "bg-[#f3f3f3] text-[#262626] border-transparent hover:bg-[#e0e0e0]"
                     }`}
                   >
-                    {isSelected ? "✓ " : ""}{tag.label_en}
+                    {tag.label_en}
                   </button>
                 );
               })}
@@ -275,7 +273,7 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
             onClick={() => setShowOriginal(!showOriginal)}
             className="text-xs font-semibold text-[#707070] hover:text-[#141414] cursor-pointer flex items-center gap-1"
           >
-            {showOriginal ? "▲ Hide your original words" : "▼ Show your original words"}
+            {showOriginal ? "Hide your original words" : "Show your original words"}
           </button>
           {showOriginal && (
             <div className="mt-2 p-4 bg-[#f3f3f3] rounded-[16px] text-xs text-[#262626] font-mono leading-relaxed">
@@ -304,7 +302,6 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
             </Link>
           </div>
 
-          {/* Honesty Rule H5: User must press Confirm ticket before matching runs */}
           <Button
             type="button"
             variant="primary"
@@ -313,7 +310,7 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
             onClick={handleConfirm}
             className="w-full sm:w-auto"
           >
-            Confirm Ticket & Find Providers →
+            Confirm Ticket and Find Providers
           </Button>
         </div>
       </div>

@@ -2,8 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { PlumberIcon, ElectricianIcon, ACIcon } from "@/components/ui/Icons";
 
 export interface FeaturedProviderItem {
   id: string;
@@ -26,7 +26,7 @@ const SAMPLE_FEATURED_PROVIDERS: FeaturedProviderItem[] = [
     rating: "4.9",
     jobsCompleted: 184,
     visitFeeLkr: 2500,
-    tagline: "Licensed domestic wireman · tripping breakers, switches & fan repairs",
+    tagline: "Licensed domestic wireman / tripping breakers, switches and fan repairs",
     samplePrompt: "Main breaker tripping repeatedly and ceiling fan speed regulator broken",
   },
   {
@@ -37,7 +37,7 @@ const SAMPLE_FEATURED_PROVIDERS: FeaturedProviderItem[] = [
     rating: "4.8",
     jobsCompleted: 142,
     visitFeeLkr: 2000,
-    tagline: "Domestic master plumber · kitchen sink leaks, tap fittings & drainage",
+    tagline: "Domestic master plumber / kitchen sink leaks, tap fittings and drainage",
     samplePrompt: "Kitchen sink pipe leaking under the counter, need repair tomorrow morning",
   },
   {
@@ -48,7 +48,7 @@ const SAMPLE_FEATURED_PROVIDERS: FeaturedProviderItem[] = [
     rating: "4.8",
     jobsCompleted: 165,
     visitFeeLkr: 3500,
-    tagline: "HVAC specialist · inverter AC servicing, gas charging & coil leaks",
+    tagline: "HVAC specialist / inverter AC servicing, gas charging and coil leaks",
     samplePrompt: "Split AC not cooling properly and blowing warm air",
   },
   {
@@ -59,7 +59,7 @@ const SAMPLE_FEATURED_PROVIDERS: FeaturedProviderItem[] = [
     rating: "4.9",
     jobsCompleted: 210,
     visitFeeLkr: 3000,
-    tagline: "Sanitary fittings specialist · blocked drains & commode cistern valves",
+    tagline: "Sanitary fittings specialist / blocked drains and commode cistern valves",
     samplePrompt: "Bathroom drain blocked and toilet commode flush leaking constantly",
   },
 ];
@@ -84,18 +84,18 @@ export const FeaturedTechnicians: React.FC<FeaturedTechniciansProps> = ({ onSele
           </p>
         </div>
         <Link href="/provider" className="text-xs font-semibold text-[#141414] hover:underline">
-          View all technicians →
+          View all technicians
         </Link>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {SAMPLE_FEATURED_PROVIDERS.map((provider) => {
-          const categoryIcon =
+          const IconComp =
             provider.category === "plumbing"
-              ? "🚰"
+              ? PlumberIcon
               : provider.category === "electrical"
-              ? "⚡"
-              : "❄️";
+              ? ElectricianIcon
+              : ACIcon;
 
           return (
             <div
@@ -104,13 +104,13 @@ export const FeaturedTechnicians: React.FC<FeaturedTechniciansProps> = ({ onSele
             >
               <div className="space-y-3">
                 <div className="flex items-start justify-between">
-                  {/* 30% iOS Squircle Icon */}
-                  <div className="w-12 h-12 bg-[#141414] text-white app-icon-squircle flex items-center justify-center text-xl shrink-0">
-                    {categoryIcon}
+                  {/* 30% iOS Squircle Icon Container */}
+                  <div className="w-12 h-12 bg-[#141414] text-white app-icon-squircle flex items-center justify-center shrink-0">
+                    <IconComp className="w-5 h-5 text-white" />
                   </div>
-                  <Badge variant="neutral" size="sm">
+                  <span className="text-xs font-medium text-[#707070] bg-[#f5f5f5] px-2.5 py-1 rounded-full">
                     {provider.homeArea}
-                  </Badge>
+                  </span>
                 </div>
 
                 <div className="space-y-1">
@@ -118,9 +118,9 @@ export const FeaturedTechnicians: React.FC<FeaturedTechniciansProps> = ({ onSele
                     {provider.displayName}
                   </h3>
                   <div className="flex items-center gap-1.5 text-xs text-[#707070]">
-                    <span className="text-[#141414] font-semibold">★ {provider.rating}</span>
+                    <span className="text-[#141414] font-semibold">Rating: {provider.rating}</span>
                     <span>(demo)</span>
-                    <span>•</span>
+                    <span>/</span>
                     <span>{provider.jobsCompleted} jobs</span>
                   </div>
                 </div>
@@ -146,7 +146,7 @@ export const FeaturedTechnicians: React.FC<FeaturedTechniciansProps> = ({ onSele
                   className="w-full text-xs font-semibold"
                   onClick={() => onSelectProvider && onSelectProvider(provider)}
                 >
-                  Book Specialist →
+                  Book Specialist
                 </Button>
               </div>
             </div>

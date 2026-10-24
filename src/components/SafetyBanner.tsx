@@ -1,4 +1,5 @@
 import React from "react";
+import { AlertIcon } from "@/components/ui/Icons";
 
 export interface SafetyBannerProps {
   hazardText?: string;
@@ -14,8 +15,8 @@ export const SafetyBanner: React.FC<SafetyBannerProps> = ({
       role="alert"
       className={`bg-[#141414] text-white rounded-[24px] p-5 sm:p-6 flex items-start gap-4 ${className}`}
     >
-      <div className="w-9 h-9 rounded-full bg-white text-[#141414] flex items-center justify-center shrink-0 font-bold text-base">
-        ⚠️
+      <div className="w-9 h-9 rounded-full bg-white text-[#141414] flex items-center justify-center shrink-0">
+        <AlertIcon className="w-5 h-5 text-[#141414]" />
       </div>
       <div className="space-y-2 text-xs sm:text-sm">
         <h3 className="font-bold text-sm sm:text-base tracking-tight text-white">

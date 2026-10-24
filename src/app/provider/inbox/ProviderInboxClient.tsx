@@ -2,7 +2,6 @@
 
 import React, { useState, useTransition } from "react";
 import { Booking, JobTicket, ProviderSlot, Provider } from "@/server/db/schema";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { SafetyBanner } from "@/components/SafetyBanner";
 import {
@@ -90,14 +89,14 @@ export default function ProviderInboxClient({
       <div className="bg-[#141414] text-white rounded-[24px] p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
             <h2 className="text-lg font-bold tracking-tight">Active as: {provider.displayName}</h2>
-            <Badge variant="sample" size="sm">
+            <span className="text-[11px] text-[#adadad] bg-white/10 px-2 py-0.5 rounded-full">
               Demo Identity
-            </Badge>
+            </span>
           </div>
           <p className="text-xs text-[#adadad]">
-            Categories: {provider.categories.join(", ")} · Home Base: {provider.homeArea} · Rating: ★ {provider.rating} (demo)
+            Categories: {provider.categories.join(", ")} / Home Base: {provider.homeArea} / Rating: {provider.rating} (demo)
           </p>
         </div>
 
@@ -108,7 +107,7 @@ export default function ProviderInboxClient({
           onClick={handleSwitchProvider}
           className="bg-transparent text-white border-white/20 hover:bg-white/10 shrink-0"
         >
-          Switch Sample Provider ⇄
+          Switch Sample Provider
         </Button>
       </div>
 
@@ -156,7 +155,7 @@ export default function ProviderInboxClient({
               : "text-[#707070] hover:text-[#141414] hover:bg-[#f3f3f3]"
           }`}
         >
-          History & Completed ({inbox.past.length})
+          History and Completed ({inbox.past.length})
         </button>
       </div>
 
@@ -164,7 +163,6 @@ export default function ProviderInboxClient({
       <div className="space-y-4">
         {currentList.length === 0 ? (
           <div className="bg-white rounded-[24px] border border-[#f0f0f0] p-10 text-center space-y-2">
-            <span className="text-2xl">📭</span>
             <h3 className="font-bold text-[#141414] text-sm">No bookings in this tab</h3>
             <p className="text-xs text-[#707070]">
               New resident requests will automatically appear here within ~5 seconds.
@@ -181,9 +179,9 @@ export default function ProviderInboxClient({
                 <div className="space-y-1">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-mono text-xs text-[#707070]">{booking.id}</span>
-                    <Badge variant={booking.status === "accepted" ? "success" : "neutral"} size="sm">
+                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#f3f3f3] text-[#141414] border border-[#e0e0e0]">
                       {booking.status.replace(/_/g, " ").toUpperCase()}
-                    </Badge>
+                    </span>
                     {ticket.residentName && (
                       <span className="text-xs text-[#141414] font-medium">
                         Resident: {ticket.residentName}
@@ -196,7 +194,7 @@ export default function ProviderInboxClient({
                 <div className="text-right sm:text-right shrink-0">
                   <span className="text-xs text-[#707070] block">Scheduled Slot</span>
                   <span className="font-bold text-sm text-[#141414]">
-                    {slot.date} · <span className="capitalize">{slot.window}</span>
+                    {slot.date} / <span className="capitalize">{slot.window}</span>
                   </span>
                 </div>
               </div>
@@ -206,22 +204,22 @@ export default function ProviderInboxClient({
                 <SafetyBanner hazardText="Hazard alert flagged by resident input (sparks, burning odor, or electrical danger). Exercise safety protocols on arrival." />
               )}
 
-              {/* Structured Job Details Strip (The Provider Value Prop) */}
+              {/* Structured Job Details Strip */}
               <div className="bg-[#f3f3f3] rounded-[16px] p-4 space-y-2 text-xs text-[#262626]">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="font-semibold text-[#141414]">Structured Job Ticket:</span>
-                  <Badge variant="neutral" size="sm">
+                  <span className="bg-white px-2.5 py-0.5 rounded-full border border-[#e0e0e0]">
                     Category: {ticket.category}
-                  </Badge>
-                  <Badge variant="neutral" size="sm">
+                  </span>
+                  <span className="bg-white px-2.5 py-0.5 rounded-full border border-[#e0e0e0]">
                     Area: {ticket.area}
-                  </Badge>
-                  <Badge variant="neutral" size="sm">
+                  </span>
+                  <span className="bg-white px-2.5 py-0.5 rounded-full border border-[#e0e0e0]">
                     Urgency: {ticket.urgency}
-                  </Badge>
-                  <Badge variant="neutral" size="sm">
+                  </span>
+                  <span className="bg-white px-2.5 py-0.5 rounded-full border border-[#e0e0e0]">
                     Language: {ticket.detectedLanguage.toUpperCase()}
-                  </Badge>
+                  </span>
                 </div>
 
                 {ticket.tags && ticket.tags.length > 0 && (
@@ -269,7 +267,7 @@ export default function ProviderInboxClient({
                               : "bg-white text-[#262626] border-[#e0e0e0] hover:bg-[#f3f3f3]"
                           }`}
                         >
-                          {s.date} · <span className="capitalize">{s.window}</span>
+                          {s.date} / <span className="capitalize">{s.window}</span>
                         </button>
                       ))}
                     </div>
@@ -299,7 +297,7 @@ export default function ProviderInboxClient({
                 </div>
               )}
 
-              {/* Action Buttons */}
+              {/* Action Buttons without arrows or checkmark symbols */}
               <div className="flex flex-wrap items-center justify-end gap-2 pt-1 border-t border-[#f0f0f0]">
                 {booking.status === "requested" && (
                   <>
@@ -327,7 +325,7 @@ export default function ProviderInboxClient({
                       loading={isPending}
                       onClick={() => handleAccept(booking.id)}
                     >
-                      Accept Booking ✓
+                      Accept Booking
                     </Button>
                   </>
                 )}
@@ -340,7 +338,7 @@ export default function ProviderInboxClient({
                     loading={isPending}
                     onClick={() => handleComplete(booking.id)}
                   >
-                    Mark Job Completed ✓
+                    Mark Job Completed
                   </Button>
                 )}
               </div>
