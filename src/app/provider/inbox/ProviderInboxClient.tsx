@@ -87,7 +87,7 @@ export default function ProviderInboxClient({
   return (
     <div className="space-y-6">
       {/* Provider Identity Header Banner */}
-      <div className="bg-[#141414] text-white rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-[#141414] text-white rounded-[24px] p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -163,7 +163,7 @@ export default function ProviderInboxClient({
       {/* Booking List */}
       <div className="space-y-4">
         {currentList.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-[#f0f0f0] p-10 text-center space-y-2">
+          <div className="bg-white rounded-[24px] border border-[#f0f0f0] p-10 text-center space-y-2">
             <span className="text-2xl">📭</span>
             <h3 className="font-bold text-[#141414] text-sm">No bookings in this tab</h3>
             <p className="text-xs text-[#707070]">
@@ -174,7 +174,7 @@ export default function ProviderInboxClient({
           currentList.map(({ booking, ticket, slot, proposedSlot }) => (
             <div
               key={booking.id}
-              className="bg-white rounded-2xl border border-[#f0f0f0] p-5 sm:p-6 space-y-4 shadow-sm"
+              className="bg-white rounded-[24px] border border-[#f0f0f0] p-5 sm:p-6 space-y-4"
             >
               {/* Header Info */}
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
@@ -207,7 +207,7 @@ export default function ProviderInboxClient({
               )}
 
               {/* Structured Job Details Strip (The Provider Value Prop) */}
-              <div className="bg-[#f3f3f3] rounded-xl p-3.5 space-y-2 text-xs text-[#262626]">
+              <div className="bg-[#f3f3f3] rounded-[16px] p-4 space-y-2 text-xs text-[#262626]">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="font-semibold text-[#141414]">Structured Job Ticket:</span>
                   <Badge variant="neutral" size="sm">
@@ -230,7 +230,7 @@ export default function ProviderInboxClient({
                     {ticket.tags.map((t) => (
                       <span
                         key={t}
-                        className="px-2 py-0.5 bg-white rounded-full text-[11px] border border-[#e0e0e0] font-medium"
+                        className="px-2.5 py-0.5 bg-white rounded-full text-[11px] border border-[#e0e0e0] font-medium"
                       >
                         {t}
                       </span>
@@ -245,14 +245,14 @@ export default function ProviderInboxClient({
 
               {/* Proposal notification if waiting on resident */}
               {proposedSlot && booking.status === "alternative_proposed" && (
-                <div className="bg-amber-50 p-3 rounded-xl border border-amber-200 text-xs text-amber-900">
+                <div className="bg-[#f3f3f3] p-4 rounded-[16px] border border-[#e0e0e0] text-xs text-[#141414]">
                   You proposed an alternative slot on <strong>{proposedSlot.date} ({proposedSlot.window})</strong>. Waiting for resident response.
                 </div>
               )}
 
               {/* Propose another slot inline drawer */}
               {proposingBookingId === booking.id && (
-                <div className="bg-[#fafafa] border border-[#e0e0e0] rounded-xl p-4 space-y-3">
+                <div className="bg-[#fafafa] border border-[#e0e0e0] rounded-[16px] p-4 space-y-3">
                   <h4 className="text-xs font-bold text-[#141414]">
                     Select another available time to propose to resident:
                   </h4>

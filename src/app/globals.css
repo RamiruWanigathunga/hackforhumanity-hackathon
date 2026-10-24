@@ -15,6 +15,15 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background-color: #141414;
+  color: #ffffff;
+}
+
 body {
   background-color: var(--canvas);
   color: var(--ink);

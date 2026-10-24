@@ -62,9 +62,9 @@ export const StatusTimeline: React.FC<StatusTimelineProps> = ({ events, currentS
           const isNegative = evt.type === "declined" || evt.type === "cancelled";
 
           let dotColor = "bg-[#141414]";
-          if (isAccepted) dotColor = "bg-emerald-600";
-          if (isWarning) dotColor = "bg-amber-500";
-          if (isNegative) dotColor = "bg-red-500";
+          if (isAccepted) dotColor = "bg-[#141414]";
+          if (isWarning) dotColor = "bg-[#707070]";
+          if (isNegative) dotColor = "bg-[#141414]";
 
           return (
             <div key={evt.id} className="relative flex items-start gap-3">
@@ -84,7 +84,7 @@ export const StatusTimeline: React.FC<StatusTimelineProps> = ({ events, currentS
                 </div>
                 <div className="text-xs text-[#707070]">
                   Actor: <span className="font-medium text-[#262626]">{getActorLabel(evt.actor)}</span>
-                  {evt.note && <p className="mt-1 text-xs text-[#141414] bg-[#f3f3f3] p-2 rounded-lg">{evt.note}</p>}
+                  {evt.note && <p className="mt-1 text-xs text-[#141414] bg-[#f3f3f3] p-2.5 rounded-[12px]">{evt.note}</p>}
                 </div>
               </div>
             </div>

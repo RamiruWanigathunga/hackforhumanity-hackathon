@@ -39,8 +39,8 @@ export default function ResidentBookingActions({
 
   if (status === "alternative_proposed") {
     return (
-      <div className="bg-amber-50 border border-amber-300 rounded-2xl p-5 space-y-3">
-        <h4 className="font-bold text-sm text-amber-950">
+      <div className="bg-[#f3f3f3] border border-[#e0e0e0] rounded-[20px] p-5 sm:p-6 space-y-3">
+        <h4 className="font-bold text-sm text-[#141414]">
           The technician suggested another time. Does this work for you?
         </h4>
         <div className="flex gap-3">
@@ -69,7 +69,7 @@ export default function ResidentBookingActions({
 
   if (status === "completed") {
     return (
-      <div className="bg-[#fafafa] border border-[#f0f0f0] rounded-2xl p-5 space-y-2">
+      <div className="bg-[#fafafa] border border-[#f0f0f0] rounded-[20px] p-5 space-y-2">
         <span className="text-xs font-semibold text-[#141414] block">
           Rate your service experience:
         </span>

@@ -82,7 +82,7 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
 
       {/* Clarifying Question Block */}
       {ticket.clarificationQ && !ticket.clarificationA && (
-        <div className="bg-[#fafafa] border-2 border-[#141414] rounded-2xl p-5 space-y-3">
+        <div className="bg-[#fafafa] border border-[#141414] rounded-[24px] p-5 sm:p-6 space-y-3">
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-[#141414]">
               Clarification Question
@@ -98,7 +98,7 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
               value={clarificationAnswer}
               onChange={(e) => setClarificationAnswer(e.target.value)}
               placeholder="Your answer..."
-              className="flex-1 bg-white border border-[#e0e0e0] rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#141414]"
+              className="flex-1 bg-white border border-[#e0e0e0] rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#141414]"
             />
             <Button
               type="submit"
@@ -114,7 +114,7 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
       )}
 
       {/* What we understood review card */}
-      <div className="bg-white rounded-2xl border border-[#f0f0f0] p-6 space-y-6">
+      <div className="bg-white rounded-[24px] border border-[#f0f0f0] p-6 sm:p-8 space-y-6">
         {/* Meta row */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#f0f0f0] pb-4">
           <div className="flex items-center gap-2">
@@ -142,7 +142,7 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
             rows={2}
             value={summary}
             onChange={(e) => setSummary(e.target.value)}
-            className="w-full bg-[#f0f0f0] text-[#141414] rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#141414] resize-none"
+            className="w-full bg-[#f0f0f0] text-[#141414] rounded-[16px] px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#141414] resize-none"
           />
         </div>
 
@@ -210,7 +210,7 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
               id="area"
               value={area}
               onChange={(e) => setArea(e.target.value)}
-              className="w-full bg-[#f0f0f0] text-[#141414] rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#141414]"
+              className="w-full bg-[#f0f0f0] text-[#141414] rounded-[16px] px-3.5 py-3 text-xs focus:outline-none focus:ring-2 focus:ring-[#141414] cursor-pointer"
             >
               {PILOT_AREAS.map((a) => (
                 <option key={a} value={a}>
@@ -229,7 +229,7 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
               type="date"
               value={preferredDate}
               onChange={(e) => setPreferredDate(e.target.value)}
-              className="w-full bg-[#f0f0f0] text-[#141414] rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#141414]"
+              className="w-full bg-[#f0f0f0] text-[#141414] rounded-[16px] px-3.5 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#141414]"
             />
           </div>
 
@@ -241,7 +241,7 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
               id="window"
               value={preferredWindow}
               onChange={(e) => setPreferredWindow(e.target.value)}
-              className="w-full bg-[#f0f0f0] text-[#141414] rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#141414]"
+              className="w-full bg-[#f0f0f0] text-[#141414] rounded-[16px] px-3.5 py-3 text-xs focus:outline-none focus:ring-2 focus:ring-[#141414] cursor-pointer"
             >
               {TIME_WINDOWS.map((w) => (
                 <option key={w} value={w}>
@@ -259,7 +259,7 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
               id="urgency"
               value={urgency}
               onChange={(e) => setUrgency(e.target.value)}
-              className="w-full bg-[#f0f0f0] text-[#141414] rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#141414]"
+              className="w-full bg-[#f0f0f0] text-[#141414] rounded-[16px] px-3.5 py-3 text-xs focus:outline-none focus:ring-2 focus:ring-[#141414] cursor-pointer"
             >
               <option value="low">Low</option>
               <option value="normal">Normal</option>
@@ -278,7 +278,7 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
             {showOriginal ? "▲ Hide your original words" : "▼ Show your original words"}
           </button>
           {showOriginal && (
-            <div className="mt-2 p-3 bg-[#f3f3f3] rounded-xl text-xs text-[#262626] font-mono leading-relaxed">
+            <div className="mt-2 p-4 bg-[#f3f3f3] rounded-[16px] text-xs text-[#262626] font-mono leading-relaxed">
               &quot;{ticket.rawText}&quot;
             </div>
           )}
