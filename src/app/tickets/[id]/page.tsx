@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import { getTicket } from "@/server/db/queries";
 import TicketReviewForm from "./TicketReviewForm";
 
+export const dynamic = "force-dynamic";
+
 export default async function TicketReviewPage({
   params,
 }: {

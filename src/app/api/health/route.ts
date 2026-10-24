@@ -3,6 +3,8 @@ import { db } from "@/server/db/client";
 import { sql } from "drizzle-orm";
 import { env } from "@/server/env";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   let dbOk = false;
   try {

@@ -6,6 +6,8 @@ import MatchesList from "./MatchesList";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 
+export const dynamic = "force-dynamic";
+
 export default async function MatchesPage({
   params,
 }: {
