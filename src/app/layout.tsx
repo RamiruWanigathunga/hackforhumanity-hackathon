@@ -14,6 +14,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "HelpDesk LK : Institutional AI Local Trades Matching",
   description: "Multilingual AI intake and explainable transparent local trades matching in Sri Lanka.",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({

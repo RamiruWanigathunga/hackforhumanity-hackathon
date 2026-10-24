@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { Button } from "@/components/ui/Button";
+import { Logo } from "@/components/Logo";
 
 export default async function Header() {
   const cookieStore = await cookies();
@@ -18,12 +19,10 @@ export default async function Header() {
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b border-[#dee1e6] h-16 flex items-center">
       <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 flex items-center justify-between">
-        {/* Brand Wordmark with Coinbase Blue accent */}
+        {/* Brand Wordmark with Coinbase Blue Logo */}
         <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-7 h-7 rounded-full bg-[#0052ff] flex items-center justify-center text-white text-xs font-bold">
-              H
-            </div>
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <Logo size={28} />
             <span className="font-semibold text-lg tracking-tight text-[#0a0b0d]">
               HelpDesk<span className="text-[#0052ff]">.lk</span>
             </span>

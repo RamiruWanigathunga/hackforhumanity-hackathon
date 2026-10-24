@@ -20,7 +20,7 @@ export function SegmentedControl<T extends string>({
 }: SegmentedControlProps<T>) {
   return (
     <div
-      className={`inline-flex items-center p-1 bg-[#f3f3f3] rounded-full gap-1 ${className}`}
+      className={`inline-flex items-center p-1 bg-[#eef0f3] rounded-full gap-1 ${className}`}
       role="tablist"
     >
       {options.map((opt) => {
@@ -34,8 +34,8 @@ export function SegmentedControl<T extends string>({
             onClick={() => onChange(opt.value)}
             className={`px-5 py-2 text-xs font-semibold rounded-full transition-all cursor-pointer ${
               isActive
-                ? "bg-white text-[#141414] shadow-sm" // The one soft shadow exception in Mobbin
-                : "text-[#707070] hover:text-[#141414]"
+                ? "bg-white text-[#0a0b0d] shadow-sm"
+                : "text-[#5b616e] hover:text-[#0a0b0d]"
             }`}
           >
             {opt.label}

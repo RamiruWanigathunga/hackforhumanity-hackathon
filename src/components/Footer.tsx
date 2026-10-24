@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { Logo } from "@/components/Logo";
 
 export default function Footer() {
   return (
@@ -36,10 +37,8 @@ export default function Footer() {
         <div className="max-w-[1200px] mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 pb-12">
           {/* Col 1: Brand */}
           <div className="col-span-2 space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-full bg-[#0052ff] flex items-center justify-center text-white text-xs font-bold">
-                H
-              </div>
+            <div className="flex items-center gap-2.5">
+              <Logo size={24} />
               <span className="font-semibold text-base text-[#0a0b0d]">HelpDesk.lk</span>
             </div>
             <p className="body-sm text-[#7c828a] max-w-xs leading-relaxed">

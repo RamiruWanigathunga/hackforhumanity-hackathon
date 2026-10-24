@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import { getRecentResidentBookings } from "@/server/db/queries";
 import { Button } from "@/components/ui/Button";
+import { Booking } from "@/server/db/schema";
 
 export default async function ResidentBookingsPage() {
   const cookieStore = await cookies();
@@ -16,7 +17,7 @@ export default async function ResidentBookingsPage() {
     }
   }
 
-  let bookingsList: any[] = [];
+  let bookingsList: Booking[] = [];
   try {
     if (bookingIds.length > 0) {
       bookingsList = await getRecentResidentBookings(bookingIds);
