@@ -101,7 +101,7 @@ export function fallbackParse(
     formDefaults?.preferredWindow &&
     ["morning", "afternoon", "evening", "anytime"].includes(formDefaults.preferredWindow)
   ) {
-    preferredWindow = formDefaults.preferredWindow as any;
+    preferredWindow = formDefaults.preferredWindow as "morning" | "afternoon" | "evening" | "anytime";
   } else {
     if (/morning|udee|kaalai|උදේ|காலை/.test(lower)) {
       preferredWindow = "morning";

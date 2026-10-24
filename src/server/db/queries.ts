@@ -1,7 +1,7 @@
 import "server-only";
 import { eq, and, gte, lte, desc, inArray } from "drizzle-orm";
 import { db } from "./client";
-import { providers, providerSlots, jobTickets, bookings, bookingEvents, Provider, JobTicket, Booking, ProviderSlot } from "./schema";
+import { providers, providerSlots, jobTickets, bookings, bookingEvents, Provider, JobTicket, ProviderSlot } from "./schema";
 import { getColomboToday, getColomboOffsetDate } from "@/lib/time";
 
 export async function getTicket(id: string): Promise<JobTicket | null> {
