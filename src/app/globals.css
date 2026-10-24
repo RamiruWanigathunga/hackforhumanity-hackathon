@@ -1,26 +1,46 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --canvas: #ffffff;
+    --canvas-soft: #f3f3f3;
+    --field: #f0f0f0;
+    --hairline-soft: #f0f0f0;
+    --hairline: #e0e0e0;
+    --ink: #141414;
+    --ink-soft: #262626;
+    --text-muted: #707070;
+    --text-faint: #adadad;
+    --accent: #0066ff;
+    --radius-sm: 16px;
+    --radius-md: 24px;
+    --radius-full: 9999px;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom helper utilities for Mobbin Design System */
+.bg-canvas { background-color: var(--canvas); }
+.bg-canvas-soft { background-color: var(--canvas-soft); }
+.bg-field { background-color: var(--field); }
+.border-hairline { border-color: var(--hairline); }
+.border-hairline-soft { border-color: var(--hairline-soft); }
+.text-ink { color: var(--ink); }
+.text-ink-soft { color: var(--ink-soft); }
+.text-muted { color: var(--text-muted); }
+.text-faint { color: var(--text-faint); }
+.text-accent { color: var(--accent); }
+.bg-accent { background-color: var(--accent); }
+.bg-ink { background-color: var(--ink); }
+
+/* Squircle 30% border radius */
+.squircle {
+  border-radius: 30%;
 }
