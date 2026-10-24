@@ -82,6 +82,7 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
   ];
 
   const handleChipClick = (chip: DemoChipItem) => {
+    setErrorMsg(null);
     setProblemText(chip.text);
     setSelectedArea(chip.area);
     setSelectedDay(chip.day);
@@ -90,7 +91,13 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrorMsg(null);
     if (!problemText.trim()) return;
+
+    if (problemText.trim().length < 2) {
+      setErrorMsg("Please describe your problem in at least a few words.");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("rawText", problemText);
@@ -100,7 +107,19 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
     if (residentName) formData.append("residentName", residentName);
 
     startTransition(async () => {
-      await createTicketAction(formData);
+      try {
+        await createTicketAction(formData);
+      } catch (err: unknown) {
+        if (
+          err &&
+          typeof err === "object" &&
+          ("digest" in err || "message" in err) &&
+          String((err as { digest?: string; message?: string }).message || (err as { digest?: string; message?: string }).digest).includes("NEXT_REDIRECT")
+        ) {
+          throw err;
+        }
+        setErrorMsg((err as Error)?.message || "Failed to process request. Please try again.");
+      }
     });
   };
 
@@ -173,6 +192,12 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
                 </Button>
               </div>
             </div>
+
+            {errorMsg && (
+              <div className="bg-red-950/80 border border-red-500/50 text-red-200 text-xs px-4 py-2 rounded-full">
+                {errorMsg}
+              </div>
+            )}
 
             {/* Advanced Preferences Toggle */}
             <div className="flex items-center justify-between px-2 pt-1 text-xs text-[#a8acb3]">
