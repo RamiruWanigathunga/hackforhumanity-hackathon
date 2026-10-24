@@ -8,6 +8,8 @@ import { getColomboToday } from "@/lib/time";
 import { StatusPoller } from "@/components/StatusPoller";
 import ProviderInboxClient from "./ProviderInboxClient";
 
+export const instant = false;
+
 
 export default async function ProviderInboxPage() {
   const cookieStore = await cookies();

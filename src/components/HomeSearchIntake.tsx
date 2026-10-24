@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useTransition, useImperativeHandle, forwardRef } from "react";
+import React, { useState, useEffect, useTransition, useImperativeHandle, forwardRef } from "react";
 import { PILOT_AREAS } from "@/config/pilot";
 import { TIME_WINDOWS, TIME_WINDOW_LABELS, getColomboToday } from "@/lib/time";
 import { createTicketAction } from "@/server/actions/tickets";
@@ -49,6 +49,11 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
   const [selectedWindow, setSelectedWindow] = useState<string>("morning");
   const [residentName, setResidentName] = useState<string>("");
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [colomboToday, setColomboToday] = useState<string>("");
+
+  useEffect(() => {
+    setColomboToday(getColomboToday());
+  }, []);
   const [isPending, startTransition] = useTransition();
 
   useImperativeHandle(ref, () => ({
@@ -164,9 +169,11 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
               >
                 {showAdvanced ? "Hide scheduling options" : "Specify preferred day and time window"}
               </button>
-              <span className="hidden sm:inline">
-                Today is {getColomboToday()} (Colombo time)
-              </span>
+              {colomboToday && (
+                <span className="hidden sm:inline">
+                  Today is {colomboToday} (Colombo time)
+                </span>
+              )}
             </div>
 
             {/* Collapsible Advanced Form */}

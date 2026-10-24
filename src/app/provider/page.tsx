@@ -3,6 +3,8 @@ import { setDemoProviderAction } from "@/server/actions/provider";
 import { Button } from "@/components/ui/Button";
 import { PlumberIcon, ElectricianIcon, ACIcon } from "@/components/ui/Icons";
 
+export const instant = false;
+
 export default async function ProviderPickerPage() {
   const providersList = await listProviders();
 

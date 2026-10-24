@@ -5,6 +5,8 @@ import { rankProviders } from "@/server/matching/match";
 import MatchesList from "./MatchesList";
 import { Button } from "@/components/ui/Button";
 
+export const instant = false;
+
 export default async function MatchesPage({
   params,
 }: {
