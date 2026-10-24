@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -25,7 +26,7 @@ const notoTamil = Noto_Sans_Tamil({
 });
 
 export const metadata: Metadata = {
-  title: "HelpDesk LK — AI Local Service Matcher",
+  title: "HelpDesk LK — AI Local Service Matcher.",
   description: "Multilingual AI intake and explainable transparent local trades matching in Sri Lanka.",
 };
 
@@ -39,9 +40,9 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${notoSinhala.variable} ${notoTamil.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-canvas text-ink">
+      <body className="min-h-full flex flex-col bg-white text-[#141414] font-sans">
         <Header />
-        <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 py-6 md:py-10">
+        <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 py-8 md:py-12">
           {children}
         </main>
         <Footer />

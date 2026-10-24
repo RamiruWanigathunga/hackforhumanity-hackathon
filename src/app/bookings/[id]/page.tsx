@@ -7,7 +7,6 @@ import ResidentBookingActions from "./ResidentBookingActions";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
-export const dynamic = "force-dynamic";
 
 export default async function BookingDetailPage({
   params,
@@ -31,38 +30,38 @@ export default async function BookingDetailPage({
   const isCancelled = booking.status === "cancelled";
   const isDeclined = booking.status === "declined";
 
-  let statusHeadline = "Requested: Waiting for Provider";
+  let statusHeadline = "Requested: Waiting for provider.";
   let statusBadgeVariant: "neutral" | "commercial" | "hazard" | "sample" | "success" = "neutral";
 
   if (isAccepted) {
-    statusHeadline = "Booking Confirmed by Provider";
+    statusHeadline = "Booking confirmed by technician.";
     statusBadgeVariant = "success";
   } else if (isProposal) {
-    statusHeadline = "Alternative Time Proposed";
+    statusHeadline = "Alternative time proposed by technician.";
     statusBadgeVariant = "commercial";
   } else if (isCompleted) {
-    statusHeadline = "Service Completed";
+    statusHeadline = "Service marked as completed.";
     statusBadgeVariant = "neutral";
   } else if (isCancelled) {
-    statusHeadline = "Booking Cancelled";
+    statusHeadline = "Booking request cancelled.";
     statusBadgeVariant = "hazard";
   } else if (isDeclined) {
-    statusHeadline = "Request Declined by Provider";
+    statusHeadline = "Request declined by technician.";
     statusBadgeVariant = "hazard";
   }
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6 py-4">
+    <div className="max-w-2xl mx-auto space-y-8 py-4 sm:py-6">
       {/* Real-time Poller auto-refreshes page every 5s while pending */}
       <StatusPoller currentStatus={booking.status} />
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <span className="text-xs font-semibold text-[#707070] uppercase tracking-wider">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+        <div className="space-y-1.5">
+          <span className="text-xs font-semibold text-[#707070] uppercase tracking-wider block">
             Booking Reference · {booking.id}
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#141414]">
+          <h1 className="heading-2 text-[#141414]">
             {statusHeadline}
           </h1>
         </div>
@@ -71,30 +70,30 @@ export default async function BookingDetailPage({
         </Badge>
       </div>
 
-      {/* Active Time Window Banner */}
-      <div className="bg-white rounded-2xl border border-[#f0f0f0] p-5 space-y-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+      {/* Active Time Window Banner (24px radius, 1px hairline border) */}
+      <div className="bg-white rounded-[24px] border border-[#f0f0f0] p-6 sm:p-7 space-y-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-xs">
           <div>
-            <span className="text-[#707070] block">Scheduled Time</span>
-            <span className="font-bold text-sm text-[#141414]">
+            <span className="text-[#707070] block">Scheduled Appointment</span>
+            <span className="font-bold text-base text-[#141414]">
               {slot?.date} · <span className="capitalize">{slot?.window}</span>
             </span>
           </div>
 
           {proposedSlot && isProposal && (
-            <div className="bg-amber-50 p-3 rounded-xl border border-amber-200">
-              <span className="text-amber-800 font-semibold block">Proposed Alternative</span>
-              <span className="font-bold text-sm text-amber-950">
+            <div className="bg-[#f3f3f3] p-4 rounded-[16px] border border-[#e0e0e0]">
+              <span className="text-[#141414] font-semibold block">Proposed Alternative</span>
+              <span className="font-bold text-sm text-[#141414]">
                 {proposedSlot.date} · <span className="capitalize">{proposedSlot.window}</span>
               </span>
             </div>
           )}
 
           <div>
-            <span className="text-[#707070] block">Technician</span>
+            <span className="text-[#707070] block">Assigned Technician</span>
             <span className="font-bold text-sm text-[#141414]">{provider?.displayName}</span>
             <span className="text-[11px] text-[#707070] block">
-              ★ {provider?.rating} (demo) · {provider?.homeArea}
+              ★ {provider?.rating} (demo) · Base: {provider?.homeArea}
             </span>
           </div>
 
@@ -102,12 +101,12 @@ export default async function BookingDetailPage({
             <span className="text-[#707070] block">Contact Phone</span>
             {/* Honesty Rule H6/H10: Phone shown only after acceptance */}
             {isAccepted || isCompleted ? (
-              <span className="font-mono font-bold text-sm text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">
+              <span className="font-mono font-bold text-sm text-[#141414] bg-[#f3f3f3] px-3 py-1 rounded-full inline-block mt-0.5">
                 {provider?.phoneMasked} (Revealed)
               </span>
             ) : (
-              <span className="text-xs text-[#707070] italic">
-                Masked until confirmed by provider
+              <span className="text-xs text-[#707070] italic block mt-0.5">
+                Masked until confirmed by technician
               </span>
             )}
           </div>
@@ -121,14 +120,14 @@ export default async function BookingDetailPage({
         />
       </div>
 
-      {/* Ticket Details */}
+      {/* Structured Ticket Details */}
       {ticket && (
-        <div className="bg-[#fafafa] rounded-2xl border border-[#f0f0f0] p-5 space-y-2 text-xs">
+        <div className="bg-[#f3f3f3] rounded-[24px] p-6 space-y-3 text-xs">
           <span className="font-bold text-[#141414] uppercase tracking-wider block">
             Job Details
           </span>
-          <p className="text-sm font-medium text-[#141414]">{ticket.summary}</p>
-          <div className="flex flex-wrap gap-1.5 pt-1">
+          <p className="text-sm font-semibold text-[#141414]">{ticket.summary}</p>
+          <div className="flex flex-wrap gap-2 pt-1">
             <Badge variant="neutral" size="sm">
               Trade: {ticket.category.replace(/_/g, " ")}
             </Badge>
@@ -143,7 +142,7 @@ export default async function BookingDetailPage({
       )}
 
       {/* Live Timeline */}
-      <div className="bg-white rounded-2xl border border-[#f0f0f0] p-5 space-y-2">
+      <div className="bg-white rounded-[24px] border border-[#f0f0f0] p-6 sm:p-7 space-y-3">
         <StatusTimeline
           currentStatus={booking.status}
           events={events.map((e) => ({

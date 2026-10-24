@@ -20,7 +20,7 @@ export function SegmentedControl<T extends string>({
 }: SegmentedControlProps<T>) {
   return (
     <div
-      className={`inline-flex items-center p-1 bg-[#f3f3f3] rounded-full border border-[#f0f0f0] gap-1 ${className}`}
+      className={`inline-flex items-center p-1 bg-[#f3f3f3] rounded-full gap-1 ${className}`}
       role="tablist"
     >
       {options.map((opt) => {
@@ -32,10 +32,10 @@ export function SegmentedControl<T extends string>({
             role="tab"
             aria-selected={isActive}
             onClick={() => onChange(opt.value)}
-            className={`px-4 py-1.5 text-xs font-semibold rounded-full transition-all cursor-pointer ${
+            className={`px-5 py-2 text-xs font-semibold rounded-full transition-all cursor-pointer ${
               isActive
-                ? "bg-white text-[#141414] shadow-sm"
-                : "text-[#707070] hover:text-[#141414] hover:bg-black/5"
+                ? "bg-white text-[#141414] shadow-sm" // The one soft shadow exception in Mobbin
+                : "text-[#707070] hover:text-[#141414]"
             }`}
           >
             {opt.label}

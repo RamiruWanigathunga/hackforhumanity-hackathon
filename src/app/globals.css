@@ -12,9 +12,6 @@
     --text-muted: #707070;
     --text-faint: #adadad;
     --accent: #0066ff;
-    --radius-sm: 16px;
-    --radius-md: 24px;
-    --radius-full: 9999px;
   }
 }
 
@@ -22,25 +19,67 @@ body {
   background-color: var(--canvas);
   color: var(--ink);
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom helper utilities for Mobbin Design System */
-.bg-canvas { background-color: var(--canvas); }
-.bg-canvas-soft { background-color: var(--canvas-soft); }
-.bg-field { background-color: var(--field); }
-.border-hairline { border-color: var(--hairline); }
-.border-hairline-soft { border-color: var(--hairline-soft); }
-.text-ink { color: var(--ink); }
-.text-ink-soft { color: var(--ink-soft); }
-.text-muted { color: var(--text-muted); }
-.text-faint { color: var(--text-faint); }
-.text-accent { color: var(--accent); }
-.bg-accent { background-color: var(--accent); }
-.bg-ink { background-color: var(--ink); }
+/* Mobbin Typography Hierarchy */
+.heading-display {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 650;
+  line-height: 1.0;
+  letter-spacing: 0;
+}
 
-/* Squircle 30% border radius */
-.squircle {
+.heading-1 {
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 650;
+  line-height: 1.0;
+  letter-spacing: 0;
+}
+
+.heading-2 {
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 650;
+  line-height: 1.13;
+  letter-spacing: 0;
+}
+
+.heading-3 {
+  font-size: 1.75rem;
+  font-weight: 650;
+  line-height: 1.13;
+  letter-spacing: 0;
+}
+
+.heading-4 {
+  font-size: 1.35rem;
+  font-weight: 650;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+.subtitle-lead {
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1.38;
+  color: #707070;
+}
+
+.body-text {
+  font-size: 1rem;
+  font-weight: 450;
+  line-height: 1.38;
+}
+
+.body-sm {
+  font-size: 0.875rem;
+  font-weight: 450;
+  line-height: 1.43;
+}
+
+/* Squircle 30% border radius motif */
+.app-icon-squircle {
   border-radius: 30%;
 }

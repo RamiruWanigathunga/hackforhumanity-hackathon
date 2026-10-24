@@ -13,10 +13,10 @@ export const Chip: React.FC<ChipProps> = ({
   return (
     <button
       type="button"
-      className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer border ${
+      className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer ${
         active
-          ? "bg-[#141414] text-white border-[#141414]"
-          : "bg-[#f3f3f3] text-[#262626] border-transparent hover:bg-[#e0e0e0] hover:text-black"
+          ? "bg-[#141414] text-white"
+          : "bg-[#f3f3f3] text-[#141414] hover:bg-[#e0e0e0]"
       } ${className}`}
       {...props}
     >

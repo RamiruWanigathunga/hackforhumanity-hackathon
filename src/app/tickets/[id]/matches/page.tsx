@@ -6,7 +6,6 @@ import MatchesList from "./MatchesList";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 
-export const dynamic = "force-dynamic";
 
 export default async function MatchesPage({
   params,
@@ -29,28 +28,31 @@ export default async function MatchesPage({
   const { matches, emptyReason } = rankProviders(ticket, providersWithSlots);
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6 py-4">
+    <div className="max-w-3xl mx-auto space-y-8 py-4 sm:py-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <span className="text-xs font-semibold text-[#707070] uppercase tracking-wider">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+        <div className="space-y-1.5">
+          <span className="text-xs font-semibold text-[#707070] uppercase tracking-wider block">
             Step 3 of 4 · Matching
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#141414]">
-            Recommended Local Technicians
+          <h1 className="heading-2 text-[#141414]">
+            Recommended local technicians in your area.
           </h1>
+          <p className="subtitle-lead text-xs sm:text-sm">
+            Ranked deterministically by category fit, area proximity, slot availability, and native language.
+          </p>
         </div>
-        <Link href={`/tickets/${ticket.id}`}>
+        <Link href={`/tickets/${ticket.id}`} className="shrink-0">
           <Button variant="outline" size="sm">
             ← Edit Ticket
           </Button>
         </Link>
       </div>
 
-      {/* Ticket Summary Strip */}
-      <div className="bg-[#f3f3f3] rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-xs border border-[#e0e0e0]">
+      {/* Ticket Summary Strip (24px radius, soft-canvas fill) */}
+      <div className="bg-[#f3f3f3] rounded-[24px] p-5 flex flex-wrap items-center justify-between gap-3 text-xs border border-[#e0e0e0]">
         <div className="space-y-1">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <span className="font-bold text-sm text-[#141414] capitalize">
               {ticket.category.replace(/_/g, " ")} Issue
             </span>
@@ -69,18 +71,18 @@ export default async function MatchesPage({
       {matches.length > 0 ? (
         <MatchesList ticketId={ticket.id} matches={matches} />
       ) : (
-        <div className="bg-white rounded-2xl border border-[#f0f0f0] p-8 text-center space-y-4">
-          <div className="w-12 h-12 rounded-full bg-[#f3f3f3] text-[#141414] flex items-center justify-center mx-auto text-lg font-bold">
+        <div className="bg-white rounded-[24px] border border-[#f0f0f0] p-10 text-center space-y-4">
+          <div className="w-14 h-14 rounded-full bg-[#f3f3f3] text-[#141414] flex items-center justify-center mx-auto text-xl font-bold">
             🔍
           </div>
-          <h3 className="font-bold text-lg text-[#141414]">No exact provider matches found</h3>
+          <h3 className="heading-4 text-[#141414]">No exact provider matches found.</h3>
           <p className="text-xs sm:text-sm text-[#707070] max-w-md mx-auto leading-relaxed">
             {emptyReason}
           </p>
           <div className="pt-2">
             <Link href={`/tickets/${ticket.id}`}>
               <Button variant="primary" size="md">
-                Widen Area or Change Date
+                Widen Area or Change Date →
               </Button>
             </Link>
           </div>
@@ -88,7 +90,7 @@ export default async function MatchesPage({
       )}
 
       {/* Footnote */}
-      <div className="text-[11px] text-[#707070] text-center sm:text-left space-y-1 pt-4 border-t border-[#f0f0f0]">
+      <div className="text-[11px] text-[#707070] text-center sm:text-left space-y-1.5 pt-6 border-t border-[#f0f0f0]">
         <p>
           Ranking is deterministically calculated from service fit (40%), availability (25%), area proximity (20%), rating (10%), and language (5%).
         </p>

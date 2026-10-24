@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { getTicket } from "@/server/db/queries";
 import TicketReviewForm from "./TicketReviewForm";
 
-export const dynamic = "force-dynamic";
 
 export default async function TicketReviewPage({
   params,
@@ -17,16 +16,16 @@ export default async function TicketReviewPage({
   }
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6 py-4">
-      <div className="space-y-1">
-        <span className="text-xs font-semibold text-[#707070] uppercase tracking-wider">
+    <div className="max-w-3xl mx-auto space-y-8 py-4 sm:py-6">
+      <div className="space-y-2">
+        <span className="text-xs font-semibold text-[#707070] uppercase tracking-wider block">
           Step 2 of 4 · Ticket Review
         </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#141414]">
-          Review & Confirm Job Ticket
+        <h1 className="heading-2 text-[#141414]">
+          Review and confirm your job ticket.
         </h1>
-        <p className="text-xs sm:text-sm text-[#707070]">
-          Ensure the details match your needs. You can change any field before searching for local providers.
+        <p className="subtitle-lead text-sm sm:text-base">
+          Verify the problem details below. Every field is editable before we search for local technicians.
         </p>
       </div>
 

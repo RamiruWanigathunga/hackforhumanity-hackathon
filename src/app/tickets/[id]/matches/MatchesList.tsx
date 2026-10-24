@@ -21,8 +21,8 @@ export default function MatchesList({
   };
 
   return (
-    <div className="space-y-4">
-      {matches.map((item) => (
+    <div className="space-y-6">
+      {matches.map((item, idx) => (
         <ProviderCard
           key={item.provider.id}
           id={item.provider.id}
@@ -41,6 +41,7 @@ export default function MatchesList({
           suggestedSlots={item.suggestedSlots}
           onSelectSlot={handleRequestBooking}
           loading={isPending}
+          featured={idx === 0} // Mobbin featured card style on top match
         />
       ))}
     </div>

@@ -8,8 +8,9 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className = "", variant = "primary", size = "md", loading = false, disabled, children, ...props }, ref) => {
+    // Mobbin strictly uses stadium pills (rounded-full) for all buttons, no drop shadows
     const baseStyles =
-      "inline-flex items-center justify-center font-medium rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#141414] focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer";
+      "inline-flex items-center justify-center font-semibold rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#141414] focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer";
 
     const sizeStyles = {
       sm: "h-9 px-4 text-xs",

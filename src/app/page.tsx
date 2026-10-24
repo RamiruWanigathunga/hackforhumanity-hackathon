@@ -10,7 +10,7 @@ import { Chip } from "@/components/ui/Chip";
 
 const DEMO_EXAMPLE_CHIPS = [
   {
-    label: "Sink leak (English)",
+    label: "Sink pipe leak (English)",
     text: "My kitchen sink pipe is leaking under the counter, need someone tomorrow morning",
     area: "Nugegoda",
     day: "tomorrow",
@@ -32,7 +32,7 @@ const DEMO_EXAMPLE_CHIPS = [
   },
   {
     label: "Bathroom tap (Tamil)",
-    text: "குளியலறை குழாய் ஒழுகுகிறது, நாளை காலை வர முடியுமா?",
+    text: "குளியලறை குழாய் ஒழுகுகிறது, நாளை காலை வர முடியுமா?",
     area: "Kirulapone",
     day: "tomorrow",
     window: "morning",
@@ -71,9 +71,9 @@ export default function HomePage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto space-y-8 py-4 sm:py-8">
-      {/* Hero */}
-      <div className="space-y-3 text-center sm:text-left">
+    <div className="max-w-2xl mx-auto space-y-10 py-4 sm:py-8">
+      {/* Hero with Mobbin weight contrast: 652 heading over 300 light subtitle */}
+      <div className="space-y-4 text-center sm:text-left">
         <div className="inline-flex items-center gap-2">
           <Badge variant="neutral" size="sm">
             Pilot: {PILOT_NAME}
@@ -82,25 +82,27 @@ export default function HomePage() {
             Plumbing · Electrical · AC
           </Badge>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#141414] leading-tight">
-          Describe your repair in your own words.
+
+        {/* Declarative sentence with terminal period per design.md */}
+        <h1 className="heading-1 text-[#141414]">
+          Describe your repair problem in your own words.
         </h1>
-        <p className="text-sm sm:text-base text-[#707070] max-w-xl">
-          English, Sinhala, Tamil, or Singlish. AI structures your request into a verifiable ticket matched to available local technicians.
+
+        <p className="subtitle-lead max-w-xl">
+          English, Sinhala, Tamil, or Singlish. AI structures your request into an editable ticket matched transparently to available local technicians.
         </p>
       </div>
 
       {/* Example Chips */}
-      <div className="space-y-2">
+      <div className="space-y-2.5">
         <span className="text-xs font-semibold text-[#707070] block">
-          One-click demo examples:
+          One-click demo scenarios:
         </span>
         <div className="flex flex-wrap gap-2">
           {DEMO_EXAMPLE_CHIPS.map((chip, idx) => (
             <Chip
               key={idx}
               onClick={() => handleChipClick(chip)}
-              className="text-xs"
             >
               ⚡ {chip.label}
             </Chip>
@@ -108,8 +110,8 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Main Intake Form */}
-      <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-[#f0f0f0] p-6 space-y-5">
+      {/* Main Intake Card Container (24px radius, 1px hairline border, zero drop shadows) */}
+      <form onSubmit={handleSubmit} className="bg-white rounded-[24px] border border-[#f0f0f0] p-6 sm:p-8 space-y-6">
         <div className="space-y-1.5">
           <label htmlFor="problem" className="text-xs font-semibold text-[#141414] block">
             What needs fixing? <span className="text-red-500">*</span>
@@ -121,7 +123,7 @@ export default function HomePage() {
             value={problemText}
             onChange={(e) => setProblemText(e.target.value)}
             placeholder="e.g. My kitchen sink pipe is leaking under the counter / fan eka karakenne na, switch eken burning smell ekak enawa / AC එක සීතල වෙන්නේ නැහැ..."
-            className="w-full bg-[#f0f0f0] text-[#141414] placeholder-[#adadad] rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#141414] resize-none"
+            className="w-full bg-[#f0f0f0] border-none text-[#141414] placeholder-[#adadad] rounded-[16px] px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#141414] resize-none"
           />
           <span className="text-[11px] text-[#707070] block">
             Today is {getColomboToday()} (Colombo time). Relative days like &quot;tomorrow&quot; or &quot;heta&quot; are automatically resolved.
@@ -139,7 +141,7 @@ export default function HomePage() {
                 id="area"
                 value={selectedArea}
                 onChange={(e) => setSelectedArea(e.target.value)}
-                className="w-full bg-[#f0f0f0] text-[#141414] rounded-xl px-4 py-3 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#141414] cursor-pointer"
+                className="w-full bg-[#f0f0f0] border-none text-[#141414] rounded-[16px] px-4 py-3.5 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#141414] cursor-pointer"
               >
                 {PILOT_AREAS.map((a) => (
                   <option key={a} value={a}>
@@ -163,12 +165,12 @@ export default function HomePage() {
                 id="day"
                 value={selectedDay}
                 onChange={(e) => setSelectedDay(e.target.value)}
-                className="w-full bg-[#f0f0f0] text-[#141414] rounded-xl px-4 py-3 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#141414] cursor-pointer"
+                className="w-full bg-[#f0f0f0] border-none text-[#141414] rounded-[16px] px-4 py-3.5 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#141414] cursor-pointer"
               >
                 <option value="today">Today</option>
                 <option value="tomorrow">Tomorrow (Recommended)</option>
                 <option value="day_after">Day after tomorrow</option>
-                <option value="flexible">Flexible / Next free</option>
+                <option value="flexible">Flexible / Any</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#707070]">
                 ▼
@@ -188,7 +190,7 @@ export default function HomePage() {
                 id="window"
                 value={selectedWindow}
                 onChange={(e) => setSelectedWindow(e.target.value)}
-                className="w-full bg-[#f0f0f0] text-[#141414] rounded-xl px-4 py-3 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#141414] cursor-pointer"
+                className="w-full bg-[#f0f0f0] border-none text-[#141414] rounded-[16px] px-4 py-3.5 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#141414] cursor-pointer"
               >
                 {TIME_WINDOWS.map((w) => (
                   <option key={w} value={w}>
@@ -212,13 +214,13 @@ export default function HomePage() {
               type="text"
               value={residentName}
               onChange={(e) => setResidentName(e.target.value)}
-              placeholder="e.g. Anura (No address or phone needed)"
-              className="w-full bg-[#f0f0f0] text-[#141414] placeholder-[#adadad] rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#141414]"
+              placeholder="e.g. Anura (No address or phone collected)"
+              className="w-full bg-[#f0f0f0] border-none text-[#141414] placeholder-[#adadad] rounded-[16px] px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#141414]"
             />
           </div>
         </div>
 
-        <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
           <span className="text-xs text-[#707070]">
             AI structures your ticket. You review and edit before sending.
           </span>

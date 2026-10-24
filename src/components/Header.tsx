@@ -15,35 +15,32 @@ export default async function Header() {
   }
 
   return (
-    <header className="sticky top-4 z-40 w-full px-4 sm:px-6">
-      <div className="max-w-4xl mx-auto bg-[#f3f3f3]/95 backdrop-blur-md rounded-full px-4 sm:px-6 py-2.5 flex items-center justify-between border border-[#e0e0e0]">
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-7 h-7 bg-[#141414] text-white rounded-full flex items-center justify-center font-bold text-xs tracking-wider">
+    <header className="sticky top-5 z-40 w-full px-4 sm:px-6">
+      <div className="max-w-4xl mx-auto bg-[#f3f3f3] rounded-full px-5 py-2.5 flex items-center justify-between border border-[#e0e0e0]">
+        {/* Logomark + Wordmark */}
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <div className="w-7 h-7 bg-[#141414] text-white app-icon-squircle flex items-center justify-center font-bold text-xs tracking-tight">
             HD
           </div>
           <span className="font-semibold text-sm sm:text-base tracking-tight text-[#141414] group-hover:text-black">
-            HelpDesk LK
+            HelpDesk LK.
           </span>
         </Link>
 
-        <nav className="flex items-center gap-2 sm:gap-4 text-xs font-medium">
+        {/* Navigation links & CTA */}
+        <nav className="flex items-center gap-1.5 sm:gap-3 text-xs font-semibold">
           <Link
             href="/"
-            className="px-3 py-1.5 rounded-full text-[#141414] hover:bg-white transition-colors"
+            className="hidden sm:inline-flex px-3.5 py-1.5 rounded-full text-[#141414] hover:bg-white transition-colors"
           >
             Resident
           </Link>
           <Link
-            href="/provider"
-            className={`px-3 py-1.5 rounded-full transition-colors ${
-              demoProviderId
-                ? "bg-[#141414] text-white"
-                : "text-[#707070] hover:text-[#141414] hover:bg-white"
-            }`}
+            href="/about"
+            className="hidden sm:inline-flex text-[#707070] hover:text-[#141414] px-3 py-1.5 rounded-full transition-colors"
           >
-            Provider {demoProviderId ? "●" : ""}
+            About
           </Link>
-
           {bookingCount > 0 && (
             <Link
               href="/bookings"
@@ -53,11 +50,12 @@ export default async function Header() {
             </Link>
           )}
 
+          {/* Provider CTA pill */}
           <Link
-            href="/about"
-            className="text-[#707070] hover:text-[#141414] px-2 py-1.5 rounded-full transition-colors"
+            href={demoProviderId ? "/provider/inbox" : "/provider"}
+            className="px-4 py-1.5 rounded-full bg-[#141414] text-white hover:bg-[#262626] transition-colors"
           >
-            About
+            {demoProviderId ? "Provider Inbox ●" : "Provider Mode"}
           </Link>
         </nav>
       </div>
