@@ -4,13 +4,15 @@ import { db } from "./client";
 import { providers, providerSlots, jobTickets, bookings, bookingEvents, Provider, JobTicket, ProviderSlot } from "./schema";
 import { getColomboToday, getColomboOffsetDate } from "@/lib/time";
 import { FALLBACK_PROVIDERS, getFallbackProvidersWithSlots } from "@/config/seed-providers";
+import { mockStore } from "./mock-store";
 
 export async function getTicket(id: string): Promise<JobTicket | null> {
   try {
     const result = await db.select().from(jobTickets).where(eq(jobTickets.id, id)).limit(1);
-    return result[0] || null;
+    if (result[0]) return result[0];
+    return mockStore.getTicket(id);
   } catch {
-    return null;
+    return mockStore.getTicket(id);
   }
 }
 
@@ -80,7 +82,9 @@ export async function getBookingWithDetails(id: string) {
   try {
     const bookingRes = await db.select().from(bookings).where(eq(bookings.id, id)).limit(1);
     const booking = bookingRes[0] || null;
-    if (!booking) return null;
+    if (!booking) {
+      return mockStore.getBookingWithDetails(id);
+    }
 
     const [ticketRes, providerRes, slotRes, proposedSlotRes, eventsRes] = await Promise.all([
       db.select().from(jobTickets).where(eq(jobTickets.id, booking.ticketId)).limit(1),
@@ -94,27 +98,29 @@ export async function getBookingWithDetails(id: string) {
 
     return {
       booking,
-      ticket: ticketRes[0] || null,
-      provider: providerRes[0] || null,
-      slot: slotRes[0] || null,
-      proposedSlot: proposedSlotRes[0] || null,
+      ticket: ticketRes[0] || mockStore.getTicket(booking.ticketId),
+      provider: providerRes[0] || FALLBACK_PROVIDERS.find((p) => p.id === booking.providerId) || null,
+      slot: slotRes[0] || mockStore.getSlot(booking.slotId),
+      proposedSlot: proposedSlotRes[0] || (booking.proposedSlotId ? mockStore.getSlot(booking.proposedSlotId) : null),
       events: eventsRes,
     };
   } catch {
-    return null;
+    return mockStore.getBookingWithDetails(id);
   }
 }
 
 export async function getRecentResidentBookings(bookingIds: string[]): Promise<typeof bookings.$inferSelect[]> {
   if (bookingIds.length === 0) return [];
   try {
-    return await db
+    const res = await db
       .select()
       .from(bookings)
       .where(inArray(bookings.id, bookingIds))
       .orderBy(desc(bookings.createdAt));
+    if (res && res.length > 0) return res;
+    return mockStore.getRecentResidentBookings(bookingIds);
   } catch {
-    return [];
+    return mockStore.getRecentResidentBookings(bookingIds);
   }
 }
 
@@ -127,12 +133,7 @@ export async function getProviderInbox(providerId: string) {
       .orderBy(desc(bookings.createdAt));
 
     if (!providerBookings || providerBookings.length === 0) {
-      return {
-        newRequests: [],
-        waitingOnResident: [],
-        upcoming: [],
-        past: [],
-      };
+      return mockStore.getProviderInbox(providerId);
     }
 
     const ticketIds = providerBookings.map((b) => b.ticketId);
@@ -153,10 +154,10 @@ export async function getProviderInbox(providerId: string) {
 
     const enriched = providerBookings.map((b) => ({
       booking: b,
-      ticket: ticketMap.get(b.ticketId)!,
-      slot: slotMap.get(b.slotId)!,
-      proposedSlot: b.proposedSlotId ? proposedSlotMap.get(b.proposedSlotId) : null,
-    }));
+      ticket: ticketMap.get(b.ticketId) || mockStore.getTicket(b.ticketId)!,
+      slot: slotMap.get(b.slotId) || mockStore.getSlot(b.slotId)!,
+      proposedSlot: b.proposedSlotId ? proposedSlotMap.get(b.proposedSlotId) || mockStore.getSlot(b.proposedSlotId) : null,
+    })).filter((item) => item.ticket && item.slot);
 
     return {
       newRequests: enriched.filter((i) => i.booking.status === "requested"),
@@ -165,19 +166,14 @@ export async function getProviderInbox(providerId: string) {
       past: enriched.filter((i) => ["completed", "declined", "cancelled"].includes(i.booking.status)),
     };
   } catch {
-    return {
-      newRequests: [],
-      waitingOnResident: [],
-      upcoming: [],
-      past: [],
-    };
+    return mockStore.getProviderInbox(providerId);
   }
 }
 
 export async function getProviderAvailableSlots(providerId: string): Promise<ProviderSlot[]> {
   try {
     const today = getColomboToday();
-    return await db
+    const res = await db
       .select()
       .from(providerSlots)
       .where(
@@ -187,10 +183,9 @@ export async function getProviderAvailableSlots(providerId: string): Promise<Pro
           eq(providerSlots.status, "available")
         )
       );
+    if (res && res.length > 0) return res;
+    return mockStore.getSlotsForProvider(providerId);
   } catch {
-    const allFallback = getFallbackProvidersWithSlots();
-    const match = allFallback.find((f) => f.provider.id === providerId);
-    return match ? match.slots : [];
+    return mockStore.getSlotsForProvider(providerId);
   }
 }
-
