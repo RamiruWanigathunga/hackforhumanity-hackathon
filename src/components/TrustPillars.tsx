@@ -1,27 +1,32 @@
+"use client";
+
 import React from "react";
 import { SearchIcon, CheckShieldIcon, CalendarIcon, StarIcon } from "@/components/ui/Icons";
+import { useLanguage } from "@/context/LanguageContext";
 
 export const TrustPillars: React.FC = () => {
+  const { t } = useLanguage();
+
   const pillars = [
     {
       iconComp: SearchIcon,
-      title: "Search and Compare",
-      description: "Find local trade specialists by exact problem symptoms, pilot area proximity, and transparent ratings.",
+      title: t.principles.searchCompareTitle,
+      description: t.principles.searchCompareDesc,
     },
     {
       iconComp: CheckShieldIcon,
-      title: "Verified Providers",
-      description: "Sample vetted technician profiles with transparent skill tags, visit fees, and zero hidden markups.",
+      title: t.principles.verifiedProvidersTitle,
+      description: t.principles.verifiedProvidersDesc,
     },
     {
       iconComp: CalendarIcon,
-      title: "Book Instantly",
-      description: "Schedule visits in your preferred morning, afternoon, or evening window with instant confirmation.",
+      title: t.principles.bookInstantlyTitle,
+      description: t.principles.bookInstantlyDesc,
     },
     {
       iconComp: StarIcon,
-      title: "Real Reviews",
-      description: "Explainable deterministic scoring with zero pay-to-win ranks or sponsored algorithmic distortion.",
+      title: t.principles.realReviewsTitle,
+      description: t.principles.realReviewsDesc,
     },
   ];
 
@@ -30,13 +35,13 @@ export const TrustPillars: React.FC = () => {
       <div className="max-w-[1200px] mx-auto space-y-12">
         <div className="max-w-2xl space-y-2">
           <span className="text-xs font-semibold text-[#7c828a] uppercase tracking-wider block">
-            Platform Principles
+            {t.principles.sectionBadge}
           </span>
           <h2 className="display-lg text-[#0a0b0d]">
-            Engineered for transparency.
+            {t.principles.title}
           </h2>
           <p className="body-md text-[#5b616e]">
-            Every technician match is calculated deterministically with zero opaque ranking logic.
+            {t.principles.subtitle}
           </p>
         </div>
 

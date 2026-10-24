@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import { cookies } from "next/headers";
-import Link from "next/link";
 import { getRecentResidentBookings } from "@/server/db/queries";
 import { Button } from "@/components/ui/Button";
 import { Booking } from "@/server/db/schema";
@@ -23,8 +22,8 @@ async function ResidentBookingsContent() {
     if (bookingIds.length > 0) {
       bookingsList = await getRecentResidentBookings(bookingIds);
     }
-  } catch (err) {
-    console.error("Failed to fetch resident bookings:", err);
+  } catch {
+    bookingsList = [];
   }
 
   if (bookingsList.length === 0) {
@@ -35,11 +34,9 @@ async function ResidentBookingsContent() {
           You have not submitted any repair requests from this browser yet. Use our natural language search to find a local specialist.
         </p>
         <div className="pt-2">
-          <Link href="/">
-            <Button variant="primary" size="md">
-              Find Local Technician
-            </Button>
-          </Link>
+          <Button href="/" variant="primary" size="md">
+            Find Local Technician
+          </Button>
         </div>
       </div>
     );
@@ -88,11 +85,9 @@ async function ResidentBookingsContent() {
               <span className="text-xs text-[#7c828a]">
                 Submitted {new Date(booking.createdAt).toLocaleDateString()}
               </span>
-              <Link href={`/bookings/${booking.id}`}>
-                <Button variant="primary" size="sm">
-                  View Live Booking Status
-                </Button>
-              </Link>
+              <Button href={`/bookings/${booking.id}`} variant="primary" size="sm">
+                View Live Booking Status
+              </Button>
             </div>
           </div>
         );

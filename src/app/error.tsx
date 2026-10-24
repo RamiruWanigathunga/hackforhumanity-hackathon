@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
 export default function Error({
@@ -12,7 +11,7 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error("Runtime error caught:", error);
+    // Error boundary captured runtime error
   }, [error]);
 
   return (
@@ -30,9 +29,9 @@ export default function Error({
         <Button variant="primary" onClick={() => reset()}>
           Try Again
         </Button>
-        <Link href="/">
-          <Button variant="outline">Go to Home</Button>
-        </Link>
+        <Button href="/" variant="outline">
+          Go to Home
+        </Button>
       </div>
     </div>
   );

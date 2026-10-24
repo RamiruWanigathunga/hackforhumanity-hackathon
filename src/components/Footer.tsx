@@ -1,33 +1,35 @@
+"use client";
+
+import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/Logo";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <div className="w-full mt-24">
       {/* Signature Coinbase CTA Band Dark */}
       <section className="w-full bg-[#0a0b0d] text-white py-20 px-4 sm:px-6">
         <div className="max-w-[1200px] mx-auto text-center space-y-6">
           <span className="text-xs uppercase tracking-wider text-[#a8acb3] font-medium block">
-            Institutional Verification
+            {t.footer.preTitle}
           </span>
           <h2 className="display-lg text-white max-w-2xl mx-auto">
-            Transparent local trade matching for Sri Lanka.
+            {t.footer.preHeading}
           </h2>
           <p className="body-md text-[#a8acb3] max-w-xl mx-auto">
-            Describe repair issues in everyday Sinhala, Tamil, Singlish, or English. Deterministic database rankings connect you directly to local technicians.
+            {t.footer.preSub}
           </p>
           <div className="pt-2 flex flex-wrap justify-center gap-3">
-            <Link href="/#search-intake-bar">
-              <Button variant="primary" size="lg">
-                Find Local Technician
-              </Button>
-            </Link>
-            <Link href="/provider">
-              <Button variant="outline-dark" size="lg">
-                Provider Registration
-              </Button>
-            </Link>
+            <Button href="/#search-intake-bar" variant="primary" size="lg">
+              {t.footer.preBtnFind}
+            </Button>
+            <Button href="/provider" variant="outline-dark" size="lg">
+              {t.footer.preBtnRegister}
+            </Button>
           </div>
         </div>
       </section>
@@ -42,37 +44,37 @@ export default function Footer() {
               <span className="font-semibold text-base text-[#0a0b0d]">HelpDesk.lk</span>
             </div>
             <p className="body-sm text-[#7c828a] max-w-xs leading-relaxed">
-              Institutional local service coordination platform. Multilingual AI problem intake with explainable open scoring weights.
+              {t.footer.tagline}
             </p>
             <div className="text-xs text-[#7c828a] pt-2">
-              Colombo Pilot Cluster : Nugegoda, Mirihana, Kirulapone
+              {t.footer.pilotInfo}
             </div>
           </div>
 
           {/* Col 2: Services */}
           <div className="space-y-3">
             <span className="text-xs font-semibold text-[#0a0b0d] uppercase tracking-wider block">
-              Services
+              {t.footer.colServices}
             </span>
             <ul className="space-y-2 text-xs">
               <li>
                 <Link href="/#categories" className="hover:text-[#0052ff] transition-colors">
-                  Electrical Repair
+                  {t.categories.items.electrical.name}
                 </Link>
               </li>
               <li>
                 <Link href="/#categories" className="hover:text-[#0052ff] transition-colors">
-                  Plumbing Services
+                  {t.categories.items.plumbing.name}
                 </Link>
               </li>
               <li>
                 <Link href="/#categories" className="hover:text-[#0052ff] transition-colors">
-                  AC and Appliances
+                  {t.categories.items.ac_appliance.name}
                 </Link>
               </li>
               <li>
                 <Link href="/#categories" className="hover:text-[#0052ff] transition-colors">
-                  Automotive Repair
+                  {t.categories.items.mechanic.name}
                 </Link>
               </li>
             </ul>
@@ -81,7 +83,7 @@ export default function Footer() {
           {/* Col 3: Technology */}
           <div className="space-y-3">
             <span className="text-xs font-semibold text-[#0a0b0d] uppercase tracking-wider block">
-              Technology
+              {t.footer.colTech}
             </span>
             <ul className="space-y-2 text-xs">
               <li>
@@ -110,7 +112,7 @@ export default function Footer() {
           {/* Col 4: For Providers */}
           <div className="space-y-3">
             <span className="text-xs font-semibold text-[#0a0b0d] uppercase tracking-wider block">
-              Providers
+              {t.footer.colProviders}
             </span>
             <ul className="space-y-2 text-xs">
               <li>
@@ -139,7 +141,7 @@ export default function Footer() {
           {/* Col 5: Legal & Notice */}
           <div className="space-y-3">
             <span className="text-xs font-semibold text-[#0a0b0d] uppercase tracking-wider block">
-              Governance
+              {t.footer.colGovernance}
             </span>
             <ul className="space-y-2 text-xs">
               <li>
@@ -164,10 +166,10 @@ export default function Footer() {
         {/* Legal Band */}
         <div className="max-w-[1200px] mx-auto pt-8 border-t border-[#dee1e6] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs text-[#7c828a]">
           <p>
-            Prototype developed for Hack for Humanity Colombo. All provider profiles are fictional sample data.
+            {t.footer.legalNote}
           </p>
           <p>
-            Powered by Google Gemini and Supabase PostgreSQL.
+            {t.footer.poweredBy}
           </p>
         </div>
       </footer>

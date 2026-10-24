@@ -8,7 +8,6 @@ import { TIME_WINDOWS, TIME_WINDOW_LABELS } from "@/lib/time";
 import { updateTicketAction, confirmTicketAction, answerClarificationAction } from "@/server/actions/tickets";
 import { Button } from "@/components/ui/Button";
 import { SafetyBanner } from "@/components/SafetyBanner";
-import Link from "next/link";
 
 export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
   const [summary, setSummary] = useState(ticket.summary);
@@ -295,11 +294,9 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
             >
               Save Changes
             </Button>
-            <Link href="/" className="w-full sm:w-auto">
-              <Button type="button" variant="outline" size="md" className="w-full sm:w-auto">
-                Start Over
-              </Button>
-            </Link>
+            <Button href="/" variant="outline" size="md" className="w-full sm:w-auto">
+              Start Over
+            </Button>
           </div>
 
           <Button

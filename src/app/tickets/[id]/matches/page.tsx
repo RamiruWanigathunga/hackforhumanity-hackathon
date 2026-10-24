@@ -41,11 +41,9 @@ export default async function MatchesPage({
             Ranked deterministically by category fit, area proximity, slot availability, and native language.
           </p>
         </div>
-        <Link href={`/tickets/${ticket.id}`} className="shrink-0">
-          <Button variant="outline" size="sm">
-            Edit Ticket
-          </Button>
-        </Link>
+        <Button href={`/tickets/${ticket.id}`} variant="outline" size="sm" className="shrink-0">
+          Edit Ticket
+        </Button>
       </div>
 
       {/* Ticket Summary Strip */}
@@ -76,11 +74,9 @@ export default async function MatchesPage({
             {emptyReason}
           </p>
           <div className="pt-2">
-            <Link href={`/tickets/${ticket.id}`}>
-              <Button variant="primary" size="md">
-                Widen Area or Change Date
-              </Button>
-            </Link>
+            <Button href={`/tickets/${ticket.id}`} variant="primary" size="md">
+              Widen Area or Change Date
+            </Button>
           </div>
         </div>
       )}

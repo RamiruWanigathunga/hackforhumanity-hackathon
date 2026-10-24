@@ -98,8 +98,7 @@ export async function processIntake(input: IntakeInput): Promise<IntakeResult> {
       source: "ai",
       rawAiResponse: aiObject,
     };
-  } catch (error) {
-    console.warn("AI intake invocation failed, using fallback parser:", error);
+  } catch {
     const fallbackDraft = fallbackParse(input.rawText, {
       area: input.area,
       preferredDate: input.preferredDate,

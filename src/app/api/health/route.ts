@@ -1,16 +1,16 @@
-import { NextResponse } from "next/server";
+import { NextResponse, connection } from "next/server";
 import { db } from "@/server/db/client";
 import { sql } from "drizzle-orm";
 import { env } from "@/server/env";
 
-
 export async function GET() {
+  await connection();
+
   let dbOk = false;
   try {
     const res = await db.execute(sql`SELECT 1 as alive`);
     dbOk = Array.isArray(res) || Boolean(res);
-  } catch (err) {
-    console.warn("Healthcheck DB ping failed:", err);
+  } catch {
     dbOk = false;
   }
 

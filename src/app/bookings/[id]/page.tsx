@@ -3,7 +3,6 @@ import { getBookingWithDetails } from "@/server/db/queries";
 import { StatusTimeline } from "@/components/StatusTimeline";
 import { StatusPoller } from "@/components/StatusPoller";
 import ResidentBookingActions from "./ResidentBookingActions";
-import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
 export const instant = false;
@@ -148,11 +147,9 @@ export default async function BookingDetailPage({
 
       {/* Footer Back Link */}
       <div className="text-center pt-2">
-        <Link href="/">
-          <Button variant="outline" size="sm">
-            Submit Another Repair Request
-          </Button>
-        </Link>
+        <Button href="/" variant="outline" size="sm">
+          Submit Another Repair Request
+        </Button>
       </div>
     </div>
   );

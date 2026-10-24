@@ -2,47 +2,26 @@
 
 import React, { useState, useEffect, useTransition, useImperativeHandle, forwardRef } from "react";
 import { PILOT_AREAS } from "@/config/pilot";
-import { TIME_WINDOWS, TIME_WINDOW_LABELS, getColomboToday } from "@/lib/time";
+import { getColomboToday } from "@/lib/time";
 import { createTicketAction } from "@/server/actions/tickets";
 import { Button } from "@/components/ui/Button";
 import { SearchIcon, ChevronDownIcon, CheckShieldIcon } from "@/components/ui/Icons";
+import { useLanguage } from "@/context/LanguageContext";
 
-export const DEMO_EXAMPLE_CHIPS = [
-  {
-    label: "Sink pipe leak (English)",
-    text: "My kitchen sink pipe is leaking under the counter, need someone tomorrow morning",
-    area: "Nugegoda",
-    day: "tomorrow",
-    window: "morning",
-  },
-  {
-    label: "Fan and burning smell (Singlish)",
-    text: "fan eka karakenne na, switch eken burning smell ekak enawa",
-    area: "Nugegoda",
-    day: "today",
-    window: "anytime",
-  },
-  {
-    label: "AC not cooling (Sinhala)",
-    text: "AC එක හරියට සීතල වෙන්නේ නැහැ, හෙට හවස එන්න පුළුවන්ද?",
-    area: "Mirihana",
-    day: "tomorrow",
-    window: "afternoon",
-  },
-  {
-    label: "Bathroom tap (Tamil)",
-    text: "குளியலறை குழாய் ஒழுகுகிறது, நாளை காலை வர முடியுமா?",
-    area: "Kirulapone",
-    day: "tomorrow",
-    window: "morning",
-  },
-];
+export interface DemoChipItem {
+  label: string;
+  text: string;
+  area: string;
+  day: string;
+  window: string;
+}
 
 export interface HomeSearchIntakeHandle {
   setProblem: (text: string, area?: string) => void;
 }
 
 export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
+  const { t } = useLanguage();
   const [problemText, setProblemText] = useState("");
   const [selectedArea, setSelectedArea] = useState<string>("Nugegoda");
   const [selectedDay, setSelectedDay] = useState<string>("tomorrow");
@@ -69,7 +48,38 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
     },
   }));
 
-  const handleChipClick = (chip: (typeof DEMO_EXAMPLE_CHIPS)[0]) => {
+  const demoChips: DemoChipItem[] = [
+    {
+      label: t.hero.demoChips.sink.label,
+      text: t.hero.demoChips.sink.text,
+      area: "Nugegoda",
+      day: "tomorrow",
+      window: "morning",
+    },
+    {
+      label: t.hero.demoChips.fan.label,
+      text: t.hero.demoChips.fan.text,
+      area: "Nugegoda",
+      day: "today",
+      window: "anytime",
+    },
+    {
+      label: t.hero.demoChips.ac.label,
+      text: t.hero.demoChips.ac.text,
+      area: "Mirihana",
+      day: "tomorrow",
+      window: "afternoon",
+    },
+    {
+      label: t.hero.demoChips.tap.label,
+      text: t.hero.demoChips.tap.text,
+      area: "Kirulapone",
+      day: "tomorrow",
+      window: "morning",
+    },
+  ];
+
+  const handleChipClick = (chip: DemoChipItem) => {
     setProblemText(chip.text);
     setSelectedArea(chip.area);
     setSelectedDay(chip.day);
@@ -92,6 +102,8 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
     });
   };
 
+  const colomboTodayFormatted = t.hero.colomboTime.replace("{date}", colomboToday);
+
   return (
     <section className="w-full bg-[#0a0b0d] text-white py-16 sm:py-24 px-4 sm:px-6">
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -100,16 +112,16 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-xs font-semibold text-[#a8acb3] uppercase tracking-wider">
               <span className="w-2 h-2 rounded-full bg-[#0052ff]" />
-              <span>Institutional Service Infrastructure / Colombo Pilot</span>
+              <span>{t.hero.eyebrow}</span>
             </div>
 
             {/* Display Mega: Weight 400, tight line-height, negative letter-spacing */}
             <h1 className="display-mega text-white">
-              The future of local trade verification.
+              {t.hero.title}
             </h1>
 
             <p className="body-md text-[#a8acb3] max-w-xl text-base sm:text-lg leading-relaxed">
-              Search verified electricians, plumbers, and AC technicians across Colombo. Describe your problem naturally in English, Sinhala, Tamil, or Singlish. Our explainable deterministic algorithm matches you with available local specialists.
+              {t.hero.subtitle}
             </p>
           </div>
 
@@ -124,7 +136,7 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
                   required
                   value={problemText}
                   onChange={(e) => setProblemText(e.target.value)}
-                  placeholder="What needs fixing? e.g. AC leaking, pipe burst, breaker tripping..."
+                  placeholder={t.hero.searchPlaceholder}
                   className="w-full bg-transparent border-none text-white placeholder-[#7c828a] text-sm sm:text-base font-normal focus:outline-none"
                 />
               </div>
@@ -138,7 +150,7 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
                   >
                     {PILOT_AREAS.map((a) => (
                       <option key={a} value={a}>
-                        Near Me ({a})
+                        {t.hero.nearMe} ({a})
                       </option>
                     ))}
                   </select>
@@ -155,7 +167,7 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
                   disabled={!problemText.trim() || isPending}
                   className="shrink-0 font-semibold"
                 >
-                  {isPending ? "Analyzing with AI..." : "Find Specialist"}
+                  {isPending ? t.hero.analyzing : t.hero.findSpecialist}
                 </Button>
               </div>
             </div>
@@ -167,11 +179,11 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
                 onClick={() => setShowAdvanced(!showAdvanced)}
                 className="hover:text-white transition-colors cursor-pointer"
               >
-                {showAdvanced ? "Hide scheduling options" : "Specify preferred day and time window"}
+                {showAdvanced ? t.hero.hideSchedulingOptions : t.hero.schedulingOptions}
               </button>
               {colomboToday && (
                 <span className="hidden sm:inline">
-                  Today is {colomboToday} (Colombo time)
+                  {colomboTodayFormatted}
                 </span>
               )}
             </div>
@@ -181,7 +193,7 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
               <div className="bg-[#16181c] rounded-[24px] p-5 border border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-4 text-left transition-all">
                 <div className="space-y-1">
                   <label htmlFor="pref-day" className="text-xs font-semibold text-white block">
-                    Preferred Day
+                    {t.hero.preferredDay}
                   </label>
                   <select
                     id="pref-day"
@@ -189,16 +201,16 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
                     onChange={(e) => setSelectedDay(e.target.value)}
                     className="w-full bg-[#0a0b0d] border border-white/15 text-white rounded-full px-4 py-2.5 text-xs appearance-none focus:outline-none focus:border-[#0052ff] cursor-pointer"
                   >
-                    <option value="today">Today</option>
-                    <option value="tomorrow">Tomorrow (Recommended)</option>
-                    <option value="day_after">Day after tomorrow</option>
-                    <option value="flexible">Flexible / Any</option>
+                    <option value="today">{t.hero.today}</option>
+                    <option value="tomorrow">{t.hero.tomorrow}</option>
+                    <option value="day_after">{t.hero.dayAfter}</option>
+                    <option value="flexible">{t.hero.flexible}</option>
                   </select>
                 </div>
 
                 <div className="space-y-1">
                   <label htmlFor="pref-window" className="text-xs font-semibold text-white block">
-                    Time Window
+                    {t.hero.timeWindow}
                   </label>
                   <select
                     id="pref-window"
@@ -206,24 +218,23 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
                     onChange={(e) => setSelectedWindow(e.target.value)}
                     className="w-full bg-[#0a0b0d] border border-white/15 text-white rounded-full px-4 py-2.5 text-xs appearance-none focus:outline-none focus:border-[#0052ff] cursor-pointer"
                   >
-                    {TIME_WINDOWS.map((w) => (
-                      <option key={w} value={w}>
-                        {TIME_WINDOW_LABELS[w]}
-                      </option>
-                    ))}
+                    <option value="morning">{t.hero.morning}</option>
+                    <option value="afternoon">{t.hero.afternoon}</option>
+                    <option value="evening">{t.hero.evening}</option>
+                    <option value="anytime">{t.hero.flexible}</option>
                   </select>
                 </div>
 
                 <div className="space-y-1">
                   <label htmlFor="pref-name" className="text-xs font-semibold text-white block">
-                    Your Name (Optional)
+                    {t.hero.yourName}
                   </label>
                   <input
                     id="pref-name"
                     type="text"
                     value={residentName}
                     onChange={(e) => setResidentName(e.target.value)}
-                    placeholder="e.g. Anura"
+                    placeholder={t.hero.namePlaceholder}
                     className="w-full bg-[#0a0b0d] border border-white/15 text-white rounded-full px-4 py-2 text-xs focus:outline-none focus:border-[#0052ff]"
                   />
                 </div>
@@ -234,10 +245,10 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
           {/* One-Click Multilingual Demo Presets */}
           <div className="space-y-2 pt-2">
             <span className="text-xs font-medium text-[#7c828a] block">
-              Sample scenario presets:
+              {t.hero.scenarioPresets}
             </span>
             <div className="flex flex-wrap gap-2">
-              {DEMO_EXAMPLE_CHIPS.map((chip, idx) => (
+              {demoChips.map((chip, idx) => (
                 <button
                   key={idx}
                   type="button"
@@ -260,11 +271,11 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
               <div className="flex items-center gap-2">
                 <CheckShieldIcon className="w-5 h-5 text-[#0052ff]" />
                 <span className="text-xs font-semibold uppercase tracking-wider text-white">
-                  Verified Dispatch Engine
+                  {t.mockup.engineTitle}
                 </span>
               </div>
               <div className="text-right">
-                <span className="text-xs text-[#a8acb3] block">Match Confidence</span>
+                <span className="text-xs text-[#a8acb3] block">{t.mockup.matchConfidence}</span>
                 <span className="number-display text-[#05b169]">96.4%</span>
               </div>
             </div>
@@ -272,20 +283,20 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
             {/* Dispatch Ticket Preview */}
             <div className="space-y-3">
               <div className="space-y-1">
-                <span className="text-xs text-[#7c828a]">Active Resident Intake</span>
+                <span className="text-xs text-[#7c828a]">{t.mockup.activeIntake}</span>
                 <p className="text-sm font-semibold text-white">
-                  Sink pipe leaking under counter / Urgent valve check
+                  {t.mockup.sampleProblem}
                 </p>
               </div>
 
               <div className="grid grid-cols-2 gap-3 text-xs pt-1">
                 <div className="bg-[#0a0b0d] p-3 rounded-[12px] border border-white/5 space-y-0.5">
-                  <span className="text-[#7c828a] block">Category</span>
-                  <span className="font-semibold text-white">Plumbing</span>
+                  <span className="text-[#7c828a] block">{t.mockup.categoryLabel}</span>
+                  <span className="font-semibold text-white">{t.mockup.categoryValue}</span>
                 </div>
                 <div className="bg-[#0a0b0d] p-3 rounded-[12px] border border-white/5 space-y-0.5">
-                  <span className="text-[#7c828a] block">Proximity Area</span>
-                  <span className="font-semibold text-white">Nugegoda Cluster</span>
+                  <span className="text-[#7c828a] block">{t.mockup.proximityLabel}</span>
+                  <span className="font-semibold text-white">{t.mockup.proximityValue}</span>
                 </div>
               </div>
             </div>
@@ -294,23 +305,23 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
             <div className="bg-[#0a0b0d] rounded-[16px] p-4 border border-white/10 space-y-3">
               <div className="flex items-center justify-between">
                 <div>
-                  <h4 className="font-semibold text-sm text-white">Kasun Perera</h4>
-                  <span className="text-xs text-[#a8acb3]">Licensed Master Plumber / 142 jobs</span>
+                  <h4 className="font-semibold text-sm text-white">{t.mockup.technicianName}</h4>
+                  <span className="text-xs text-[#a8acb3]">{t.mockup.technicianRole}</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-[11px] text-[#7c828a] block">Visit Fee</span>
-                  <span className="number-display text-white text-sm">LKR 2,000</span>
+                  <span className="text-[11px] text-[#7c828a] block">{t.mockup.visitFeeLabel}</span>
+                  <span className="number-display text-white text-sm">{t.mockup.visitFeeValue}</span>
                 </div>
               </div>
 
               <div className="flex items-center justify-between pt-2 border-t border-white/10 text-xs">
-                <span className="text-[#a8acb3]">Next Availability:</span>
-                <span className="text-[#05b169] font-medium">Tomorrow / Morning</span>
+                <span className="text-[#a8acb3]">{t.mockup.nextSlotLabel}</span>
+                <span className="text-[#05b169] font-medium">{t.mockup.nextSlotValue}</span>
               </div>
             </div>
 
             <div className="text-[11px] text-[#7c828a] text-center">
-              100% Deterministic match. Zero sponsored positioning.
+              {t.mockup.guaranteeText}
             </div>
           </div>
 

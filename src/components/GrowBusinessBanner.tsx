@@ -1,14 +1,18 @@
+"use client";
+
 import React from "react";
-import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { ToolsIcon } from "@/components/ui/Icons";
+import { useLanguage } from "@/context/LanguageContext";
 
 export const GrowBusinessBanner: React.FC = () => {
+  const { t } = useLanguage();
+
   const benefits = [
-    "Direct resident dispatch",
-    "Real-time calendar slot management",
-    "Verified technician credential status",
-    "Zero platform commission fees",
+    t.business.benefit1,
+    t.business.benefit2,
+    t.business.benefit3,
+    t.business.benefit4,
   ];
 
   return (
@@ -21,16 +25,16 @@ export const GrowBusinessBanner: React.FC = () => {
                 <ToolsIcon className="w-6 h-6 text-[#0052ff]" />
               </div>
               <span className="text-xs font-semibold text-[#a8acb3] uppercase tracking-wider">
-                For Independent Technicians
+                {t.business.sectionBadge}
               </span>
             </div>
 
             <div className="space-y-3">
               <h3 className="display-md text-white">
-                Grow your business with HelpDesk LK.
+                {t.business.title}
               </h3>
               <p className="body-md text-[#a8acb3] leading-relaxed">
-                Join licensed and certified trade professionals across Colombo. Receive verified resident requests, publish your free availability calendar, and confirm bookings with zero commission fees.
+                {t.business.subtitle}
               </p>
             </div>
 
@@ -44,17 +48,13 @@ export const GrowBusinessBanner: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0 w-full sm:w-auto lg:w-56">
-            <Link href="/provider" className="w-full">
-              <Button variant="primary" size="lg" className="w-full">
-                Register as Provider
-              </Button>
-            </Link>
-            <Link href="/provider" className="w-full">
-              <Button variant="outline-dark" size="lg" className="w-full">
-                CRM Portal Login
-              </Button>
-            </Link>
+          <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0 w-full sm:w-auto lg:w-64">
+            <Button href="/provider" variant="primary" size="lg" className="w-full">
+              {t.business.registerBtn}
+            </Button>
+            <Button href="/provider" variant="outline-dark" size="lg" className="w-full">
+              {t.business.loginBtn}
+            </Button>
           </div>
         </div>
       </div>

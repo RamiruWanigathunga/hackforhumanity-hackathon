@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { PlumberIcon, ElectricianIcon, ACIcon } from "@/components/ui/Icons";
+import { useLanguage } from "@/context/LanguageContext";
 
 export interface FeaturedProviderItem {
   id: string;
@@ -69,23 +70,25 @@ interface FeaturedTechniciansProps {
 }
 
 export const FeaturedTechnicians: React.FC<FeaturedTechniciansProps> = ({ onSelectProvider }) => {
+  const { t } = useLanguage();
+
   return (
     <section className="w-full bg-[#f7f7f7] py-20 sm:py-24 px-4 sm:px-6 border-t border-[#dee1e6]">
       <div className="max-w-[1200px] mx-auto space-y-10">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#dee1e6] pb-8">
           <div className="space-y-2">
             <span className="text-xs font-semibold text-[#7c828a] uppercase tracking-wider block">
-              Active Directory
+              {t.technicians.sectionBadge}
             </span>
             <h2 className="display-lg text-[#0a0b0d]">
-              Featured verified technicians.
+              {t.technicians.title}
             </h2>
             <p className="body-md text-[#5b616e]">
-              Licensed trade specialists active in the Colombo pilot cluster.
+              {t.technicians.subtitle}
             </p>
           </div>
           <Link href="/provider" className="text-sm font-semibold text-[#0052ff] hover:underline">
-            View all technicians
+            {t.technicians.viewAll}
           </Link>
         </div>
 
@@ -118,9 +121,9 @@ export const FeaturedTechnicians: React.FC<FeaturedTechniciansProps> = ({ onSele
                       {provider.displayName}
                     </h3>
                     <div className="flex items-center gap-2 text-xs text-[#5b616e]">
-                      <span>Rating: <strong className="text-[#0a0b0d] font-semibold">{provider.rating}</strong></span>
+                      <span>{t.technicians.ratingLabel}: <strong className="text-[#0a0b0d] font-semibold">{provider.rating}</strong></span>
                       <span>/</span>
-                      <span className="number-display text-xs">{provider.jobsCompleted} jobs</span>
+                      <span className="number-display text-xs">{provider.jobsCompleted} {t.technicians.jobsLabel}</span>
                     </div>
                   </div>
 
@@ -132,7 +135,7 @@ export const FeaturedTechnicians: React.FC<FeaturedTechniciansProps> = ({ onSele
                 <div className="pt-4 border-t border-[#dee1e6] space-y-4">
                   {provider.visitFeeLkr && (
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-[#7c828a]">Visit fee:</span>
+                      <span className="text-[#7c828a]">{t.technicians.visitFeeLabel}</span>
                       <span className="number-display text-sm text-[#0a0b0d]">
                         LKR {provider.visitFeeLkr.toLocaleString()}
                       </span>
@@ -145,7 +148,7 @@ export const FeaturedTechnicians: React.FC<FeaturedTechniciansProps> = ({ onSele
                     className="w-full text-xs font-semibold"
                     onClick={() => onSelectProvider && onSelectProvider(provider)}
                   >
-                    Select Technician
+                    {t.technicians.selectBtn}
                   </Button>
                 </div>
               </div>

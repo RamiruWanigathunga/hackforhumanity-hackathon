@@ -1,5 +1,4 @@
 import { SCORING_WEIGHTS } from "@/config/scoring";
-import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
 export default function AboutPage() {
@@ -136,11 +135,9 @@ export default function AboutPage() {
           HelpDesk LK was developed for Hack for Humanity (Hacktoberfest Hack Day Colombo). All provider profiles and reviews are fictional sample data for demonstration. No identity checks or licensing verifications have been conducted, and no real monetary transactions take place.
         </p>
         <div className="pt-2">
-          <Link href="/">
-            <Button variant="primary" size="md">
-              Try the Demo Now
-            </Button>
-          </Link>
+          <Button href="/" variant="primary" size="md">
+            Try the Demo Now
+          </Button>
         </div>
       </div>
     </div>
