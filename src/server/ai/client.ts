@@ -16,5 +16,5 @@ export function getAiModel() {
     apiKey,
   });
 
-  return google(env.AI_MODEL || "gemini-2.5-flash");
+  return google(env.AI_MODEL || "gemini-3.5-flash-lite");
 }

@@ -4,7 +4,7 @@ import { z } from "zod";
 const envSchema = z.object({
   DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
   AI_PROVIDER: z.enum(["google", "anthropic", "openai", "mock"]).default("google"),
-  AI_MODEL: z.string().default("gemini-2.5-flash"),
+  AI_MODEL: z.string().default("gemini-3.5-flash-lite"),
   GOOGLE_GENERATIVE_AI_API_KEY: z.string().optional(),
   AI_TIMEOUT_MS: z.coerce.number().default(12000),
   DEMO_ADMIN_KEY: z.string().default("change-me"),
@@ -15,7 +15,7 @@ const envSchema = z.object({
 export const env = envSchema.parse({
   DATABASE_URL: process.env.DATABASE_URL || "postgres://postgres:postgres@localhost:5432/postgres",
   AI_PROVIDER: process.env.AI_PROVIDER || "google",
-  AI_MODEL: process.env.AI_MODEL || "gemini-2.5-flash",
+  AI_MODEL: process.env.AI_MODEL || "gemini-3.5-flash-lite",
   GOOGLE_GENERATIVE_AI_API_KEY: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
   AI_TIMEOUT_MS: process.env.AI_TIMEOUT_MS,
   DEMO_ADMIN_KEY: process.env.DEMO_ADMIN_KEY,
