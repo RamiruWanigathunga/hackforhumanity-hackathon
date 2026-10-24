@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import { createBookingTransaction, applyBookingTransition } from "../booking/service";
 import { db } from "../db/client";
 import { bookings } from "../db/schema";
+import { mockStore } from "../db/mock-store";
 import { eq } from "drizzle-orm";
 
 export async function requestBookingAction(ticketId: string, providerId: string, slotId: string) {
@@ -51,13 +52,17 @@ export async function residentCancelBookingAction(bookingId: string) {
 }
 
 export async function rateBookingAction(bookingId: string, rating: number) {
-  await db
-    .update(bookings)
-    .set({
-      residentRating: Math.max(1, Math.min(5, Math.round(rating))),
-      updatedAt: new Date(),
-    })
-    .where(eq(bookings.id, bookingId));
+  try {
+    await db
+      .update(bookings)
+      .set({
+        residentRating: Math.max(1, Math.min(5, Math.round(rating))),
+        updatedAt: new Date(),
+      })
+      .where(eq(bookings.id, bookingId));
+  } catch {
+    mockStore.rateBooking(bookingId, Math.max(1, Math.min(5, Math.round(rating))));
+  }
 
   revalidatePath(`/bookings/${bookingId}`);
 }

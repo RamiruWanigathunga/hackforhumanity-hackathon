@@ -29,6 +29,7 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
   const [residentName, setResidentName] = useState<string>("");
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [colomboToday, setColomboToday] = useState<string>("");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
     setColomboToday(getColomboToday());
@@ -37,6 +38,7 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
 
   useImperativeHandle(ref, () => ({
     setProblem: (text: string, area?: string) => {
+      setErrorMsg(null);
       setProblemText(text);
       if (area) setSelectedArea(area);
       const element = document.getElementById("search-intake-bar");

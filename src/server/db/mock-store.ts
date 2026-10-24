@@ -1,6 +1,6 @@
-import { JobTicket, Booking, BookingEvent, ProviderSlot, Provider } from "./schema";
+import { JobTicket, Booking, BookingEvent, ProviderSlot } from "./schema";
 import { FALLBACK_PROVIDERS, getFallbackProvidersWithSlots } from "@/config/seed-providers";
-import { ActionType, ActorRole, transitionBooking } from "../booking/state";
+import { ActionType, ActorRole, BookingStatus, transitionBooking } from "../booking/state";
 
 interface GlobalMockStore {
   tickets: Map<string, JobTicket>;
@@ -119,40 +119,48 @@ export const mockStore = {
     }
 
     const res = transitionBooking(
-      {
-        id: booking.id,
-        currentStatus: booking.status as any,
-        slotId: booking.slotId,
-        proposedSlotId: booking.proposedSlotId,
-        providerId: booking.providerId,
-        ticketId: booking.ticketId,
-      },
+      booking.status as BookingStatus,
       action,
       actor,
-      proposalSlotId
+      {
+        currentSlotId: booking.slotId,
+        proposedSlotId: booking.proposedSlotId,
+        newProposedSlotId: proposalSlotId,
+      }
     );
 
-    booking.status = res.newStatus;
-    if (res.updatedSlotId) booking.slotId = res.updatedSlotId;
-    if (proposalSlotId) booking.proposedSlotId = proposalSlotId;
-    if (action === "resident_accept_proposal" || action === "resident_reject_proposal") {
+    booking.status = res.nextStatus;
+    if (res.updatedSlotId) {
+      booking.slotId = res.updatedSlotId;
+      booking.proposedSlotId = null;
+    } else if (proposalSlotId && res.nextStatus === "alternative_proposed") {
+      booking.proposedSlotId = proposalSlotId;
+    } else if (res.nextStatus === "cancelled" || res.nextStatus === "declined") {
       booking.proposedSlotId = null;
     }
     booking.updatedAt = new Date();
     store.bookings.set(booking.id, booking);
 
+    for (const effect of res.slotEffects) {
+      const s = store.slots.get(effect.slotId);
+      if (s) {
+        s.status = effect.newStatus;
+        store.slots.set(s.id, s);
+      }
+    }
+
     const eventList = store.bookingEvents.get(bookingId) || [];
     eventList.push({
       id: `evt-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
       bookingId,
-      type: res.newStatus,
+      type: res.nextStatus,
       actor,
-      note: note || `State transitioned to ${res.newStatus}`,
+      note: res.eventNote || note || `State transitioned to ${res.nextStatus}`,
       createdAt: new Date(),
     });
     store.bookingEvents.set(bookingId, eventList);
 
-    return booking;
+    return res.nextStatus;
   },
 
   getBookingWithDetails(id: string) {
