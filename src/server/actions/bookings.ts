@@ -33,6 +33,22 @@ export async function requestBookingAction(ticketId: string, providerId: string,
     });
   }
 
+  // Store individual booking details in cookie for stateless resilience
+  cookieStore.set(
+    `bk_${bookingId}`,
+    JSON.stringify({
+      id: bookingId,
+      ticketId,
+      providerId,
+      slotId,
+      createdAt: Date.now(),
+    }),
+    {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7,
+    }
+  );
+
   revalidatePath(`/bookings/${bookingId}`);
   redirect(`/bookings/${bookingId}`);
 }

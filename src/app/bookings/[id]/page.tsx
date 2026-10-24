@@ -135,7 +135,7 @@ export default async function BookingDetailPage({
       <div className="bg-white rounded-[24px] border border-[#dee1e6] p-6 sm:p-8 space-y-4 coinbase-card">
         <StatusTimeline
           currentStatus={booking.status}
-          events={events.map((e) => ({
+          events={events.map((e: any) => ({
             id: e.id,
             type: e.type,
             actor: e.actor as "resident" | "provider" | "system",

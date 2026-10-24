@@ -4,7 +4,23 @@ import { FALLBACK_PROVIDERS, getFallbackProvidersWithSlots } from "@/config/seed
 import { mockStore } from "./mock-store";
 
 export async function getTicket(id: string): Promise<JobTicket | null> {
-  return mockStore.getTicket(id);
+  let ticket = mockStore.getTicket(id);
+  if (!ticket) {
+    try {
+      const { cookies } = await import("next/headers");
+      const cookieStore = await cookies();
+      const rawTkt = cookieStore.get(`tkt_${id}`)?.value;
+      if (rawTkt) {
+        const parsed = JSON.parse(rawTkt);
+        const newTicket: JobTicket = { ...parsed, createdAt: new Date(parsed.createdAt) };
+        mockStore.saveTicket(newTicket);
+        return newTicket;
+      }
+    } catch {
+      // ignore
+    }
+  }
+  return ticket || mockStore.ensureSyntheticTicket(id);
 }
 
 export async function listProviders(): Promise<Provider[]> {
@@ -26,7 +42,38 @@ export async function getActiveProvidersWithSlots(daysAhead: number = 2): Promis
 }
 
 export async function getBookingWithDetails(id: string) {
-  return mockStore.getBookingWithDetails(id);
+  let details = mockStore.getBookingWithDetails(id);
+  if (!details || !details.booking) {
+    try {
+      const { cookies } = await import("next/headers");
+      const cookieStore = await cookies();
+      const rawBk = cookieStore.get(`bk_${id}`)?.value;
+      if (rawBk) {
+        const parsed = JSON.parse(rawBk);
+        mockStore.createBookingWithId({
+          id,
+          ticketId: parsed.ticketId,
+          providerId: parsed.providerId,
+          slotId: parsed.slotId,
+        });
+
+        const rawTkt = cookieStore.get(`tkt_${parsed.ticketId}`)?.value;
+        if (rawTkt) {
+          const tkt = JSON.parse(rawTkt);
+          mockStore.saveTicket({ ...tkt, createdAt: new Date(tkt.createdAt) });
+        }
+        details = mockStore.getBookingWithDetails(id);
+      }
+    } catch {
+      // ignore
+    }
+  }
+
+  if (!details || !details.booking) {
+    details = mockStore.ensureSyntheticBooking(id);
+  }
+
+  return details;
 }
 
 export async function getRecentResidentBookings(bookingIds: string[]) {

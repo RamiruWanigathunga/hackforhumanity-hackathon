@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 import { JobTicket } from "../db/schema";
 import { mockStore } from "../db/mock-store";
 import { processIntake } from "../ai/intake";
@@ -59,6 +60,17 @@ export async function createTicketAction(formData: FormData): Promise<{
     };
 
     mockStore.saveTicket(newTicketData);
+
+    try {
+      const cookieStore = await cookies();
+      cookieStore.set(`tkt_${ticketId}`, JSON.stringify(newTicketData), {
+        path: "/",
+        maxAge: 60 * 60 * 24 * 7,
+      });
+    } catch {
+      // ignore
+    }
+
     return { success: true, ticketId };
   } catch (err: unknown) {
     return {
