@@ -1,9 +1,10 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { cookies } from "next/headers";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/Logo";
 
-export default async function Header() {
+async function HeaderUserActions() {
   const cookieStore = await cookies();
   const demoProviderId = cookieStore.get("demo_provider_id")?.value;
   const recentBookingsRaw = cookieStore.get("resident_bookings")?.value;
@@ -16,6 +17,39 @@ export default async function Header() {
     }
   }
 
+  return (
+    <>
+      {bookingCount > 0 && (
+        <Link
+          href="/bookings"
+          className="text-xs font-medium text-[#0a0b0d] bg-[#eef0f3] hover:bg-[#dee1e6] px-3.5 py-1.5 rounded-full transition-colors"
+        >
+          Bookings ({bookingCount})
+        </Link>
+      )}
+
+      <Link
+        href={demoProviderId ? "/provider/inbox" : "/provider"}
+        className="text-xs font-medium text-[#5b616e] hover:text-[#0a0b0d] px-3 py-1.5 rounded-full transition-colors hidden sm:inline-block"
+      >
+        {demoProviderId ? "Provider Inbox" : "Provider Portal"}
+      </Link>
+    </>
+  );
+}
+
+function HeaderUserActionsFallback() {
+  return (
+    <Link
+      href="/provider"
+      className="text-xs font-medium text-[#5b616e] hover:text-[#0a0b0d] px-3 py-1.5 rounded-full transition-colors hidden sm:inline-block"
+    >
+      Provider Portal
+    </Link>
+  );
+}
+
+export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b border-[#dee1e6] h-16 flex items-center">
       <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 flex items-center justify-between">
@@ -47,21 +81,9 @@ export default async function Header() {
 
         {/* Right Nav Actions */}
         <div className="flex items-center gap-3">
-          {bookingCount > 0 && (
-            <Link
-              href="/bookings"
-              className="text-xs font-medium text-[#0a0b0d] bg-[#eef0f3] hover:bg-[#dee1e6] px-3.5 py-1.5 rounded-full transition-colors"
-            >
-              Bookings ({bookingCount})
-            </Link>
-          )}
-
-          <Link
-            href={demoProviderId ? "/provider/inbox" : "/provider"}
-            className="text-xs font-medium text-[#5b616e] hover:text-[#0a0b0d] px-3 py-1.5 rounded-full transition-colors hidden sm:inline-block"
-          >
-            {demoProviderId ? "Provider Inbox" : "Provider Portal"}
-          </Link>
+          <Suspense fallback={<HeaderUserActionsFallback />}>
+            <HeaderUserActions />
+          </Suspense>
 
           <Link href="/#search-intake-bar">
             <Button variant="primary" size="sm">

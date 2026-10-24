@@ -6,6 +6,8 @@ import ResidentBookingActions from "./ResidentBookingActions";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
+export const instant = false;
+
 export default async function BookingDetailPage({
   params,
 }: {
