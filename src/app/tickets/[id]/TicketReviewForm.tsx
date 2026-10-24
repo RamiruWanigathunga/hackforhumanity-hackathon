@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/Button";
 import { SafetyBanner } from "@/components/SafetyBanner";
 
 export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
+  const router = useRouter();
   const [summary, setSummary] = useState(ticket.summary);
   const [category, setCategory] = useState<Category>(ticket.category as Category);
   const [tags, setTags] = useState<string[]>(ticket.tags);
@@ -58,7 +59,10 @@ export default function TicketReviewForm({ ticket }: { ticket: JobTicket }) {
 
   const handleConfirm = () => {
     startConfirmTransition(async () => {
-      await confirmTicketAction(ticket.id);
+      const res = await confirmTicketAction(ticket.id);
+      if (res?.success) {
+        router.push(`/tickets/${ticket.id}/matches`);
+      }
     });
   };
 
