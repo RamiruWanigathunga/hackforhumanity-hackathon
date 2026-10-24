@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useTransition, useImperativeHandle, forwardRef } from "react";
+import { useRouter } from "next/navigation";
 import { PILOT_AREAS } from "@/config/pilot";
 import { getColomboToday } from "@/lib/time";
 import { createTicketAction } from "@/server/actions/tickets";
@@ -21,6 +22,7 @@ export interface HomeSearchIntakeHandle {
 }
 
 export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
+  const router = useRouter();
   const { t } = useLanguage();
   const [problemText, setProblemText] = useState("");
   const [selectedArea, setSelectedArea] = useState<string>("Nugegoda");
@@ -107,18 +109,11 @@ export const HomeSearchIntake = forwardRef<HomeSearchIntakeHandle>((_, ref) => {
     if (residentName) formData.append("residentName", residentName);
 
     startTransition(async () => {
-      try {
-        await createTicketAction(formData);
-      } catch (err: unknown) {
-        if (
-          err &&
-          typeof err === "object" &&
-          ("digest" in err || "message" in err) &&
-          String((err as { digest?: string; message?: string }).message || (err as { digest?: string; message?: string }).digest).includes("NEXT_REDIRECT")
-        ) {
-          throw err;
-        }
-        setErrorMsg((err as Error)?.message || "Failed to process request. Please try again.");
+      const res = await createTicketAction(formData);
+      if (res?.success && res.ticketId) {
+        router.push(`/tickets/${res.ticketId}`);
+      } else if (res?.error) {
+        setErrorMsg(res.error);
       }
     });
   };
