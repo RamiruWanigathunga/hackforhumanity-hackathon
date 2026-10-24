@@ -3,7 +3,8 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { db } from "../db/client";
-import { jobTickets } from "../db/schema";
+import { jobTickets, JobTicket } from "../db/schema";
+import { mockStore } from "../db/mock-store";
 import { processIntake } from "../ai/intake";
 import { eq } from "drizzle-orm";
 import { resolveRelativeDay, getColomboToday } from "@/lib/time";
@@ -15,7 +16,7 @@ export async function createTicketAction(formData: FormData) {
   const preferredWindow = (formData.get("preferredWindow") as string) || "morning";
   const residentName = (formData.get("residentName") as string) || null;
 
-  if (!rawText || rawText.trim().length < 3) {
+  if (!rawText || rawText.trim().length < 2) {
     throw new Error("Please describe your problem in a few words.");
   }
 
@@ -32,7 +33,7 @@ export async function createTicketAction(formData: FormData) {
   const { draft, source, rawAiResponse } = intakeResult;
   const ticketId = `tkt-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
 
-  await db.insert(jobTickets).values({
+  const newTicketData: JobTicket = {
     id: ticketId,
     rawText,
     clarificationQ: draft.clarifyingQuestion,
@@ -52,7 +53,14 @@ export async function createTicketAction(formData: FormData) {
     editedByUser: false,
     status: "draft",
     residentName,
-  });
+    createdAt: new Date(),
+  };
+
+  try {
+    await db.insert(jobTickets).values(newTicketData);
+  } catch {
+    mockStore.saveTicket(newTicketData);
+  }
 
   redirect(`/tickets/${ticketId}`);
 }
@@ -66,26 +74,43 @@ export async function updateTicketAction(ticketId: string, updates: {
   preferredWindow: string;
   urgency: string;
 }) {
-  await db
-    .update(jobTickets)
-    .set({
-      summary: updates.summary,
-      category: updates.category,
-      tags: updates.tags,
-      area: updates.area,
-      preferredDate: updates.preferredDate,
-      preferredWindow: updates.preferredWindow,
-      urgency: updates.urgency,
+  try {
+    await db
+      .update(jobTickets)
+      .set({
+        summary: updates.summary,
+        category: updates.category,
+        tags: updates.tags,
+        area: updates.area,
+        preferredDate: updates.preferredDate,
+        preferredWindow: updates.preferredWindow,
+        urgency: updates.urgency,
+        editedByUser: true,
+      })
+      .where(eq(jobTickets.id, ticketId));
+  } catch {
+    mockStore.updateTicket(ticketId, {
+      ...updates,
       editedByUser: true,
-    })
-    .where(eq(jobTickets.id, ticketId));
+    });
+  }
 
   revalidatePath(`/tickets/${ticketId}`);
 }
 
 export async function confirmTicketAction(ticketId: string) {
-  const ticketRes = await db.select().from(jobTickets).where(eq(jobTickets.id, ticketId)).limit(1);
-  const ticket = ticketRes[0];
+  let ticket: JobTicket | null = null;
+  try {
+    const ticketRes = await db.select().from(jobTickets).where(eq(jobTickets.id, ticketId)).limit(1);
+    ticket = ticketRes[0] || null;
+  } catch {
+    ticket = mockStore.getTicket(ticketId);
+  }
+
+  if (!ticket) {
+    ticket = mockStore.getTicket(ticketId);
+  }
+
   if (!ticket) {
     throw new Error("Ticket not found.");
   }
@@ -94,12 +119,16 @@ export async function confirmTicketAction(ticketId: string) {
     throw new Error("Please select a specific trade category before confirming.");
   }
 
-  await db
-    .update(jobTickets)
-    .set({
-      status: "confirmed",
-    })
-    .where(eq(jobTickets.id, ticketId));
+  try {
+    await db
+      .update(jobTickets)
+      .set({
+        status: "confirmed",
+      })
+      .where(eq(jobTickets.id, ticketId));
+  } catch {
+    mockStore.updateTicket(ticketId, { status: "confirmed" });
+  }
 
   revalidatePath(`/tickets/${ticketId}`);
   revalidatePath(`/tickets/${ticketId}/matches`);
@@ -107,8 +136,18 @@ export async function confirmTicketAction(ticketId: string) {
 }
 
 export async function answerClarificationAction(ticketId: string, answer: string) {
-  const ticketRes = await db.select().from(jobTickets).where(eq(jobTickets.id, ticketId)).limit(1);
-  const ticket = ticketRes[0];
+  let ticket: JobTicket | null = null;
+  try {
+    const ticketRes = await db.select().from(jobTickets).where(eq(jobTickets.id, ticketId)).limit(1);
+    ticket = ticketRes[0] || null;
+  } catch {
+    ticket = mockStore.getTicket(ticketId);
+  }
+
+  if (!ticket) {
+    ticket = mockStore.getTicket(ticketId);
+  }
+
   if (!ticket || !ticket.clarificationQ) {
     throw new Error("Invalid clarification request.");
   }
@@ -124,9 +163,22 @@ export async function answerClarificationAction(ticketId: string, answer: string
 
   const { draft, source } = intakeResult;
 
-  await db
-    .update(jobTickets)
-    .set({
+  try {
+    await db
+      .update(jobTickets)
+      .set({
+        clarificationA: answer,
+        summary: draft.summary,
+        category: draft.category !== "unknown" ? draft.category : ticket.category,
+        tags: draft.tags.length > 0 ? draft.tags : ticket.tags,
+        urgency: draft.urgency,
+        hazard: draft.hazard || ticket.hazard,
+        aiSource: source,
+        editedByUser: true,
+      })
+      .where(eq(jobTickets.id, ticketId));
+  } catch {
+    mockStore.updateTicket(ticketId, {
       clarificationA: answer,
       summary: draft.summary,
       category: draft.category !== "unknown" ? draft.category : ticket.category,
@@ -135,8 +187,8 @@ export async function answerClarificationAction(ticketId: string, answer: string
       hazard: draft.hazard || ticket.hazard,
       aiSource: source,
       editedByUser: true,
-    })
-    .where(eq(jobTickets.id, ticketId));
+    });
+  }
 
   revalidatePath(`/tickets/${ticketId}`);
 }
